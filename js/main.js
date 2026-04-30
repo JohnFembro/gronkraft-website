@@ -92,7 +92,7 @@
     var step = document.getElementById(id);
     if (!step) return;
     step.classList.add('mf-step--active');
-    var card = document.querySelector('.hero-card');
+    var card = document.querySelector('.gk-form');
     if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 

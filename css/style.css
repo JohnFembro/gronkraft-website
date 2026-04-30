@@ -95,7 +95,8 @@ button {
 /* ============================================================
    BUTTONS
 ============================================================ */
-.btn {
+.btn,
+.gk-form .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -112,18 +113,22 @@ button {
   white-space: nowrap;
 }
 
-.btn-primary {
+.btn-primary,
+.gk-form .btn-primary {
   background: var(--accent);
   color: #fff;
   border-color: var(--accent);
 }
 .btn-primary:hover,
-.btn-primary:focus-visible {
+.btn-primary:focus-visible,
+.gk-form .btn-primary:hover,
+.gk-form .btn-primary:focus-visible {
   background: var(--accent-dim);
   border-color: var(--accent-dim);
 }
 
-.btn-full {
+.btn-full,
+.gk-form .btn-full {
   width: 100%;
 }
 
@@ -293,24 +298,54 @@ button {
   max-width: 500px;
 }
 
-/* Hero form card */
-.hero-card {
+/* Hero form card — also serves as .gk-form root for Webflow embed */
+.gk-form {
+  /* Variables (self-contained for Webflow embed) */
+  --dark:        #002617;
+  --dark-2:      #001a0f;
+  --dark-3:      #003d20;
+  --green:       #1aa269;
+  --accent:      #1aa269;
+  --accent-dim:  #158f58;
+  --white:       #ffffff;
+  --light:       #f6f6f6;
+  --border:      #e0e0e0;
+  --muted:       #717171;
+  --radius:      14px;
+  --radius-sm:   8px;
+  --shadow:      0 4px 20px rgba(0,0,0,0.10);
+  --shadow-lg:   0 16px 48px rgba(0,0,0,0.22);
+  --ease:        0.25s ease;
+
   background: var(--light);
   border-radius: var(--radius);
   padding: 32px 28px;
   width: 480px;
   flex-shrink: 0;
   box-shadow: var(--shadow-lg);
+  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  color: #1a2418;
 }
 
-.hero-card-title {
+.gk-form *,
+.gk-form *::before,
+.gk-form *::after {
+  box-sizing: border-box;
+}
+
+.gk-form button {
+  font-family: inherit;
+}
+
+.gk-form .hero-card-title {
   font-size: 1.5rem;
   font-weight: 800;
   color: #000;
   margin-bottom: 6px;
 }
 
-.hero-card-sub {
+.gk-form .hero-card-sub {
   font-size: 1rem;
   color: #000;
   line-height: 1.5;
@@ -318,7 +353,7 @@ button {
 }
 
 /* Radio options */
-.lead-form fieldset {
+.gk-form fieldset {
   border: none;
   display: flex;
   flex-direction: column;
@@ -326,7 +361,7 @@ button {
   margin-bottom: 16px;
 }
 
-.radio-opt {
+.gk-form .radio-opt {
   display: flex;
   align-items: center;
   padding: 0 16px;
@@ -342,19 +377,19 @@ button {
   user-select: none;
 }
 
-.radio-opt:hover {
+.gk-form .radio-opt:hover {
   border-color: var(--accent);
 }
 
-.radio-opt input[type="radio"],
-.radio-opt input[type="checkbox"] {
+.gk-form .radio-opt input[type="radio"],
+.gk-form .radio-opt input[type="checkbox"] {
   position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-.radio-opt:has(input:checked) {
+.gk-form .radio-opt:has(input:checked) {
   border-color: var(--accent);
   background: rgba(26,162,105,0.07);
 }
@@ -1049,7 +1084,7 @@ button {
     max-width: 100%;
   }
 
-  .hero-card {
+  .gk-form {
     width: 100%;
   }
 
@@ -1156,36 +1191,36 @@ button {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.mf-step {
+.gk-form .mf-step {
   display: none;
 }
 
-.mf-step--active {
+.gk-form .mf-step--active {
   display: block;
   animation: mfFadeIn 0.18s ease;
 }
 
-.mf-heading {
+.gk-form .mf-heading {
   font-size: 1.5rem;
   font-weight: 800;
   color: #000;
   margin-bottom: 16px;
 }
 
-.mf-divider {
+.gk-form .mf-divider {
   border: none;
   border-top: 1px solid var(--border);
   margin: 0 0 20px;
 }
 
-.mf-label-text {
+.gk-form .mf-label-text {
   font-size: 0.875rem;
   font-weight: 700;
   color: #1a2418;
   margin-bottom: 8px;
 }
 
-.mf-fieldset {
+.gk-form .mf-fieldset {
   border: none;
   display: flex;
   flex-direction: column;
@@ -1193,15 +1228,15 @@ button {
   margin-bottom: 24px;
 }
 
-.mf-fieldset--row {
+.gk-form .mf-fieldset--row {
   flex-direction: row;
 }
 
-.mf-fieldset--row .radio-opt {
+.gk-form .mf-fieldset--row .radio-opt {
   flex: 1;
 }
 
-.mf-input {
+.gk-form .mf-input {
   width: 100%;
   padding: 11px 14px;
   border: 1.5px solid var(--border);
@@ -1215,69 +1250,69 @@ button {
   -webkit-appearance: none;
 }
 
-.mf-input::placeholder {
+.gk-form .mf-input::placeholder {
   color: #b8b8b8;
 }
 
-.mf-input:focus {
+.gk-form .mf-input:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(26,162,105,0.12);
 }
 
-.mf-input[type="number"] {
+.gk-form .mf-input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.mf-input[type="number"]::-webkit-outer-spin-button,
-.mf-input[type="number"]::-webkit-inner-spin-button {
+.gk-form .mf-input[type="number"]::-webkit-outer-spin-button,
+.gk-form .mf-input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-.mf-textarea {
+.gk-form .mf-textarea {
   resize: vertical;
   min-height: 84px;
   line-height: 1.55;
 }
 
-.mf-fields {
+.gk-form .mf-fields {
   display: flex;
   flex-direction: column;
   gap: 12px;
   margin-bottom: 16px;
 }
 
-.mf-field {
+.gk-form .mf-field {
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
-.mf-label {
+.gk-form .mf-label {
   font-size: 0.82rem;
   font-weight: 700;
   color: #1a2418;
 }
 
-.mf-optional {
+.gk-form .mf-optional {
   font-weight: 400;
   color: var(--muted);
 }
 
-.mf-hint {
+.gk-form .mf-hint {
   font-size: 0.82rem;
   color: var(--muted);
   line-height: 1.55;
   margin-bottom: 14px;
 }
 
-.mf-hint em {
+.gk-form .mf-hint em {
   font-style: normal;
   font-weight: 700;
   color: #1a2418;
 }
 
-.mf-error {
+.gk-form .mf-error {
   font-size: 0.8rem;
   color: #c0392b;
   font-weight: 600;
@@ -1285,16 +1320,16 @@ button {
   animation: mfFadeIn 0.15s ease;
 }
 
-.mf-nav {
+.gk-form .mf-nav {
   display: flex;
   align-items: center;
 }
 
-.mf-nav--split {
+.gk-form .mf-nav--split {
   justify-content: space-between;
 }
 
-.btn-back {
+.gk-form .btn-back {
   background: none;
   border: none;
   padding: 0;
@@ -1309,11 +1344,11 @@ button {
   transition: opacity var(--ease);
 }
 
-.btn-back:hover {
+.gk-form .btn-back:hover {
   opacity: 0.7;
 }
 
-.mf-success {
+.gk-form .mf-success {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1322,13 +1357,13 @@ button {
   gap: 14px;
 }
 
-.mf-success-title {
+.gk-form .mf-success-title {
   font-size: 1.4rem;
   font-weight: 800;
   color: #000;
 }
 
-.mf-success-sub {
+.gk-form .mf-success-sub {
   font-size: 0.95rem;
   color: var(--muted);
   line-height: 1.55;
@@ -1337,7 +1372,8 @@ button {
 /* ============================================================
    FOCUS STYLES (accessibility)
 ============================================================ */
-:focus-visible {
+:focus-visible,
+.gk-form :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
