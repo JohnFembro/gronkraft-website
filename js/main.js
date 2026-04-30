@@ -269,18 +269,53 @@
     /* Show success immediately */
     mfGoto('fs-done');
 
-    /* Async POST to Webflow form handler (silent fail in local dev) */
-    var form = document.getElementById('mf-submit-form');
-    form.innerHTML = '';
-    Object.keys(mfState).forEach(function (k) {
-      if (mfState[k] === undefined) return;
-      var inp = document.createElement('input');
-      inp.type = 'hidden'; inp.name = k; inp.value = mfState[k];
-      form.appendChild(inp);
-    });
+    /* Webflow bridge: copy values into the hidden Webflow form and submit it */
+    var wfForm = document.querySelector('form[data-name="leads-gronkraft"]');
+    if (wfForm) {
+      Object.keys(mfState).forEach(function (k) {
+        if (mfState[k] === undefined) return;
+        var input = wfForm.querySelector('[name="' + k + '"]');
+        if (input) input.value = mfState[k];
+      });
+      var submitBtn = wfForm.querySelector('input[type="submit"], button[type="submit"]');
+      if (submitBtn) submitBtn.click();
+    } else {
+      /* Local dev fallback: silent POST to legacy hidden form */
+      var form = document.getElementById('mf-submit-form');
+      if (form) {
+        form.innerHTML = '';
+        Object.keys(mfState).forEach(function (k) {
+          if (mfState[k] === undefined) return;
+          var inp = document.createElement('input');
+          inp.type = 'hidden'; inp.name = k; inp.value = mfState[k];
+          form.appendChild(inp);
+        });
+        try { fetch(form.action, { method: 'POST', body: new FormData(form) }); } catch (e) {}
+      }
+    }
+
+    /* Tracking — Google Ads conversion + Meta Pixel Lead event */
     try {
-      fetch(form.action, { method: 'POST', body: new FormData(form) });
-    } catch (e) { /* silent */ }
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'conversion', {
+          'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
+          'event_category': 'lead',
+          'event_label': mfState.omrade || 'unknown'
+        });
+        window.gtag('event', 'generate_lead', {
+          'event_category': 'lead',
+          'event_label': mfState.omrade || 'unknown'
+        });
+      }
+    } catch (e) {}
+    try {
+      if (typeof window.fbq === 'function') {
+        window.fbq('track', 'Lead', {
+          content_category: mfState.omrade || 'unknown',
+          content_name: mfState.kundtyp || mfState.tjanst || 'unknown'
+        });
+      }
+    } catch (e) {}
   };
 
 })();
