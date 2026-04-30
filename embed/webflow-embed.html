@@ -760,9 +760,10 @@
 
     mfGoto('fs-done');
 
-    /* Bridge to the hidden Webflow form (data-name="leads-gronkraft").
-       Webflow's own JS handles the AJAX POST + Forms-tab logging + email. */
-    var wfForm = document.querySelector('form[data-name="leads-gronkraft"]');
+    /* Bridge to the hidden Webflow form (must have custom attribute
+       data-gk-bridge="true"). Webflow's own JS handles the AJAX POST,
+       Forms-tab logging, email notification, and HubSpot sync. */
+    var wfForm = document.querySelector('form[data-gk-bridge="true"]');
     if (wfForm) {
       Object.keys(mfState).forEach(function (k) {
         if (mfState[k] === undefined) return;
@@ -773,28 +774,20 @@
       if (submitBtn) submitBtn.click();
     }
 
-    /* Tracking — Google Ads conversion + Meta Pixel Lead event.
-       Replace AW-CONVERSION_ID/CONVERSION_LABEL with your actual values. */
+    /* Tracking — push a single event to GTM dataLayer.
+       GTM (GTM-MMLNRTP9) is already loaded on the site; configure tags inside
+       GTM (Google Ads conversion, Meta Pixel Lead, GA4 generate_lead) to
+       trigger on event = "lead_form_submit". */
     try {
-      if (typeof window.gtag === 'function') {
-        window.gtag('event', 'conversion', {
-          'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
-          'event_category': 'lead',
-          'event_label': mfState.omrade || 'unknown'
-        });
-        window.gtag('event', 'generate_lead', {
-          'event_category': 'lead',
-          'event_label': mfState.omrade || 'unknown'
-        });
-      }
-    } catch (e) {}
-    try {
-      if (typeof window.fbq === 'function') {
-        window.fbq('track', 'Lead', {
-          content_category: mfState.omrade || 'unknown',
-          content_name: mfState.kundtyp || mfState.tjanst || 'unknown'
-        });
-      }
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'lead_form_submit',
+        lead_omrade: mfState.omrade || '',
+        lead_kundtyp: mfState.kundtyp || '',
+        lead_tjanst: mfState.tjanst || '',
+        lead_intresse: mfState.intresse || '',
+        lead_kontrollera: mfState.kontrollera || ''
+      });
     } catch (e) {}
   };
 })();

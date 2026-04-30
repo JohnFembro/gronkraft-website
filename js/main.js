@@ -269,8 +269,9 @@
     /* Show success immediately */
     mfGoto('fs-done');
 
-    /* Webflow bridge: copy values into the hidden Webflow form and submit it */
-    var wfForm = document.querySelector('form[data-name="leads-gronkraft"]');
+    /* Webflow bridge: copy values into the hidden Webflow form and submit it.
+       Form must have custom attribute data-gk-bridge="true" set in Designer. */
+    var wfForm = document.querySelector('form[data-gk-bridge="true"]');
     if (wfForm) {
       Object.keys(mfState).forEach(function (k) {
         if (mfState[k] === undefined) return;
@@ -294,27 +295,20 @@
       }
     }
 
-    /* Tracking — Google Ads conversion + Meta Pixel Lead event */
+    /* Tracking — single dataLayer push for GTM (GTM-MMLNRTP9 is loaded via
+       a Webflow Marketplace app). Configure tags inside GTM to trigger on
+       event = "lead_form_submit" (Google Ads conversion, Meta Pixel Lead,
+       GA4 generate_lead). Local dev: dataLayer is undefined, push is skipped. */
     try {
-      if (typeof window.gtag === 'function') {
-        window.gtag('event', 'conversion', {
-          'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
-          'event_category': 'lead',
-          'event_label': mfState.omrade || 'unknown'
-        });
-        window.gtag('event', 'generate_lead', {
-          'event_category': 'lead',
-          'event_label': mfState.omrade || 'unknown'
-        });
-      }
-    } catch (e) {}
-    try {
-      if (typeof window.fbq === 'function') {
-        window.fbq('track', 'Lead', {
-          content_category: mfState.omrade || 'unknown',
-          content_name: mfState.kundtyp || mfState.tjanst || 'unknown'
-        });
-      }
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'lead_form_submit',
+        lead_omrade: mfState.omrade || '',
+        lead_kundtyp: mfState.kundtyp || '',
+        lead_tjanst: mfState.tjanst || '',
+        lead_intresse: mfState.intresse || '',
+        lead_kontrollera: mfState.kontrollera || ''
+      });
     } catch (e) {}
   };
 
