@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -sL \"https://gronkraft.webflow.io/test-av-nytt-formular\" -o /tmp/gronkraft-test.html)",
+      "Read(//tmp/**)",
+      "Bash(curl -sL \"https://cdn.prod.website-files.com/689459ca72b26f3abc2a641d/css/gronkraft.webflow.shared.b4f1aff38.min.css\")",
+      "Bash(curl -sL \"https://cdn.prod.website-files.com/689459ca72b26f3abc2a641d/css/gronkraft.webflow.689459cb72b26f3abc2a6452.174f7912b.opt.min.css\")",
+      "Bash(grep -oE '\\(label|input\\\\[type=.?radio.?\\\\]|input\\\\[type=.?checkbox.?\\\\]\\)[^{]*\\\\{[^}]{0,200}\\\\}' /tmp/gronkraft-site.css)",
+      "Bash(grep -oE '[^{}]{0,80}\\\\{[^}]*text-transform:uppercase[^}]*\\\\}' /tmp/gronkraft-site.css)",
+      "Bash(curl -sL \"https://www.gronkraftab.se/test-av-nytt-formular\" -o /tmp/gronkraft-test.html)",
+      "Bash(awk '/<form[^>]*>/{wrap=1; print NR\":\"$0; getline; while \\($0 !~ /<\\\\/form>/\\) { if \\($0 ~ /gk-form/\\) print NR\":FOUND-INSIDE-FORM:\"$0; getline } }' /tmp/gronkraft-test.html)",
+      "Bash(curl -sL -o /dev/null -w \"HTTP %{http_code} | redirected to %{url_effective}\\\\n\" \"https://www.gronkraftab.se/test-av-nytt-formular\")",
+      "Bash(curl -sL -o /dev/null -w \"HTTP %{http_code} | redirected to %{url_effective}\\\\n\" \"https://gronkraft.webflow.io/test-av-nytt-formular\")"
+    ]
+  }
+}
