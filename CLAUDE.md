@@ -26,8 +26,18 @@ A single-page site with three files:
 
 ## Lead form
 
-The multi-step form in the hero section branches based on customer type (`privat` / `BRF` / `företag`). Each step is a `.form-step` div; JS shows/hides steps and tracks `currentStep`. On final submission it POSTs to a Webflow form endpoint and redirects to `/tack`.
+The multi-step form in the hero section branches based on customer type (`privat` / `BRF` / `företag`). Each step is a `.mf-step` div; JS in `main.js` shows/hides steps and tracks history in `mfHistory`. On final submission it POSTs silently to a Webflow form endpoint (`/tack`) and shows a success screen.
+
+**The form is designed to be embedded in Webflow via a custom code embed.** All form CSS is scoped under `.gk-form` so it does not conflict with Webflow's own CSS. Key rules:
+
+- The outer wrapper `<div class="gk-form">` is the embed root.
+- All CSS variables the form needs are defined on `.gk-form` itself (not just `:root`) so the snippet is self-contained.
+- Button selectors are doubled: `.btn, .gk-form .btn` — so they work both on this static site and standalone in Webflow.
+- Never add form-specific styles outside of a `.gk-form` selector prefix — they will leak into Webflow's page.
+- `@keyframes mfFadeIn` is left global (keyframe names cannot be scoped to a class).
+
+To embed in Webflow: copy the `<div class="gk-form">...</div>` block from `index.html` + all `.gk-form` CSS rules from `style.css` + the lead form JS section from `main.js` (the IIFE containing `mfNext`, `mfBack`, `mfSubmit`, and the keyboard support IIFE above it). Load the Nunito font in Webflow's page settings.
 
 ## CSS conventions
 
-All design tokens (brand colors, shadows, border-radius, transitions) live as CSS variables in `:root` — use these rather than hard-coding values. The primary brand color is `--primary-color: #2E7D32`.
+All design tokens (brand colors, shadows, border-radius, transitions) live as CSS variables in `:root` — use these rather than hard-coding values. The primary brand color is `--primary-color: #2E7D32`. The form's own tokens are duplicated on `.gk-form` so the embed works without the page's `:root`.
