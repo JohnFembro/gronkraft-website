@@ -317,8 +317,8 @@ button {
   --shadow-lg:   0 16px 48px rgba(0,0,0,0.22);
   --ease:        0.25s ease;
 
-  background: var(--light);
-  border-radius: var(--radius);
+  background: rgba(246, 246, 246, 0.8);
+  border-radius: var(--radius) 0 var(--radius) 0;
   padding: 32px 28px;
   width: 480px;
   flex-shrink: 0;
@@ -1086,6 +1086,7 @@ button {
 
   .gk-form {
     width: 100%;
+    padding: 32px 16px;
   }
 
   /* Areas */
