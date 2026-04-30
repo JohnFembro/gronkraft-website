@@ -10,7 +10,12 @@
       "Bash(curl -sL \"https://www.gronkraftab.se/test-av-nytt-formular\" -o /tmp/gronkraft-test.html)",
       "Bash(awk '/<form[^>]*>/{wrap=1; print NR\":\"$0; getline; while \\($0 !~ /<\\\\/form>/\\) { if \\($0 ~ /gk-form/\\) print NR\":FOUND-INSIDE-FORM:\"$0; getline } }' /tmp/gronkraft-test.html)",
       "Bash(curl -sL -o /dev/null -w \"HTTP %{http_code} | redirected to %{url_effective}\\\\n\" \"https://www.gronkraftab.se/test-av-nytt-formular\")",
-      "Bash(curl -sL -o /dev/null -w \"HTTP %{http_code} | redirected to %{url_effective}\\\\n\" \"https://gronkraft.webflow.io/test-av-nytt-formular\")"
+      "Bash(curl -sL -o /dev/null -w \"HTTP %{http_code} | redirected to %{url_effective}\\\\n\" \"https://gronkraft.webflow.io/test-av-nytt-formular\")",
+      "Bash(curl -sL -b wf-cookies.txt -c wf-cookies.txt -X POST https://gronkraft.webflow.io/.wf_auth -d pass=Jagbygger123 -d path=/test-av-nytt-formular -d page=/test-av-nytt-formular -o wf-after-auth.html -w 'Step2: HTTP %{http_code} → %{url_effective}\\\\n')",
+      "Bash(curl -sL -b wf-cookies.txt -o wf-test-page.html -w \"Step3: HTTP %{http_code}, %{size_download} bytes\\\\n\" \"https://gronkraft.webflow.io/test-av-nytt-formular\")",
+      "Bash(grep -oE '<[^<>]{0,300}gk-form[^<>]{0,50}>' wf-test-page.html)",
+      "Bash(awk '/<div class=\"mf-step mf-step--active\" id=\"fs-1\">/,/<\\\\/fieldset>/' wf-test-page.html)",
+      "Bash(awk '/<div class=\"mf-step\" id=\"fs-2a\">/,/<\\\\/fieldset>/' wf-test-page.html)"
     ]
   }
 }
