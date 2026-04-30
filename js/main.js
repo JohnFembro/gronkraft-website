@@ -136,6 +136,54 @@
     mfShowStep(id);
   }
 
+  /* Build a human-readable summary including only relevant fields for the
+     selected flow. Sent as a separate "summary" field so Webflow's plaintext
+     notification email is readable at a glance. */
+  function mfBuildSummary(s) {
+    var maps = {
+      omrade:    { 'elbilsladdning': 'Elbilsladdning', 'solceller-batteri': 'Solceller & Batteri', 'besiktning-serviceavtal': 'Besiktning & Serviceavtal' },
+      kundtyp:   { 'privat': 'Privat', 'brf': 'BRF', 'foretag': 'Företag' },
+      tjanst:    { 'besiktning': 'Besiktning', 'serviceavtal': 'Serviceavtal', 'bada': 'Båda' },
+      intresse:  { 'solceller': 'Solceller', 'batteri': 'Batteri', 'solceller-batteri': 'Solceller + Batteri' },
+      laddare:   { 'ac': 'AC-laddare', 'dc': 'DC-laddare' },
+      befintlig: { 'befintlig': 'Befintlig anläggning', 'ny': 'Ny anläggning – slutbesiktning' }
+    };
+    var lines = [];
+    function add(label, value) { if (value) lines.push(label + ': ' + value); }
+    function pretty(field) { return maps[field] && maps[field][s[field]] ? maps[field][s[field]] : s[field]; }
+
+    add('Område',         pretty('omrade'));
+    if (s.kundtyp)        add('Kundtyp', pretty('kundtyp'));
+    if (s.tjanst)         add('Tjänst', pretty('tjanst'));
+    if (s.intresse)       add('Intresse', pretty('intresse'));
+    if (s.kontrollera)    add('Kontrollera', s.kontrollera);
+    if (s.laddare)        add('Laddare', pretty('laddare'));
+    if (s.antalUttag)     add('Antal uttag', s.antalUttag);
+    if (s.befintlig)      add('Anläggningstyp', pretty('befintlig'));
+
+    if (s.orgNamn || s.orgNr) {
+      lines.push('');
+      add('Organisation', s.orgNamn);
+      add('Org.nr', s.orgNr);
+    }
+
+    if (s.adress || s.kommun || s.postort) {
+      lines.push('');
+      add('Adress', s.adress);
+      add('Kommun', s.kommun);
+      add('Postort', s.postort);
+    }
+
+    lines.push('');
+    add('Namn', s.namn);
+    add('Kontaktperson', s.kontaktperson);
+    add('Telefon', s.telefon);
+    add('E-post', s.epost);
+    add('Meddelande', s.meddelande);
+
+    return lines.join('\n');
+  }
+
   /* ── Navigation ── */
   window.mfNext = function (cur) {
     var next;
@@ -265,6 +313,9 @@
       mfState.epost = mfVal('fs5c-epost'); mfState.adress = mfVal('fs5c-adress');
       mfState.kommun = mfVal('fs5c-kommun'); mfState.meddelande = mfVal('fs5c-meddelande');
     }
+
+    /* Build pre-formatted summary (relevant fields only) for the email body */
+    mfState.summary = mfBuildSummary(mfState);
 
     /* Show success immediately */
     mfGoto('fs-done');

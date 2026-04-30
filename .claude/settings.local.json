@@ -15,7 +15,9 @@
       "Bash(curl -sL -b wf-cookies.txt -o wf-test-page.html -w \"Step3: HTTP %{http_code}, %{size_download} bytes\\\\n\" \"https://gronkraft.webflow.io/test-av-nytt-formular\")",
       "Bash(grep -oE '<[^<>]{0,300}gk-form[^<>]{0,50}>' wf-test-page.html)",
       "Bash(awk '/<div class=\"mf-step mf-step--active\" id=\"fs-1\">/,/<\\\\/fieldset>/' wf-test-page.html)",
-      "Bash(awk '/<div class=\"mf-step\" id=\"fs-2a\">/,/<\\\\/fieldset>/' wf-test-page.html)"
+      "Bash(awk '/<div class=\"mf-step\" id=\"fs-2a\">/,/<\\\\/fieldset>/' wf-test-page.html)",
+      "mcp__claude_ai_Webflow__element_tool",
+      "mcp__claude_ai_Webflow__whtml_builder"
     ]
   }
 }
