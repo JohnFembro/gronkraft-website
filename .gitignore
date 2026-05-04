@@ -1,2 +1,5 @@
 .DS_Store
 Thumbs.db
+
+# Claude Code local settings (contains permission grants and command history)
+.claude/
