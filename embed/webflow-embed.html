@@ -1,631 +1,573 @@
 <!--
   ╔════════════════════════════════════════════════════════════════════╗
-  ║  GRÖNKRAFT — MULTI-STEP LEAD FORM (Webflow embed)                  ║
+  ║  GRÖNKRAFT — MULTI-STEP LEAD FORM (Webflow embed) — v2.0           ║
+  ║  Claude Design aesthetic: .lf-card + progress bar + .lf-opt        ║
   ║  Paste this entire snippet into a Webflow Embed element.           ║
-  ║  Companion setup steps: see embed/webflow-instructions.md          ║
   ╚════════════════════════════════════════════════════════════════════╝
 -->
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap');
 
-@keyframes mfFadeIn {
-  from { opacity: 0; transform: translateY(5px); }
+@keyframes lfFade {
+  from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.gk-form {
-  --accent:      #1aa269;
-  --accent-dim:  #158f58;
-  --border:      #e0e0e0;
-  --muted:       #717171;
-  --radius:      14px;
-  --radius-sm:   8px;
-  --shadow-lg:   0 16px 48px rgba(0,0,0,0.22);
-  --ease:        0.25s ease;
-
-  background: rgba(246, 246, 246, 0.8);
-  border-radius: var(--radius) 0 var(--radius) 0;
-  padding: 32px 28px;
-  width: 480px;
-  max-width: 100%;
-  box-shadow: var(--shadow-lg);
-  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
-  line-height: 1.6;
-  color: #1a2418;
-}
-
-.gk-form *,
-.gk-form *::before,
-.gk-form *::after { box-sizing: border-box; }
-
-.gk-form button { font-family: inherit; }
-
-/* Defensive overrides — Webflow's site CSS has aggressive global rules on
-   <label> (text-transform:uppercase, letter-spacing:1px, font-size:12px,
-   font-weight:500, line-height:20px, margin-bottom:10px). Reset everything
-   inside .gk-form so embed text renders as authored. */
-.gk-form label,
-.gk-form input,
-.gk-form textarea,
-.gk-form fieldset,
-.gk-form legend,
-.gk-form p,
-.gk-form span {
+/* Reset / namespace defenses against host-page CSS */
+.lf-card, .lf-card * { box-sizing: border-box; }
+.lf-card label, .lf-card input, .lf-card textarea, .lf-card fieldset,
+.lf-card legend, .lf-card p, .lf-card span, .lf-card h3, .lf-card button {
   text-transform: none;
   letter-spacing: normal;
   margin-bottom: 0;
   line-height: inherit;
+  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+}
+.lf-card img { max-width: 100%; display: block; }
+
+/* Card */
+.lead-card.lf-card {
+  display: flex; flex-direction: column;
+  background: rgba(255, 255, 255, 0.97);
+  color: #0B1410;
+  border-radius: 22px;
+  padding: 26px;
+  box-shadow: 0 30px 60px -30px rgba(11, 20, 16, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+  width: 480px; max-width: 100%;
+  min-height: 460px;
+  line-height: 1.55;
+}
+@media (min-width: 1024px) {
+  .lead-card.lf-card { padding: 32px; }
 }
 
-.gk-form .sr-only {
-  position: absolute;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
+/* Progress bar */
+.lf-progress {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 18px;
+}
+.lf-progress-track {
+  flex: 1; height: 4px; border-radius: 999px;
+  background: rgba(11, 20, 16, 0.08);
   overflow: hidden;
-  clip: rect(0,0,0,0);
-  white-space: nowrap;
-  border: 0;
+}
+.lf-progress-fill {
+  height: 100%; background: #1F8A4C;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 999px;
+  width: 20%;
+}
+.lf-progress-label {
+  font-size: 12px; font-weight: 700;
+  color: #5A655F;
+  letter-spacing: 0.02em; white-space: nowrap;
+}
+.lead-card.is-done .lf-progress { display: none; }
+
+/* Step container */
+.lf-step {
+  display: none;
+  flex: 1;
+  animation: lfFade 0.22s ease both;
+}
+.lf-step.lf-step--active { display: block; }
+
+/* Heading inside step */
+.lf-head h3 {
+  margin: 0 0 6px;
+  font-size: 22px; font-weight: 800; letter-spacing: -0.005em;
+  color: #0B1410;
+}
+.lf-head .lf-sub {
+  margin: 0 0 18px;
+  font-size: 14px; color: #5A655F; line-height: 1.5;
+}
+.lf-section-label {
+  font-size: 13px; font-weight: 700;
+  color: #2A332E;
+  margin: 4px 0 10px;
 }
 
-.gk-form .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 11px 24px;
-  border-radius: 24px;
-  font-size: 1rem;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: background var(--ease), color var(--ease), border-color var(--ease);
-  letter-spacing: 0.02em;
-  white-space: nowrap;
+/* Radio / checkbox group */
+.lf-radios {
+  display: flex; flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
 }
-.gk-form .btn-primary {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-}
-.gk-form .btn-primary:hover,
-.gk-form .btn-primary:focus-visible {
-  background: var(--accent-dim);
-  border-color: var(--accent-dim);
-}
-.gk-form .btn-full { width: 100%; }
-
-.gk-form .hero-card-title {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #000;
-  margin-bottom: 6px;
-}
-.gk-form .hero-card-sub {
-  font-size: 1rem;
-  color: #000;
-  line-height: 1.5;
-  margin-bottom: 16px;
+.lf-radios.two-col {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
 }
 
-.gk-form fieldset {
-  border: none;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
-  padding: 0;
-}
-
-.gk-form .radio-opt {
+/* Option (radio or checkbox visual) */
+.lf-opt {
   position: relative;
-  display: flex;
-  align-items: center;
-  padding: 0 16px;
-  min-height: 67px;
-  border: 1.5px solid var(--border);
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #000;
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px;
+  border: 1.5px solid #E4E8E5;
+  border-radius: 12px;
   background: #fff;
-  transition: border-color var(--ease), background var(--ease);
-  user-select: none;
+  font-size: 15px; font-weight: 700;
+  color: #0B1410;
+  cursor: pointer; user-select: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  min-height: 56px;
 }
-.gk-form .radio-opt:hover { border-color: var(--accent); }
+.lf-opt:hover { border-color: #4CC07A; }
+.lf-opt input {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  opacity: 0; cursor: pointer; margin: 0;
+}
+.lf-opt-text { flex: 1; line-height: 1.3; }
 
-/* Inputs cover the entire label area, fully transparent — clicks land on the
-   input directly (no reliance on label's implicit-for binding which can break
-   under host-page CSS resets). */
-.gk-form .radio-opt input[type="radio"],
-.gk-form .radio-opt input[type="checkbox"] {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  opacity: 0;
-  cursor: pointer;
-  z-index: 1;
-  appearance: none;
-  -webkit-appearance: none;
+/* Radio dot */
+.lf-opt-dot {
+  width: 20px; height: 20px;
+  border-radius: 999px;
+  border: 2px solid #B7BFB9;
+  background: #fff;
+  flex-shrink: 0;
+  position: relative;
+  transition: border-color 0.15s ease;
 }
-.gk-form .radio-opt span { pointer-events: none; }
-.gk-form .radio-opt:has(input:checked) {
-  border-color: var(--accent);
-  background: rgba(26,162,105,0.07);
+.lf-opt:has(input[type="radio"]:checked) {
+  border-color: #1F8A4C;
+  background: rgba(31, 138, 76, 0.06);
+}
+.lf-opt:has(input[type="radio"]:checked) .lf-opt-dot {
+  border-color: #1F8A4C;
+}
+.lf-opt:has(input[type="radio"]:checked) .lf-opt-dot::after {
+  content: ""; position: absolute; inset: 3px;
+  border-radius: 999px; background: #1F8A4C;
 }
 
-.gk-form .mf-step { display: none; }
-.gk-form .mf-step--active {
+/* Checkbox box */
+.lf-opt-check {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  border: 2px solid #B7BFB9;
+  background: #fff;
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #fff;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.lf-opt:has(input[type="checkbox"]:checked) {
+  border-color: #1F8A4C;
+  background: rgba(31, 138, 76, 0.06);
+}
+.lf-opt:has(input[type="checkbox"]:checked) .lf-opt-check {
+  border-color: #1F8A4C;
+  background: #1F8A4C;
+}
+.lf-opt:has(input[type="checkbox"]:checked) .lf-opt-check::after {
+  content: "✓";
+  color: #fff; font-weight: 900; font-size: 14px; line-height: 1;
+}
+
+/* Field */
+.field.lf-field { position: relative; margin-bottom: 12px; }
+.lf-label {
   display: block;
-  animation: mfFadeIn 0.18s ease;
+  font-size: 13px; font-weight: 700;
+  color: #2A332E;
+  margin: 0 0 6px;
 }
-.gk-form .mf-heading {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #000;
-  margin-bottom: 16px;
-}
-.gk-form .mf-divider {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 0 0 20px;
-}
-.gk-form .mf-label-text {
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: #1a2418;
-  margin-bottom: 8px;
-}
-.gk-form .mf-fieldset {
-  border: none;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 24px;
-  padding: 0;
-}
-.gk-form .mf-fieldset--row { flex-direction: row; }
-.gk-form .mf-fieldset--row .radio-opt { flex: 1; }
-.gk-form .mf-input {
+.lf-optional { font-weight: 500; color: #5A655F; }
+.lf-card input, .lf-card textarea {
   width: 100%;
-  padding: 11px 14px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm);
-  font-family: inherit;
-  font-size: 0.95rem;
-  color: #1a2418;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1.5px solid #E4E8E5;
   background: #fff;
-  transition: border-color var(--ease), box-shadow var(--ease);
-  appearance: none;
-  -webkit-appearance: none;
-}
-.gk-form .mf-input::placeholder { color: #b8b8b8; }
-.gk-form .mf-input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(26,162,105,0.12);
-}
-.gk-form .mf-input[type="number"] { -moz-appearance: textfield; }
-.gk-form .mf-input[type="number"]::-webkit-outer-spin-button,
-.gk-form .mf-input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
-.gk-form .mf-textarea {
-  resize: vertical;
-  min-height: 84px;
-  line-height: 1.55;
-}
-.gk-form .mf-fields {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-.gk-form .mf-field {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-.gk-form .mf-label {
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: #1a2418;
-}
-.gk-form .mf-optional {
-  font-weight: 400;
-  color: var(--muted);
-}
-.gk-form .mf-hint {
-  font-size: 0.82rem;
-  color: var(--muted);
-  line-height: 1.55;
-  margin-bottom: 14px;
-}
-.gk-form .mf-hint em {
-  font-style: normal;
-  font-weight: 700;
-  color: #1a2418;
-}
-.gk-form .mf-error {
-  font-size: 0.8rem;
-  color: #c0392b;
-  font-weight: 600;
-  margin-bottom: 10px;
-  animation: mfFadeIn 0.15s ease;
-}
-.gk-form .mf-nav {
-  display: flex;
-  align-items: center;
-}
-.gk-form .mf-nav--split { justify-content: space-between; }
-.gk-form .btn-back {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+  font-size: 15px;
+  color: #0B1410;
   font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--accent);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  letter-spacing: 0.02em;
-  transition: opacity var(--ease);
+  transition: border 0.15s ease, box-shadow 0.15s ease;
+  appearance: none; -webkit-appearance: none;
 }
-.gk-form .btn-back:hover { opacity: 0.7; }
-.gk-form .mf-success {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 16px 0 8px;
-  gap: 14px;
+.lf-card input::placeholder, .lf-card textarea::placeholder { color: #B7BFB9; }
+.lf-card input:focus, .lf-card textarea:focus {
+  outline: none; border-color: #1F8A4C;
+  box-shadow: 0 0 0 4px rgba(31, 138, 76, 0.12);
 }
-.gk-form .mf-success-title {
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: #000;
-}
-.gk-form .mf-success-sub {
-  font-size: 0.95rem;
-  color: var(--muted);
-  line-height: 1.55;
-}
-.gk-form :focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
+.lf-card input[type="number"] { -moz-appearance: textfield; }
+.lf-card input[type="number"]::-webkit-outer-spin-button,
+.lf-card input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+.lf-card textarea { resize: vertical; min-height: 84px; line-height: 1.55; }
+
+.lf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 480px) { .lf-row { grid-template-columns: 1fr; } }
+
+/* Error */
+.lf-err {
+  font-size: 13px; color: #C5341A; font-weight: 700;
+  background: #FFF2EE; border: 1px solid rgba(197, 52, 26, 0.2);
+  border-radius: 8px; padding: 10px 12px;
+  margin: 4px 0 12px;
+  animation: lfFade 0.15s ease;
 }
 
-/* Hide the bridged Webflow form (and its success/error UI) — leads are still
-   recorded in Webflow's Forms tab; we show our own success screen instead. */
+/* Nav */
+.lf-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-top: 8px; padding-top: 16px;
+  border-top: 1px solid rgba(11, 20, 16, 0.06);
+}
+.lead-card.is-done .lf-nav { display: none; }
+.lf-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none; border: none;
+  font-size: 14px; font-weight: 700;
+  color: #2A332E;
+  padding: 10px 4px; cursor: pointer;
+  font-family: inherit;
+  transition: color 0.15s ease;
+}
+.lf-back:hover { color: #1F8A4C; }
+
+/* Button */
+.lf-card .btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 700; font-size: 15px;
+  border: none; cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.lf-card .btn:active { transform: translateY(1px); }
+.lf-card .btn-primary {
+  background: #1F8A4C;
+  color: #fff;
+  box-shadow: 0 8px 18px -8px rgba(31, 138, 76, 0.55);
+}
+.lf-card .btn-primary:hover { background: #25A85A; }
+.lf-card .btn-block { width: 100%; }
+
+/* Success */
+.lead-success { text-align: center; padding: 16px 8px 8px; }
+.success-mark {
+  width: 64px; height: 64px; border-radius: 999px;
+  background: rgba(31, 138, 76, 0.12);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #1F8A4C; margin: 0 auto 12px;
+  font-size: 32px; font-weight: 900;
+}
+.lead-success h3 { margin: 6px 0; font-size: 22px; font-weight: 800; color: #0B1410; }
+.lead-success p { margin: 0 0 18px; color: #5A655F; font-size: 14.5px; line-height: 1.55; }
+.tiny { font-size: 12px; color: #5A655F; margin-top: 8px; }
+
+/* Focus */
+.lf-card :focus-visible { outline: 2px solid #1F8A4C; outline-offset: 3px; }
+
+/* Hide bridge form wrapper */
 .gk-bridge { display: none !important; }
-
-@media (max-width: 768px) {
-  .gk-form {
-    width: 100%;
-    padding: 32px 16px;
-  }
-}
 </style>
 
-<div class="gk-form" role="complementary" aria-label="Intresseformulär">
-  <div class="mf-form" id="leadForm">
+<div class="lead-card lf-card" role="complementary" aria-label="Intresseformulär">
 
-    <!-- ── Steg 1: Välj område ── -->
-    <div class="mf-step mf-step--active" id="fs-1">
-      <p class="hero-card-title">Vad söker du offert för?</p>
-      <p class="hero-card-sub">Välj inom vilket område ditt ärende gäller, fler alternativ väljs i kommande steg</p>
-      <fieldset class="mf-fieldset">
-        <legend class="sr-only">Välj ditt område av intresse</legend>
-        <label class="radio-opt"><input type="radio" name="fs1-omrade" value="elbilsladdning"><span>Elbilsladdning</span></label>
-        <label class="radio-opt"><input type="radio" name="fs1-omrade" value="solceller-batteri"><span>Solceller &amp; Batteri</span></label>
-        <label class="radio-opt"><input type="radio" name="fs1-omrade" value="besiktning-serviceavtal"><span>Besiktning &amp; Serviceavtal</span></label>
-      </fieldset>
-      <p class="mf-error" id="fs1-err" hidden>Välj ett alternativ för att fortsätta.</p>
-      <div class="mf-nav">
-        <button type="button" class="btn btn-primary btn-full" onclick="mfNext('fs-1')">NÄSTA →</button>
-      </div>
+  <div class="lf-progress">
+    <div class="lf-progress-track">
+      <div class="lf-progress-fill" id="lf-progress-fill"></div>
     </div>
-
-    <!-- ── Steg 2a: Elbilsladdning – Kundtyp ── -->
-    <div class="mf-step" id="fs-2a">
-      <p class="mf-heading">Vad är du intresserad av?</p>
-      <hr class="mf-divider">
-      <p class="mf-label-text">Kundtyp</p>
-      <fieldset class="mf-fieldset">
-        <legend class="sr-only">Välj kundtyp</legend>
-        <label class="radio-opt"><input type="radio" name="fs2a-kundtyp" value="privat"><span>Privat</span></label>
-        <label class="radio-opt"><input type="radio" name="fs2a-kundtyp" value="brf"><span>BRF</span></label>
-        <label class="radio-opt"><input type="radio" name="fs2a-kundtyp" value="foretag"><span>Företag</span></label>
-      </fieldset>
-      <p class="mf-error" id="fs2a-err" hidden>Välj ett alternativ för att fortsätta.</p>
-      <div class="mf-nav mf-nav--split">
-        <button type="button" class="btn-back" onclick="mfBack()">TILLBAKA</button>
-        <button type="button" class="btn btn-primary" onclick="mfNext('fs-2a')">NÄSTA →</button>
-      </div>
-    </div>
-
-    <!-- ── Steg 2b: Solceller – Kundtyp ── -->
-    <div class="mf-step" id="fs-2b">
-      <p class="mf-heading">Vad är du intresserad av?</p>
-      <hr class="mf-divider">
-      <p class="mf-label-text">Kundtyp</p>
-      <fieldset class="mf-fieldset">
-        <legend class="sr-only">Välj kundtyp</legend>
-        <label class="radio-opt"><input type="radio" name="fs2b-kundtyp" value="privat"><span>Privat</span></label>
-        <label class="radio-opt"><input type="radio" name="fs2b-kundtyp" value="brf"><span>BRF</span></label>
-        <label class="radio-opt"><input type="radio" name="fs2b-kundtyp" value="foretag"><span>Företag</span></label>
-      </fieldset>
-      <p class="mf-error" id="fs2b-err" hidden>Välj ett alternativ för att fortsätta.</p>
-      <div class="mf-nav mf-nav--split">
-        <button type="button" class="btn-back" onclick="mfBack()">TILLBAKA</button>
-        <button type="button" class="btn btn-primary" onclick="mfNext('fs-2b')">NÄSTA →</button>
-      </div>
-    </div>
-
-    <!-- ── Steg 2c: Besiktning – Typ av tjänst ── -->
-    <div class="mf-step" id="fs-2c">
-      <p class="mf-heading">Vad är du intresserad av?</p>
-      <hr class="mf-divider">
-      <p class="mf-label-text">Typ av tjänst</p>
-      <fieldset class="mf-fieldset">
-        <legend class="sr-only">Välj typ av tjänst</legend>
-        <label class="radio-opt"><input type="radio" name="fs2c-tjanst" value="besiktning"><span>Besiktning</span></label>
-        <label class="radio-opt"><input type="radio" name="fs2c-tjanst" value="serviceavtal"><span>Serviceavtal</span></label>
-        <label class="radio-opt"><input type="radio" name="fs2c-tjanst" value="bada"><span>Båda</span></label>
-      </fieldset>
-      <p class="mf-error" id="fs2c-err" hidden>Välj ett alternativ för att fortsätta.</p>
-      <div class="mf-nav mf-nav--split">
-        <button type="button" class="btn-back" onclick="mfBack()">TILLBAKA</button>
-        <button type="button" class="btn btn-primary" onclick="mfNext('fs-2c')">NÄSTA →</button>
-      </div>
-    </div>
-
-    <!-- ── Steg 3a: EV Privat – Antal uttag ── -->
-    <div class="mf-step" id="fs-3a">
-      <p class="mf-heading">Vad är du intresserad av?</p>
-      <hr class="mf-divider">
-      <div class="mf-fields">
-        <div class="mf-field">
-          <label class="mf-label" for="fs3a-uttag">Antal uttag</label>
-          <input type="number" id="fs3a-uttag" name="antal-uttag" min="1" max="100" placeholder="Hur många uttag är du intresserad av?" class="mf-input">
-        </div>
-      </div>
-      <p class="mf-error" id="fs3a-err" hidden>Ange antal uttag för att fortsätta.</p>
-      <div class="mf-nav mf-nav--split">
-        <button type="button" class="btn-back" onclick="mfBack()">TILLBAKA</button>
-        <button type="button" class="btn btn-primary" onclick="mfNext('fs-3a')">NÄSTA →</button>
-      </div>
-    </div>
-
-    <!-- ── Steg 3b: EV BRF/Ftg – Laddare + Antal uttag ── -->
-    <div class="mf-step" id="fs-3b">
-      <p class="mf-heading">Vad är du intresserad av?</p>
-      <hr class="mf-divider">
-      <p class="mf-label-text">Vilken typ av laddare vill ni ha?</p>
-      <fieldset class="mf-fieldset mf-fieldset--row">
-        <legend class="sr-only">Välj typ av laddare</legend>
-        <label class="radio-opt"><input type="radio" name="fs3b-laddare" value="ac"><span>AC-laddare</span></label>
-        <label class="radio-opt"><input type="radio" name="fs3b-laddare" value="dc"><span>DC-laddare</span></label>
-      </fieldset>
-      <div class="mf-fields">
-        <div class="mf-field">
-          <label class="mf-label" for="fs3b-uttag">Antal uttag</label>
-          <input type="number" id="fs3b-uttag" name="antal-uttag-org" min="1" max="500" placeholder="Hur många ladduttag behöver ni?" class="mf-input">
-        </div>
-      </div>
-      <p class="mf-error" id="fs3b-err" hidden>Välj laddare och ange antal uttag.</p>
-      <div class="mf-nav mf-nav--split">
-        <button type="button" class="btn-back" onclick="mfBack()">TILLBAKA</button>
-        <button type="button" class="btn btn-primary" onclick="mfNext('fs-3b')">NÄSTA →</button>
-      </div>
-    </div>
-
-    <!-- ── Steg 3c: Sol – Intresse ── -->
-    <div class="mf-step" id="fs-3c">
-      <p class="mf-heading">Vad är du intresserad av?</p>
-      <hr class="mf-divider">
-      <p class="mf-label-text">Vad är ditt intresse?</p>
-      <fieldset class="mf-fieldset">
-        <legend class="sr-only">Välj intresse</legend>
-        <label class="radio-opt"><input type="radio" name="fs3c-intresse" value="solceller"><span>Solceller</span></label>
-        <label class="radio-opt"><input type="radio" name="fs3c-intresse" value="batteri"><span>Batteri</span></label>
-        <label class="radio-opt"><input type="radio" name="fs3c-intresse" value="solceller-batteri"><span>Solceller + Batteri</span></label>
-      </fieldset>
-      <p class="mf-error" id="fs3c-err" hidden>Välj ett alternativ för att fortsätta.</p>
-      <div class="mf-nav mf-nav--split">
-        <button type="button" class="btn-back" onclick="mfBack()">TILLBAKA</button>
-        <button type="button" class="btn btn-primary" onclick="mfNext('fs-3c')">NÄSTA →</button>
-      </div>
-    </div>
-
-    <!-- ── Steg 3d: Besiktning – Vad ska kontrolleras (multi-select) ── -->
-    <div class="mf-step" id="fs-3d">
-      <p class="mf-heading">Vad är du intresserad av?</p>
-      <hr class="mf-divider">
-      <p class="mf-label-text">Vad ska kontrolleras?</p>
-      <fieldset class="mf-fieldset">
-        <legend class="sr-only">Välj vad som ska kontrolleras</legend>
-        <label class="radio-opt"><input type="checkbox" name="fs3d-kontroll" value="elbilsladdare"><span>Elbilsladdare</span></label>
-        <label class="radio-opt"><input type="checkbox" name="fs3d-kontroll" value="solceller"><span>Solceller</span></label>
-        <label class="radio-opt"><input type="checkbox" name="fs3d-kontroll" value="batteri"><span>Batteri</span></label>
-      </fieldset>
-      <p class="mf-error" id="fs3d-err" hidden>Välj minst ett alternativ för att fortsätta.</p>
-      <div class="mf-nav mf-nav--split">
-        <button type="button" class="btn-back" onclick="mfBack()">TILLBAKA</button>
-        <button type="button" class="btn btn-primary" onclick="mfNext('fs-3d')">NÄSTA →</button>
-      </div>
-    </div>
-
-    <!-- ── Steg 4a: EV Privat – Kontaktuppgifter → SKICKA ── -->
-    <div class="mf-step" id="fs-4a">
-      <p class="mf-heading">Lämna dina kontaktuppgifter</p>
-      <hr class="mf-divider">
-      <div class="mf-fields">
-        <div class="mf-field"><label class="mf-label" for="fs4a-namn">Namn</label><input type="text" id="fs4a-namn" autocomplete="name" placeholder="Fyll i för- och efternamn" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs4a-tel">Telefonnummer</label><input type="tel" id="fs4a-tel" autocomplete="tel" placeholder="+46" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs4a-epost">Epost</label><input type="email" id="fs4a-epost" autocomplete="email" placeholder="Fyll i din epost" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs4a-adress">Adress</label><input type="text" id="fs4a-adress" autocomplete="street-address" placeholder="Gatuadress för installationen" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs4a-kommun">Kommun</label><input type="text" id="fs4a-kommun" placeholder="tex. Göteborg" class="mf-input"></div>
-      </div>
-      <p class="mf-error" id="fs4a-err" hidden>Fyll i alla obligatoriska fält.</p>
-      <div class="mf-nav mf-nav--split">
-        <button type="button" class="btn-back" onclick="mfBack()">TILLBAKA</button>
-        <button type="button" class="btn btn-primary" onclick="mfSubmit('fs-4a')">SKICKA →</button>
-      </div>
-    </div>
-
-    <!-- ── Steg 4b: EV BRF/Ftg – Organisationsinfo ── -->
-    <div class="mf-step" id="fs-4b">
-      <p class="mf-heading">Lämna dina kontaktuppgifter</p>
-      <hr class="mf-divider">
-      <div class="mf-fields">
-        <div class="mf-field"><label class="mf-label" for="fs4b-orgnamn">Organisationens namn</label><input type="text" id="fs4b-orgnamn" placeholder="Fyll i organisationens namn" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs4b-orgnr">Org. nummer <span class="mf-optional">(Valfritt)</span></label><input type="text" id="fs4b-orgnr" placeholder="Fyll i ert organisationsnummer" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs4b-adress">Adress</label><input type="text" id="fs4b-adress" placeholder="Gatuadress för installationen" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs4b-kommun">Kommun</label><input type="text" id="fs4b-kommun" placeholder="tex. Göteborg" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs4b-postort">Postort</label><input type="text" id="fs4b-postort" placeholder="Fyll i er postort" class="mf-input"></div>
-      </div>
-      <p class="mf-error" id="fs4b-err" hidden>Fyll i alla obligatoriska fält.</p>
-      <div class="mf-nav mf-nav--split">
-        <button type="button" class="btn-back" onclick="mfBack()">TILLBAKA</button>
-        <button type="button" class="btn btn-primary" onclick="mfNext('fs-4b')">NÄSTA →</button>
-      </div>
-    </div>
-
-    <!-- ── Steg 4c: Sol Privat – Kontaktuppgifter → SKICKA ── -->
-    <div class="mf-step" id="fs-4c">
-      <p class="mf-heading">Lämna dina kontaktuppgifter</p>
-      <hr class="mf-divider">
-      <div class="mf-fields">
-        <div class="mf-field"><label class="mf-label" for="fs4c-namn">Namn</label><input type="text" id="fs4c-namn" autocomplete="name" placeholder="Fyll i för- och efternamn" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs4c-tel">Telefonnummer</label><input type="tel" id="fs4c-tel" autocomplete="tel" placeholder="+46" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs4c-epost">Epost</label><input type="email" id="fs4c-epost" autocomplete="email" placeholder="Fyll i din epost" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs4c-adress">Adress</label><input type="text" id="fs4c-adress" placeholder="Gatuadress för installationen" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs4c-kommun">Kommun</label><input type="text" id="fs4c-kommun" placeholder="tex. Göteborg" class="mf-input"></div>
-      </div>
-      <p class="mf-error" id="fs4c-err" hidden>Fyll i alla obligatoriska fält.</p>
-      <div class="mf-nav mf-nav--split">
-        <button type="button" class="btn-back" onclick="mfBack()">TILLBAKA</button>
-        <button type="button" class="btn btn-primary" onclick="mfSubmit('fs-4c')">SKICKA →</button>
-      </div>
-    </div>
-
-    <!-- ── Steg 4d: Sol Ftg – Organisationsinfo ── -->
-    <div class="mf-step" id="fs-4d">
-      <p class="mf-heading">Lämna dina kontaktuppgifter</p>
-      <hr class="mf-divider">
-      <div class="mf-fields">
-        <div class="mf-field"><label class="mf-label" for="fs4d-orgnamn">Organisationens namn</label><input type="text" id="fs4d-orgnamn" placeholder="Fyll i organisationens namn" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs4d-orgnr">Org. nummer <span class="mf-optional">(Valfritt)</span></label><input type="text" id="fs4d-orgnr" placeholder="Fyll i ert organisationsnummer" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs4d-adress">Adress</label><input type="text" id="fs4d-adress" placeholder="Gatuadress för installationen" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs4d-kommun">Kommun</label><input type="text" id="fs4d-kommun" placeholder="tex. Göteborg" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs4d-postort">Postort</label><input type="text" id="fs4d-postort" placeholder="Fyll i er postort" class="mf-input"></div>
-      </div>
-      <p class="mf-error" id="fs4d-err" hidden>Fyll i alla obligatoriska fält.</p>
-      <div class="mf-nav mf-nav--split">
-        <button type="button" class="btn-back" onclick="mfBack()">TILLBAKA</button>
-        <button type="button" class="btn btn-primary" onclick="mfNext('fs-4d')">NÄSTA →</button>
-      </div>
-    </div>
-
-    <!-- ── Steg 4e: Besiktning – Typ av besiktning ── -->
-    <div class="mf-step" id="fs-4e">
-      <p class="mf-heading">Vad är du intresserad av?</p>
-      <hr class="mf-divider">
-      <p class="mf-label-text">Gäller det en befintlig eller ny anläggning?</p>
-      <p class="mf-hint">En slutbesiktning utförs på en ny anläggning <em>innan</em> den tas i drift. Välj "Ny anläggning" om installationen ännu inte är klar.</p>
-      <fieldset class="mf-fieldset">
-        <legend class="sr-only">Typ av besiktning</legend>
-        <label class="radio-opt"><input type="radio" name="fs4e-befintlig" value="befintlig"><span>Befintlig anläggning</span></label>
-        <label class="radio-opt"><input type="radio" name="fs4e-befintlig" value="ny"><span>Ny anläggning – slutbesiktning</span></label>
-      </fieldset>
-      <p class="mf-error" id="fs4e-err" hidden>Välj ett alternativ för att fortsätta.</p>
-      <div class="mf-nav mf-nav--split">
-        <button type="button" class="btn-back" onclick="mfBack()">TILLBAKA</button>
-        <button type="button" class="btn btn-primary" onclick="mfNext('fs-4e')">NÄSTA →</button>
-      </div>
-    </div>
-
-    <!-- ── Steg 5a: EV BRF/Ftg – Kontaktperson → SKICKA ── -->
-    <div class="mf-step" id="fs-5a">
-      <p class="mf-heading">Lämna dina kontaktuppgifter</p>
-      <hr class="mf-divider">
-      <div class="mf-fields">
-        <div class="mf-field"><label class="mf-label" for="fs5a-kontakt">Kontaktperson</label><input type="text" id="fs5a-kontakt" autocomplete="name" placeholder="Namn på den som skall bli kontaktad" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs5a-tel">Telefonnummer</label><input type="tel" id="fs5a-tel" autocomplete="tel" placeholder="+46" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs5a-epost">Epost</label><input type="email" id="fs5a-epost" autocomplete="email" placeholder="Fyll i din epost" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs5a-meddelande">Meddelande (Valfritt)</label><textarea id="fs5a-meddelande" rows="3" placeholder="Lämna ett kompletterande meddelande om dina förutsättningar" class="mf-input mf-textarea"></textarea></div>
-      </div>
-      <p class="mf-error" id="fs5a-err" hidden>Fyll i alla obligatoriska fält.</p>
-      <div class="mf-nav mf-nav--split">
-        <button type="button" class="btn-back" onclick="mfBack()">TILLBAKA</button>
-        <button type="button" class="btn btn-primary" onclick="mfSubmit('fs-5a')">SKICKA →</button>
-      </div>
-    </div>
-
-    <!-- ── Steg 5b: Sol Ftg – Kontaktperson → SKICKA ── -->
-    <div class="mf-step" id="fs-5b">
-      <p class="mf-heading">Lämna dina kontaktuppgifter</p>
-      <hr class="mf-divider">
-      <div class="mf-fields">
-        <div class="mf-field"><label class="mf-label" for="fs5b-kontakt">Kontaktperson</label><input type="text" id="fs5b-kontakt" autocomplete="name" placeholder="Namn på den som skall bli kontaktad" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs5b-tel">Telefonnummer</label><input type="tel" id="fs5b-tel" autocomplete="tel" placeholder="+46" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs5b-epost">Epost</label><input type="email" id="fs5b-epost" autocomplete="email" placeholder="Fyll i din epost" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs5b-meddelande">Meddelande (Valfritt)</label><textarea id="fs5b-meddelande" rows="3" placeholder="Lämna ett kompletterande meddelande om dina förutsättningar" class="mf-input mf-textarea"></textarea></div>
-      </div>
-      <p class="mf-error" id="fs5b-err" hidden>Fyll i alla obligatoriska fält.</p>
-      <div class="mf-nav mf-nav--split">
-        <button type="button" class="btn-back" onclick="mfBack()">TILLBAKA</button>
-        <button type="button" class="btn btn-primary" onclick="mfSubmit('fs-5b')">SKICKA →</button>
-      </div>
-    </div>
-
-    <!-- ── Steg 5c: Besiktning – Kontaktuppgifter → SKICKA ── -->
-    <div class="mf-step" id="fs-5c">
-      <p class="mf-heading">Lämna dina kontaktuppgifter</p>
-      <hr class="mf-divider">
-      <div class="mf-fields">
-        <div class="mf-field"><label class="mf-label" for="fs5c-namn">Namn / Organisation</label><input type="text" id="fs5c-namn" autocomplete="name" placeholder="Fyll i namn eller organisation" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs5c-tel">Telefonnummer</label><input type="tel" id="fs5c-tel" autocomplete="tel" placeholder="+46" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs5c-epost">Epost</label><input type="email" id="fs5c-epost" autocomplete="email" placeholder="Fyll i din epost" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs5c-adress">Adress</label><input type="text" id="fs5c-adress" placeholder="Gatuadress för anläggningen" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs5c-kommun">Kommun</label><input type="text" id="fs5c-kommun" placeholder="tex. Göteborg" class="mf-input"></div>
-        <div class="mf-field"><label class="mf-label" for="fs5c-meddelande">Meddelande (Valfritt)</label><textarea id="fs5c-meddelande" rows="3" placeholder="Lämna ett kompletterande meddelande om dina förutsättningar" class="mf-input mf-textarea"></textarea></div>
-      </div>
-      <p class="mf-error" id="fs5c-err" hidden>Fyll i alla obligatoriska fält.</p>
-      <div class="mf-nav mf-nav--split">
-        <button type="button" class="btn-back" onclick="mfBack()">TILLBAKA</button>
-        <button type="button" class="btn btn-primary" onclick="mfSubmit('fs-5c')">SKICKA →</button>
-      </div>
-    </div>
-
-    <!-- ── Tack-skärm ── -->
-    <div class="mf-step" id="fs-done">
-      <div class="mf-success">
-        <div class="mf-success-icon" aria-hidden="true">
-          <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-            <circle cx="28" cy="28" r="27" stroke="#1aa269" stroke-width="2"/>
-            <path d="M18 28l7 7 14-14" stroke="#1aa269" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <p class="mf-success-title">Tack för din förfrågan!</p>
-        <p class="mf-success-sub">En av våra rådgivare hör av sig till dig inom 24 timmar.</p>
-      </div>
-    </div>
-
+    <span class="lf-progress-label" id="lf-progress-label">Steg 1 av 5</span>
   </div>
+
+  <!-- ── Steg 1: Område ── -->
+  <div class="lf-step lf-step--active" id="fs-1">
+    <div class="lf-head">
+      <h3>Vad söker du offert för?</h3>
+      <p class="lf-sub">Välj inom vilket område ditt ärende gäller. Vi anpassar resten av frågorna efter ditt val.</p>
+    </div>
+    <div class="lf-radios" role="radiogroup">
+      <label class="lf-opt"><input type="radio" name="fs1-omrade" value="elbilsladdning"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Elbilsladdning</span></label>
+      <label class="lf-opt"><input type="radio" name="fs1-omrade" value="solceller-batteri"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Solceller &amp; Batteri</span></label>
+      <label class="lf-opt"><input type="radio" name="fs1-omrade" value="besiktning-serviceavtal"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Besiktning &amp; Serviceavtal</span></label>
+    </div>
+    <div class="lf-err" id="fs1-err" hidden>Välj ett alternativ för att fortsätta.</div>
+    <div class="lf-nav">
+      <span></span>
+      <button type="button" class="btn btn-primary" onclick="mfNext('fs-1')">Nästa →</button>
+    </div>
+  </div>
+
+  <!-- ── Steg 2a: EV kundtyp ── -->
+  <div class="lf-step" id="fs-2a">
+    <div class="lf-head"><h3>Vem är du?</h3></div>
+    <p class="lf-section-label">Kundtyp</p>
+    <div class="lf-radios" role="radiogroup">
+      <label class="lf-opt"><input type="radio" name="fs2a-kundtyp" value="privat"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Privat</span></label>
+      <label class="lf-opt"><input type="radio" name="fs2a-kundtyp" value="brf"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Bostadsrättsförening</span></label>
+      <label class="lf-opt"><input type="radio" name="fs2a-kundtyp" value="foretag"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Företag</span></label>
+    </div>
+    <div class="lf-err" id="fs2a-err" hidden>Välj kundtyp.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="mfBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="mfNext('fs-2a')">Nästa →</button>
+    </div>
+  </div>
+
+  <!-- ── Steg 2b: Sol kundtyp ── -->
+  <div class="lf-step" id="fs-2b">
+    <div class="lf-head"><h3>Vem är du?</h3></div>
+    <p class="lf-section-label">Kundtyp</p>
+    <div class="lf-radios" role="radiogroup">
+      <label class="lf-opt"><input type="radio" name="fs2b-kundtyp" value="privat"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Privat</span></label>
+      <label class="lf-opt"><input type="radio" name="fs2b-kundtyp" value="brf"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Bostadsrättsförening</span></label>
+      <label class="lf-opt"><input type="radio" name="fs2b-kundtyp" value="foretag"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Företag</span></label>
+    </div>
+    <div class="lf-err" id="fs2b-err" hidden>Välj kundtyp.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="mfBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="mfNext('fs-2b')">Nästa →</button>
+    </div>
+  </div>
+
+  <!-- ── Steg 2c: Besiktning tjänst ── -->
+  <div class="lf-step" id="fs-2c">
+    <div class="lf-head"><h3>Vilken tjänst gäller det?</h3></div>
+    <div class="lf-radios" role="radiogroup">
+      <label class="lf-opt"><input type="radio" name="fs2c-tjanst" value="besiktning"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Besiktning</span></label>
+      <label class="lf-opt"><input type="radio" name="fs2c-tjanst" value="serviceavtal"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Serviceavtal</span></label>
+      <label class="lf-opt"><input type="radio" name="fs2c-tjanst" value="bada"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Båda</span></label>
+    </div>
+    <div class="lf-err" id="fs2c-err" hidden>Välj typ av tjänst.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="mfBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="mfNext('fs-2c')">Nästa →</button>
+    </div>
+  </div>
+
+  <!-- ── Steg 3a: EV Privat – antal uttag ── -->
+  <div class="lf-step" id="fs-3a">
+    <div class="lf-head"><h3>Hur många uttag behöver du?</h3></div>
+    <div class="field lf-field">
+      <label class="lf-label">Antal uttag</label>
+      <input type="number" id="fs3a-uttag" min="1" max="20" placeholder="t.ex. 1">
+    </div>
+    <div class="lf-err" id="fs3a-err" hidden>Ange antal uttag för att fortsätta.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="mfBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="mfNext('fs-3a')">Nästa →</button>
+    </div>
+  </div>
+
+  <!-- ── Steg 3b: EV BRF/Ftg – Laddare + antal uttag ── -->
+  <div class="lf-step" id="fs-3b">
+    <div class="lf-head"><h3>Berätta om er laddningslösning</h3></div>
+    <p class="lf-section-label">Vilken typ av laddare?</p>
+    <div class="lf-radios two-col" role="radiogroup">
+      <label class="lf-opt"><input type="radio" name="fs3b-laddare" value="ac"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">AC-laddare</span></label>
+      <label class="lf-opt"><input type="radio" name="fs3b-laddare" value="dc"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">DC-laddare</span></label>
+    </div>
+    <div class="field lf-field">
+      <label class="lf-label">Antal uttag</label>
+      <input type="number" id="fs3b-uttag" min="1" max="500" placeholder="Hur många ladduttag behöver ni?">
+    </div>
+    <div class="lf-err" id="fs3b-err" hidden>Välj laddare och ange antal uttag.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="mfBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="mfNext('fs-3b')">Nästa →</button>
+    </div>
+  </div>
+
+  <!-- ── Steg 3c: Sol intresse ── -->
+  <div class="lf-step" id="fs-3c">
+    <div class="lf-head"><h3>Vad är ditt intresse?</h3></div>
+    <div class="lf-radios" role="radiogroup">
+      <label class="lf-opt"><input type="radio" name="fs3c-intresse" value="solceller"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Solceller</span></label>
+      <label class="lf-opt"><input type="radio" name="fs3c-intresse" value="batteri"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Batteri</span></label>
+      <label class="lf-opt"><input type="radio" name="fs3c-intresse" value="solceller-batteri"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Solceller + Batteri</span></label>
+    </div>
+    <div class="lf-err" id="fs3c-err" hidden>Välj ditt intresse.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="mfBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="mfNext('fs-3c')">Nästa →</button>
+    </div>
+  </div>
+
+  <!-- ── Steg 3d: Besiktning – kontrollera (multi-select) ── -->
+  <div class="lf-step" id="fs-3d">
+    <div class="lf-head">
+      <h3>Vad ska kontrolleras?</h3>
+      <p class="lf-sub">Markera alla anläggningar som ska kontrolleras.</p>
+    </div>
+    <div class="lf-radios" role="group">
+      <label class="lf-opt"><input type="checkbox" name="fs3d-kontroll" value="elbilsladdare"><span class="lf-opt-check" aria-hidden="true"></span><span class="lf-opt-text">Elbilsladdare</span></label>
+      <label class="lf-opt"><input type="checkbox" name="fs3d-kontroll" value="solceller"><span class="lf-opt-check" aria-hidden="true"></span><span class="lf-opt-text">Solceller</span></label>
+      <label class="lf-opt"><input type="checkbox" name="fs3d-kontroll" value="batteri"><span class="lf-opt-check" aria-hidden="true"></span><span class="lf-opt-text">Batteri</span></label>
+    </div>
+    <div class="lf-err" id="fs3d-err" hidden>Välj minst ett alternativ.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="mfBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="mfNext('fs-3d')">Nästa →</button>
+    </div>
+  </div>
+
+  <!-- ── Steg 4a: EV Privat – kontaktuppgifter → SUBMIT ── -->
+  <div class="lf-step" id="fs-4a">
+    <div class="lf-head"><h3>Lämna dina kontaktuppgifter</h3></div>
+    <div class="field lf-field"><label class="lf-label">Namn</label><input type="text" id="fs4a-namn" autocomplete="name" placeholder="För- och efternamn"></div>
+    <div class="lf-row">
+      <div class="field lf-field"><label class="lf-label">Telefonnummer</label><input type="tel" id="fs4a-tel" autocomplete="tel" placeholder="+46"></div>
+      <div class="field lf-field"><label class="lf-label">E-post</label><input type="email" id="fs4a-epost" autocomplete="email" placeholder="namn@exempel.se"></div>
+    </div>
+    <div class="field lf-field"><label class="lf-label">Adress</label><input type="text" id="fs4a-adress" autocomplete="street-address" placeholder="Gatuadress för installationen"></div>
+    <div class="field lf-field"><label class="lf-label">Kommun</label><input type="text" id="fs4a-kommun" placeholder="t.ex. Göteborg"></div>
+    <div class="lf-err" id="fs4a-err" hidden>Fyll i alla obligatoriska fält.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="mfBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="mfSubmit('fs-4a')">Skicka förfrågan →</button>
+    </div>
+    <p class="tiny" style="margin-top:12px;">Genom att skicka godkänner du vår integritetspolicy. Vi delar aldrig dina uppgifter.</p>
+  </div>
+
+  <!-- ── Steg 4b: EV BRF/Ftg – Organisationsinfo ── -->
+  <div class="lf-step" id="fs-4b">
+    <div class="lf-head"><h3>Information om organisationen</h3></div>
+    <div class="field lf-field"><label class="lf-label">Organisationens namn</label><input type="text" id="fs4b-orgnamn" placeholder="Fyll i organisationens namn"></div>
+    <div class="field lf-field"><label class="lf-label">Org. nummer <span class="lf-optional">(Valfritt)</span></label><input type="text" id="fs4b-orgnr" placeholder="Organisationsnummer"></div>
+    <div class="field lf-field"><label class="lf-label">Adress</label><input type="text" id="fs4b-adress" placeholder="Gatuadress för installationen"></div>
+    <div class="lf-row">
+      <div class="field lf-field"><label class="lf-label">Kommun</label><input type="text" id="fs4b-kommun" placeholder="t.ex. Göteborg"></div>
+      <div class="field lf-field"><label class="lf-label">Postort</label><input type="text" id="fs4b-postort" placeholder="Postort"></div>
+    </div>
+    <div class="lf-err" id="fs4b-err" hidden>Fyll i alla obligatoriska fält.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="mfBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="mfNext('fs-4b')">Nästa →</button>
+    </div>
+  </div>
+
+  <!-- ── Steg 4c: Sol Privat – kontaktuppgifter → SUBMIT ── -->
+  <div class="lf-step" id="fs-4c">
+    <div class="lf-head"><h3>Lämna dina kontaktuppgifter</h3></div>
+    <div class="field lf-field"><label class="lf-label">Namn</label><input type="text" id="fs4c-namn" autocomplete="name" placeholder="För- och efternamn"></div>
+    <div class="lf-row">
+      <div class="field lf-field"><label class="lf-label">Telefonnummer</label><input type="tel" id="fs4c-tel" autocomplete="tel" placeholder="+46"></div>
+      <div class="field lf-field"><label class="lf-label">E-post</label><input type="email" id="fs4c-epost" autocomplete="email" placeholder="namn@exempel.se"></div>
+    </div>
+    <div class="field lf-field"><label class="lf-label">Adress</label><input type="text" id="fs4c-adress" autocomplete="street-address" placeholder="Gatuadress för installationen"></div>
+    <div class="field lf-field"><label class="lf-label">Kommun</label><input type="text" id="fs4c-kommun" placeholder="t.ex. Göteborg"></div>
+    <div class="lf-err" id="fs4c-err" hidden>Fyll i alla obligatoriska fält.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="mfBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="mfSubmit('fs-4c')">Skicka förfrågan →</button>
+    </div>
+    <p class="tiny" style="margin-top:12px;">Genom att skicka godkänner du vår integritetspolicy. Vi delar aldrig dina uppgifter.</p>
+  </div>
+
+  <!-- ── Steg 4d: Sol Ftg – Organisationsinfo ── -->
+  <div class="lf-step" id="fs-4d">
+    <div class="lf-head"><h3>Information om organisationen</h3></div>
+    <div class="field lf-field"><label class="lf-label">Organisationens namn</label><input type="text" id="fs4d-orgnamn" placeholder="Fyll i organisationens namn"></div>
+    <div class="field lf-field"><label class="lf-label">Org. nummer <span class="lf-optional">(Valfritt)</span></label><input type="text" id="fs4d-orgnr" placeholder="Organisationsnummer"></div>
+    <div class="field lf-field"><label class="lf-label">Adress</label><input type="text" id="fs4d-adress" placeholder="Gatuadress för installationen"></div>
+    <div class="lf-row">
+      <div class="field lf-field"><label class="lf-label">Kommun</label><input type="text" id="fs4d-kommun" placeholder="t.ex. Göteborg"></div>
+      <div class="field lf-field"><label class="lf-label">Postort</label><input type="text" id="fs4d-postort" placeholder="Postort"></div>
+    </div>
+    <div class="lf-err" id="fs4d-err" hidden>Fyll i alla obligatoriska fält.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="mfBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="mfNext('fs-4d')">Nästa →</button>
+    </div>
+  </div>
+
+  <!-- ── Steg 4e: Besiktning – Befintlig/ny anläggning ── -->
+  <div class="lf-step" id="fs-4e">
+    <div class="lf-head">
+      <h3>Befintlig eller ny anläggning?</h3>
+      <p class="lf-sub">En slutbesiktning utförs på en ny anläggning <strong>innan</strong> driftsättning. Välj "Ny anläggning" om installationen ännu inte är klar.</p>
+    </div>
+    <div class="lf-radios" role="radiogroup">
+      <label class="lf-opt"><input type="radio" name="fs4e-befintlig" value="befintlig"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Befintlig anläggning</span></label>
+      <label class="lf-opt"><input type="radio" name="fs4e-befintlig" value="ny"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Ny anläggning (slutbesiktning)</span></label>
+    </div>
+    <div class="lf-err" id="fs4e-err" hidden>Välj ett alternativ.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="mfBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="mfNext('fs-4e')">Nästa →</button>
+    </div>
+  </div>
+
+  <!-- ── Steg 5a: EV BRF/Ftg – Kontaktperson → SUBMIT ── -->
+  <div class="lf-step" id="fs-5a">
+    <div class="lf-head"><h3>Kontaktperson</h3></div>
+    <div class="field lf-field"><label class="lf-label">Kontaktperson</label><input type="text" id="fs5a-kontakt" autocomplete="name" placeholder="Namn på den som ska bli kontaktad"></div>
+    <div class="lf-row">
+      <div class="field lf-field"><label class="lf-label">Telefonnummer</label><input type="tel" id="fs5a-tel" autocomplete="tel" placeholder="+46"></div>
+      <div class="field lf-field"><label class="lf-label">E-post</label><input type="email" id="fs5a-epost" autocomplete="email" placeholder="namn@exempel.se"></div>
+    </div>
+    <div class="field lf-field"><label class="lf-label">Meddelande <span class="lf-optional">(Valfritt)</span></label><textarea id="fs5a-meddelande" placeholder="Lämna ett kompletterande meddelande om era förutsättningar"></textarea></div>
+    <div class="lf-err" id="fs5a-err" hidden>Fyll i alla obligatoriska fält.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="mfBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="mfSubmit('fs-5a')">Skicka förfrågan →</button>
+    </div>
+    <p class="tiny" style="margin-top:12px;">Genom att skicka godkänner du vår integritetspolicy. Vi delar aldrig dina uppgifter.</p>
+  </div>
+
+  <!-- ── Steg 5b: Sol Ftg – Kontaktperson → SUBMIT ── -->
+  <div class="lf-step" id="fs-5b">
+    <div class="lf-head"><h3>Kontaktperson</h3></div>
+    <div class="field lf-field"><label class="lf-label">Kontaktperson</label><input type="text" id="fs5b-kontakt" autocomplete="name" placeholder="Namn på den som ska bli kontaktad"></div>
+    <div class="lf-row">
+      <div class="field lf-field"><label class="lf-label">Telefonnummer</label><input type="tel" id="fs5b-tel" autocomplete="tel" placeholder="+46"></div>
+      <div class="field lf-field"><label class="lf-label">E-post</label><input type="email" id="fs5b-epost" autocomplete="email" placeholder="namn@exempel.se"></div>
+    </div>
+    <div class="field lf-field"><label class="lf-label">Meddelande <span class="lf-optional">(Valfritt)</span></label><textarea id="fs5b-meddelande" placeholder="Lämna ett kompletterande meddelande om era förutsättningar"></textarea></div>
+    <div class="lf-err" id="fs5b-err" hidden>Fyll i alla obligatoriska fält.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="mfBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="mfSubmit('fs-5b')">Skicka förfrågan →</button>
+    </div>
+    <p class="tiny" style="margin-top:12px;">Genom att skicka godkänner du vår integritetspolicy. Vi delar aldrig dina uppgifter.</p>
+  </div>
+
+  <!-- ── Steg 5c: Besiktning – Kontaktuppgifter → SUBMIT ── -->
+  <div class="lf-step" id="fs-5c">
+    <div class="lf-head"><h3>Lämna dina kontaktuppgifter</h3></div>
+    <div class="field lf-field"><label class="lf-label">Namn / Organisation</label><input type="text" id="fs5c-namn" autocomplete="name" placeholder="Namn eller organisation"></div>
+    <div class="lf-row">
+      <div class="field lf-field"><label class="lf-label">Telefonnummer</label><input type="tel" id="fs5c-tel" autocomplete="tel" placeholder="+46"></div>
+      <div class="field lf-field"><label class="lf-label">E-post</label><input type="email" id="fs5c-epost" autocomplete="email" placeholder="namn@exempel.se"></div>
+    </div>
+    <div class="field lf-field"><label class="lf-label">Adress</label><input type="text" id="fs5c-adress" placeholder="Gatuadress för anläggningen"></div>
+    <div class="field lf-field"><label class="lf-label">Kommun</label><input type="text" id="fs5c-kommun" placeholder="t.ex. Göteborg"></div>
+    <div class="field lf-field"><label class="lf-label">Meddelande <span class="lf-optional">(Valfritt)</span></label><textarea id="fs5c-meddelande" placeholder="Beskriv anläggningen eller vad ni vill ha kontrollerat"></textarea></div>
+    <div class="lf-err" id="fs5c-err" hidden>Fyll i alla obligatoriska fält.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="mfBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="mfSubmit('fs-5c')">Skicka förfrågan →</button>
+    </div>
+    <p class="tiny" style="margin-top:12px;">Genom att skicka godkänner du vår integritetspolicy. Vi delar aldrig dina uppgifter.</p>
+  </div>
+
+  <!-- ── Tack-skärm ── -->
+  <div class="lf-step" id="fs-done">
+    <div class="lead-success">
+      <span class="success-mark">✓</span>
+      <h3 id="fs-done-title">Tack för din förfrågan!</h3>
+      <p id="fs-done-sub">En av våra rådgivare hör av sig till dig inom 24 timmar.</p>
+    </div>
+  </div>
+
 </div>
 
 <script>
-/* Keyboard support for radio/checkbox in .radio-opt labels */
+/* Keyboard support for radio/checkbox in .lf-opt labels */
 (function () {
   document.addEventListener('keydown', function (e) {
     if (e.key !== ' ' && e.key !== 'Enter') return;
-    var opt = e.target.closest('.radio-opt');
+    var opt = e.target.closest('.lf-opt');
     if (!opt) return;
     e.preventDefault();
     var input = opt.querySelector('input');
@@ -642,12 +584,38 @@
   var mfHistory = ['fs-1'];
 
   function mfShowStep(id) {
-    document.querySelectorAll('.mf-step').forEach(function (el) { el.classList.remove('mf-step--active'); });
+    document.querySelectorAll('.lf-step').forEach(function (el) { el.classList.remove('lf-step--active'); });
     var step = document.getElementById(id);
     if (!step) return;
-    step.classList.add('mf-step--active');
-    var card = document.querySelector('.gk-form');
-    if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    step.classList.add('lf-step--active');
+    var card = document.querySelector('.lead-card');
+    if (card) {
+      card.classList.toggle('is-done', id === 'fs-done');
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    mfUpdateProgress();
+  }
+
+  function mfUpdateProgress() {
+    var fill = document.getElementById('lf-progress-fill');
+    var label = document.getElementById('lf-progress-label');
+    if (!fill || !label) return;
+
+    var step = mfHistory.length;
+    var branchLen = 5;
+    if (mfState.omrade === 'elbilsladdning') {
+      branchLen = mfState.kundtyp === 'privat' ? 4 : 5;
+    } else if (mfState.omrade === 'solceller-batteri') {
+      branchLen = mfState.kundtyp === 'privat' ? 4 : 5;
+    } else if (mfState.omrade === 'besiktning-serviceavtal') {
+      var k = mfState.kontrollera || '';
+      var arr = k ? k.split(', ') : [];
+      branchLen = (arr.length === 1 && arr[0] === 'elbilsladdare') ? 3 : 4;
+    }
+
+    var stepNum = Math.min(step, branchLen);
+    fill.style.width = (stepNum / branchLen * 100) + '%';
+    label.textContent = 'Steg ' + stepNum + ' av ' + branchLen;
   }
 
   function mfRadio(name, errId) {
@@ -672,7 +640,7 @@
     ids.forEach(function (id) {
       var el = document.getElementById(id);
       if (!el) return;
-      if (!el.value.trim()) { el.style.borderColor = '#c0392b'; ok = false; }
+      if (!el.value.trim()) { el.style.borderColor = '#C5341A'; ok = false; }
       else el.style.borderColor = '';
     });
     if (!ok) { if (err) err.hidden = false; return false; }
@@ -710,6 +678,7 @@
     return lines.join('\n');
   }
 
+  /* ── Navigation ── */
   window.mfNext = function (cur) {
     var next;
     if (cur === 'fs-1') {
@@ -818,11 +787,16 @@
 
     mfState.summary = mfBuildSummary(mfState);
 
+    /* Personalize the success screen */
+    var firstName = (mfState.namn || mfState.kontaktperson || '').split(' ')[0];
+    var titleEl = document.getElementById('fs-done-title');
+    var subEl = document.getElementById('fs-done-sub');
+    if (titleEl) titleEl.textContent = firstName ? ('Tack ' + firstName + '!') : 'Tack för din förfrågan!';
+    if (subEl && mfState.telefon) subEl.textContent = 'Vi har tagit emot din förfrågan. En av våra rådgivare hör av sig till ' + mfState.telefon + ' inom 24 timmar.';
+
     mfGoto('fs-done');
 
-    /* Bridge to the hidden Webflow form (must have custom attribute
-       data-gk-bridge="true"). Webflow's own JS handles the AJAX POST,
-       Forms-tab logging, email notification, and HubSpot sync. */
+    /* Bridge to hidden Webflow form */
     var wfForm = document.querySelector('form[data-gk-bridge="true"]');
     if (wfForm) {
       Object.keys(mfState).forEach(function (k) {
@@ -834,10 +808,7 @@
       if (submitBtn) submitBtn.click();
     }
 
-    /* Tracking — push a single event to GTM dataLayer.
-       GTM (GTM-MMLNRTP9) is already loaded on the site; configure tags inside
-       GTM (Google Ads conversion, Meta Pixel Lead, GA4 generate_lead) to
-       trigger on event = "lead_form_submit". */
+    /* Tracking — single dataLayer push for GTM (GTM-MMLNRTP9) */
     try {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
@@ -850,5 +821,8 @@
       });
     } catch (e) {}
   };
+
+  /* Initialize progress bar on load */
+  mfUpdateProgress();
 })();
 </script>

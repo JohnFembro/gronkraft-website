@@ -24,7 +24,16 @@
       "Bash(curl -sL \"https://cdn.prod.website-files.com/689459ca72b26f3abc2a641d/css/gronkraft.webflow.689459cb72b26f3abc2a645f.ff192b9a5.opt.min.css\")",
       "Bash(curl -sL \"https://cdn.prod.website-files.com/689459ca72b26f3abc2a641d%2F689e5ba67671442434f3ca35%2F69f39005b61587851a38460c%2Fgk_faq_toggle-1.0.0.js\")",
       "Bash(grep -oE '<div class=\"q-a-list-wrapper-2-0\">.{0,800}' wf-test-page-v3.html)",
-      "Bash(curl -sL \"https://cdn.prod.website-files.com/689459ca72b26f3abc2a641d/css/gronkraft.webflow.69f32b2d19d062022f0dcde8.566dbfacd.opt.min.css\")"
+      "Bash(curl -sL \"https://cdn.prod.website-files.com/689459ca72b26f3abc2a641d/css/gronkraft.webflow.69f32b2d19d062022f0dcde8.566dbfacd.opt.min.css\")",
+      "mcp__claude_ai_Webflow__variable_tool",
+      "mcp__claude_ai_Webflow__asset_tool",
+      "Bash(curl -sL -b wf-cookies.txt -o wf-current.html -w \"Size: %{size_download} bytes\\\\n\" \"https://gronkraft.webflow.io/test-av-nytt-formular\")",
+      "Bash(rm -f wf-cookies.txt)",
+      "Bash(curl -sL -c wf-cookies.txt -o /dev/null \"https://gronkraft.webflow.io/test-av-nytt-formular\")",
+      "Bash(curl -sL -b wf-cookies.txt -c wf-cookies.txt -X POST \"https://gronkraft.webflow.io/.wf_auth\" -d \"pass=Jagbygger123\" -d \"path=/test-av-nytt-formular\" -d \"page=/test-av-nytt-formular\" -o /dev/null)",
+      "Bash(curl -sL -b wf-cookies.txt -o wf-live.html -w \"Size: %{size_download} bytes\\\\n\" \"https://gronkraft.webflow.io/test-av-nytt-formular\")",
+      "Bash(curl -sL -b wf-cookies.txt -o wf-now.html \"https://gronkraft.webflow.io/test-av-nytt-formular\")",
+      "Bash(awk '/gk-trust/,/<\\\\/div>/' wf-now.html)"
     ]
   }
 }
