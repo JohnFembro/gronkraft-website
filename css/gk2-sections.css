@@ -127,22 +127,70 @@
 [data-gk-split-cta] { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 999px; background: var(--gk-g500); color: #fff !important; text-decoration: none; font-size: 22px; font-weight: 700; align-self: flex-start; transition: background .15s ease, transform .2s ease; }
 [data-gk-split-cta]:hover { background: var(--gk-g400); transform: translateX(3px); }
 
-/* ── Articles (3 article cards on tinted background) ─────────────────────── */
+/* ── Articles (Webflow Collection List bound to Blog Posts CMS) ──────────── */
 [data-gk-articles] { padding: 72px 0; background: var(--gk-surf2); font-family: var(--gk-ff); }
 [data-gk-articles] [data-gk-wrap] { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 @media (min-width: 900px) { [data-gk-articles] [data-gk-wrap] { padding: 0 40px; } }
 [data-gk-articles] [data-gk-sec-head] { margin: 0 0 32px; }
 [data-gk-articles] h2 { font-size: clamp(26px, 3.4vw, 38px); font-weight: 900; letter-spacing: -.01em; margin: 8px 0 0; color: var(--gk-i900); font-family: var(--gk-ff); }
-[data-gk-articles-grid] { display: grid; gap: 18px; grid-template-columns: 1fr; }
-@media (min-width: 720px) { [data-gk-articles-grid] { grid-template-columns: repeat(3, 1fr); } }
-[data-gk-article] { background: #fff; border-radius: 22px; border: 1px solid var(--gk-line); overflow: hidden; display: flex; flex-direction: column; transition: transform .25s, box-shadow .25s; }
-[data-gk-article]:hover { transform: translateY(-4px); box-shadow: var(--gk-shd); }
-[data-gk-article-img] { aspect-ratio: 16/10; background-color: var(--gk-surf2); background-image: repeating-linear-gradient(45deg, rgba(11,51,38,.04) 0 12px, rgba(11,51,38,.08) 12px 24px); display: flex; align-items: center; justify-content: center; color: var(--gk-i400); font-family: ui-monospace, monospace; font-size: 12px; }
-[data-gk-article-body] { padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+
+/* Webflow Collection List wrapper sits inside [data-gk-articles-grid] —
+   target its internal .w-dyn-* classes so each .w-dyn-item becomes a card
+   and the items lay out in a 3-column grid. */
+[data-gk-articles-grid] .w-dyn-list { padding: 0; margin: 0; }
+[data-gk-articles-grid] .w-dyn-items {
+  display: grid !important;
+  gap: 18px;
+  grid-template-columns: 1fr;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+@media (min-width: 720px) {
+  [data-gk-articles-grid] .w-dyn-items {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+[data-gk-articles-grid] .w-dyn-item {
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  float: none !important;
+  background: #fff;
+  border-radius: 22px;
+  border: 1px solid var(--gk-line);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform .25s, box-shadow .25s;
+  list-style: none;
+}
+[data-gk-articles-grid] .w-dyn-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--gk-shd);
+}
+
+/* Image (as <img> with data-gk-article-img attribute, bound to thumbnail-image) */
+[data-gk-article-img] {
+  width: 100% !important;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+  display: block;
+  background: var(--gk-surf2);
+}
+
+[data-gk-article-body] {
+  padding: 22px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
 [data-gk-article-meta] { font-size: 12px; color: var(--gk-g500); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-[data-gk-article] h3 { margin: 0; font-size: 18.5px; font-weight: 800; line-height: 1.25; color: var(--gk-i900); font-family: var(--gk-ff); }
-[data-gk-article] p { margin: 0; color: var(--gk-i500); font-size: 14.5px; line-height: 1.55; flex: 1; font-family: var(--gk-ff); }
+[data-gk-articles-grid] .w-dyn-item h3 { margin: 0; font-size: 18.5px; font-weight: 800; line-height: 1.25; color: var(--gk-i900); font-family: var(--gk-ff); }
+[data-gk-articles-grid] .w-dyn-item p { margin: 0; color: var(--gk-i500); font-size: 14.5px; line-height: 1.55; flex: 1; font-family: var(--gk-ff); }
 [data-gk-article-link] { font-weight: 700; color: var(--gk-g500) !important; font-size: 14px; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+
 [data-gk-articles-cta] { text-align: center; margin-top: 32px; }
 [data-gk-articles-all] { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 22px; border-radius: 999px; background: var(--gk-g500); color: #fff !important; font-weight: 700; font-size: 15px; text-decoration: none; transition: background .15s; }
 [data-gk-articles-all]:hover { background: var(--gk-g400); }
