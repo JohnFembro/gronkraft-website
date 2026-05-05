@@ -327,6 +327,29 @@ html[data-wf-page="69f32b2d19d062022f0dcde8"] .navigation { display: none !impor
   transition: opacity .25s ease;
   overflow-y: auto;
 }
+
+/* Close button (X) — top-right corner of the drawer */
+[data-gk-drawer-close] {
+  position: absolute;
+  top: 18px; right: 18px;
+  width: 44px; height: 44px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.08);
+  border: 0 !important;
+  color: #fff !important;
+  font-size: 26px;
+  font-family: var(--gk-ff);
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s;
+  z-index: 1;
+  padding: 0;
+}
+[data-gk-drawer-close]:hover { background: rgba(255,255,255,.16); }
 [data-gk-header-drawer].open { opacity: 1 !important; pointer-events: auto !important; }
 [data-gk-header-drawer] a {
   padding: 14px 6px;
