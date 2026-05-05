@@ -477,7 +477,7 @@ html, body { max-width: 100vw; overflow-x: hidden; }
 [data-gk-toc-sticky] a:hover { color: var(--gk-i900) !important; }
 [data-gk-toc-sticky] a.on { color: var(--gk-g500) !important; border-left-color: var(--gk-g500); }
 [data-gk-toc-cta] { background: transparent; border-top: 1px solid var(--gk-line); border-radius: 0; padding: 20px 0 0; }
-[data-gk-toc-cta] h5 { font-size: 15px; font-weight: 800; margin: 0 0 6px; letter-spacing: -.01em; color: var(--gk-i900); }
+[data-gk-toc-cta] :where(h3, h4, h5) { font-size: 15px; font-weight: 800; margin: 0 0 6px; letter-spacing: -.01em; color: var(--gk-i900); }
 [data-gk-toc-cta] p { font-size: 13.5px; color: var(--gk-i500); margin: 0 0 14px; line-height: 1.5; }
 [data-gk-toc-cta] a { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 11px 16px; font-size: 14px; font-weight: 700; background: var(--gk-g500); color: #fff !important; border-radius: 999px; text-decoration: none; transition: background .15s; }
 [data-gk-toc-cta] a:hover { background: var(--gk-g400); }
@@ -509,7 +509,7 @@ html, body { max-width: 100vw; overflow-x: hidden; }
 
 /* Callouts */
 [data-gk-callout] { margin: 32px 0; padding: 18px 22px; background: rgba(31,138,76,.06); border-left: 3px solid var(--gk-g500); }
-[data-gk-callout] h4 { margin: 0 0 8px; font-size: 15px; font-weight: 800; letter-spacing: -.005em; color: var(--gk-g600); font-family: var(--gk-ff); }
+[data-gk-callout] :where(h3, h4, h5) { margin: 0 0 8px !important; font-size: 15px !important; font-weight: 800 !important; letter-spacing: -.005em !important; color: var(--gk-g600) !important; font-family: var(--gk-ff) !important; }
 [data-gk-callout] > div, [data-gk-callout] > p { color: var(--gk-i700); font-size: 15.5px; margin: 0; }
 
 /* Sub-lead section (bottom of subpage) */
