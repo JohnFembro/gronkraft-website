@@ -1,0 +1,421 @@
+<!--
+  ╔════════════════════════════════════════════════════════════════════╗
+  ║  GRÖNKRAFT — BESIKTNING & SERVICEAVTAL lead form (Webflow embed)   ║
+  ║  Pre-segmented Bes flow: tjänst → kontroll → anläggningstyp →      ║
+  ║  contact. Paste this entire snippet into a Webflow Embed element   ║
+  ║  inside [data-gk-sub-lead-form-slot] on the Besiktning subpage.    ║
+  ╚════════════════════════════════════════════════════════════════════╝
+-->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap');
+
+@keyframes lfFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.lf-card, .lf-card * { box-sizing: border-box; }
+.lf-card label, .lf-card input, .lf-card textarea, .lf-card fieldset,
+.lf-card legend, .lf-card p, .lf-card span, .lf-card h3, .lf-card button {
+  text-transform: none;
+  letter-spacing: normal;
+  margin-bottom: 0;
+  line-height: inherit;
+  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+}
+.lf-card img { max-width: 100%; display: block; }
+
+.lead-card.lf-card {
+  display: flex; flex-direction: column;
+  background: rgba(255, 255, 255, 0.97);
+  color: #0B1410;
+  border-radius: 22px;
+  padding: 26px;
+  box-shadow: 0 30px 60px -30px rgba(11, 20, 16, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+  width: 100%; max-width: 540px;
+  min-height: 460px;
+  line-height: 1.55;
+}
+@media (min-width: 1024px) { .lead-card.lf-card { padding: 32px; } }
+
+.lf-progress { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.lf-progress-track { flex: 1; height: 4px; border-radius: 999px; background: rgba(11, 20, 16, 0.08); overflow: hidden; }
+.lf-progress-fill { height: 100%; background: #1F8A4C; transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 999px; width: 25%; }
+.lf-progress-label { font-size: 12px; font-weight: 700; color: #5A655F; letter-spacing: 0.02em; white-space: nowrap; }
+.lead-card.is-done .lf-progress { display: none; }
+
+.lf-step { display: none; flex: 1; animation: lfFade 0.22s ease both; }
+.lf-step.lf-step--active { display: block; }
+
+.lf-head h3 { margin: 0 0 6px; font-size: 22px; font-weight: 800; letter-spacing: -0.005em; color: #0B1410; }
+.lf-head .lf-sub { margin: 0 0 18px; font-size: 14px; color: #5A655F; line-height: 1.5; }
+.lf-section-label { font-size: 13px; font-weight: 700; color: #2A332E; margin: 4px 0 10px; }
+
+.lf-radios { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+.lf-radios.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.lf-opt {
+  position: relative;
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px;
+  border: 1.5px solid #E4E8E5;
+  border-radius: 12px;
+  background: #fff;
+  font-size: 15px; font-weight: 700;
+  color: #0B1410;
+  cursor: pointer; user-select: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  min-height: 56px;
+}
+.lf-opt:hover { border-color: #4CC07A; }
+.lf-opt input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; margin: 0; }
+.lf-opt-text { flex: 1; line-height: 1.3; }
+
+.lf-opt-dot { width: 20px; height: 20px; border-radius: 999px; border: 2px solid #B7BFB9; background: #fff; flex-shrink: 0; position: relative; transition: border-color 0.15s ease; }
+.lf-opt:has(input[type="radio"]:checked) { border-color: #1F8A4C; background: rgba(31, 138, 76, 0.06); }
+.lf-opt:has(input[type="radio"]:checked) .lf-opt-dot { border-color: #1F8A4C; }
+.lf-opt:has(input[type="radio"]:checked) .lf-opt-dot::after { content: ""; position: absolute; inset: 3px; border-radius: 999px; background: #1F8A4C; }
+
+.lf-opt-check {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  border: 2px solid #B7BFB9;
+  background: #fff;
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #fff;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.lf-opt:has(input[type="checkbox"]:checked) { border-color: #1F8A4C; background: rgba(31, 138, 76, 0.06); }
+.lf-opt:has(input[type="checkbox"]:checked) .lf-opt-check { border-color: #1F8A4C; background: #1F8A4C; }
+.lf-opt:has(input[type="checkbox"]:checked) .lf-opt-check::after { content: "✓"; color: #fff; font-weight: 900; font-size: 14px; line-height: 1; }
+
+.field.lf-field { position: relative; margin-bottom: 12px; }
+.lf-label { display: block; font-size: 13px; font-weight: 700; color: #2A332E; margin: 0 0 6px; }
+.lf-optional { font-weight: 500; color: #5A655F; }
+.lf-card input, .lf-card textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1.5px solid #E4E8E5;
+  background: #fff;
+  font-size: 15px;
+  color: #0B1410;
+  font-family: inherit;
+  transition: border 0.15s ease, box-shadow 0.15s ease;
+  appearance: none; -webkit-appearance: none;
+}
+.lf-card input::placeholder, .lf-card textarea::placeholder { color: #B7BFB9; }
+.lf-card input:focus, .lf-card textarea:focus { outline: none; border-color: #1F8A4C; box-shadow: 0 0 0 4px rgba(31, 138, 76, 0.12); }
+.lf-card textarea { resize: vertical; min-height: 84px; line-height: 1.55; }
+
+.lf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 480px) { .lf-row { grid-template-columns: 1fr; } }
+
+.lf-err {
+  font-size: 13px; color: #C5341A; font-weight: 700;
+  background: #FFF2EE; border: 1px solid rgba(197, 52, 26, 0.2);
+  border-radius: 8px; padding: 10px 12px;
+  margin: 4px 0 12px;
+  animation: lfFade 0.15s ease;
+}
+
+.lf-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-top: 8px; padding-top: 16px;
+  border-top: 1px solid rgba(11, 20, 16, 0.06);
+}
+.lead-card.is-done .lf-nav { display: none; }
+.lf-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none; border: none;
+  font-size: 14px; font-weight: 700;
+  color: #2A332E;
+  padding: 10px 4px; cursor: pointer;
+  font-family: inherit;
+  transition: color 0.15s ease;
+}
+.lf-back:hover { color: #1F8A4C; }
+
+.lf-card .btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 700; font-size: 15px;
+  border: none; cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.lf-card .btn:active { transform: translateY(1px); }
+.lf-card .btn-primary { background: #1F8A4C; color: #fff; box-shadow: 0 8px 18px -8px rgba(31, 138, 76, 0.55); }
+.lf-card .btn-primary:hover { background: #25A85A; }
+
+.lead-success { text-align: center; padding: 16px 8px 8px; }
+.success-mark {
+  width: 64px; height: 64px; border-radius: 999px;
+  background: rgba(31, 138, 76, 0.12);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #1F8A4C; margin: 0 auto 12px;
+  font-size: 32px; font-weight: 900;
+}
+.lead-success h3 { margin: 6px 0; font-size: 22px; font-weight: 800; color: #0B1410; }
+.lead-success p { margin: 0 0 18px; color: #5A655F; font-size: 14.5px; line-height: 1.55; }
+.tiny { font-size: 12px; color: #5A655F; margin-top: 8px; }
+
+.lf-card :focus-visible { outline: 2px solid #1F8A4C; outline-offset: 3px; }
+.gk-bridge { display: none !important; }
+</style>
+
+<div class="lead-card lf-card" role="complementary" aria-label="Förfrågan om besiktning eller serviceavtal">
+
+  <div class="lf-progress">
+    <div class="lf-progress-track"><div class="lf-progress-fill" id="besf-progress-fill"></div></div>
+    <span class="lf-progress-label" id="besf-progress-label">Steg 1 av 4</span>
+  </div>
+
+  <!-- Steg 1: Tjänst -->
+  <div class="lf-step lf-step--active" id="besf-1">
+    <div class="lf-head"><h3>Vilken tjänst gäller det?</h3></div>
+    <div class="lf-radios" role="radiogroup">
+      <label class="lf-opt"><input type="radio" name="besf1-tjanst" value="besiktning"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Besiktning</span></label>
+      <label class="lf-opt"><input type="radio" name="besf1-tjanst" value="serviceavtal"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Serviceavtal</span></label>
+      <label class="lf-opt"><input type="radio" name="besf1-tjanst" value="bada"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Båda</span></label>
+    </div>
+    <div class="lf-err" id="besf1-err" hidden>Välj typ av tjänst.</div>
+    <div class="lf-nav">
+      <span></span>
+      <button type="button" class="btn btn-primary" onclick="besNext('besf-1')">Nästa →</button>
+    </div>
+  </div>
+
+  <!-- Steg 2: Kontroll (multi-select) -->
+  <div class="lf-step" id="besf-2">
+    <div class="lf-head">
+      <h3>Vad ska kontrolleras?</h3>
+      <p class="lf-sub">Markera alla anläggningar som ska kontrolleras eller servas.</p>
+    </div>
+    <div class="lf-radios" role="group">
+      <label class="lf-opt"><input type="checkbox" name="besf2-kontroll" value="elbilsladdare"><span class="lf-opt-check" aria-hidden="true"></span><span class="lf-opt-text">Laddbox / laddstation</span></label>
+      <label class="lf-opt"><input type="checkbox" name="besf2-kontroll" value="solceller"><span class="lf-opt-check" aria-hidden="true"></span><span class="lf-opt-text">Solcellsanläggning</span></label>
+      <label class="lf-opt"><input type="checkbox" name="besf2-kontroll" value="batteri"><span class="lf-opt-check" aria-hidden="true"></span><span class="lf-opt-text">Batterilager</span></label>
+    </div>
+    <div class="lf-err" id="besf2-err" hidden>Välj minst ett alternativ.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="besBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="besNext('besf-2')">Nästa →</button>
+    </div>
+  </div>
+
+  <!-- Steg 3: Befintlig eller ny anläggning -->
+  <div class="lf-step" id="besf-3">
+    <div class="lf-head">
+      <h3>Befintlig eller ny anläggning?</h3>
+      <p class="lf-sub">En slutbesiktning utförs på en ny anläggning innan driftsättning. Välj "Ny anläggning" om installationen ännu inte är klar.</p>
+    </div>
+    <div class="lf-radios" role="radiogroup">
+      <label class="lf-opt"><input type="radio" name="besf3-befintlig" value="befintlig"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Befintlig anläggning</span></label>
+      <label class="lf-opt"><input type="radio" name="besf3-befintlig" value="ny"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Ny anläggning (slutbesiktning)</span></label>
+    </div>
+    <div class="lf-err" id="besf3-err" hidden>Välj ett alternativ.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="besBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="besNext('besf-3')">Nästa →</button>
+    </div>
+  </div>
+
+  <!-- Steg 4: Kontakt → SUBMIT -->
+  <div class="lf-step" id="besf-4">
+    <div class="lf-head"><h3>Lämna dina kontaktuppgifter</h3></div>
+    <div class="field lf-field"><label class="lf-label">Namn / kontaktperson</label><input type="text" id="besf4-namn" autocomplete="name" placeholder="För- och efternamn"></div>
+    <div class="lf-row">
+      <div class="field lf-field"><label class="lf-label">Telefonnummer</label><input type="tel" id="besf4-tel" autocomplete="tel" placeholder="+46"></div>
+      <div class="field lf-field"><label class="lf-label">E-post</label><input type="email" id="besf4-epost" autocomplete="email" placeholder="namn@exempel.se"></div>
+    </div>
+    <div class="field lf-field"><label class="lf-label">Adress till anläggningen</label><input type="text" id="besf4-adress" autocomplete="street-address" placeholder="Gatuadress"></div>
+    <div class="field lf-field"><label class="lf-label">Kommun</label><input type="text" id="besf4-kommun" placeholder="t.ex. Göteborg"></div>
+    <div class="field lf-field"><label class="lf-label">Meddelande <span class="lf-optional">(Valfritt)</span></label><textarea id="besf4-meddelande" placeholder="Beskriv kort anläggningen, dess ålder och vad ni vill ha kontrollerat"></textarea></div>
+    <div class="lf-err" id="besf4-err" hidden>Fyll i alla obligatoriska fält.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="besBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="besSubmit('besf-4')">Skicka förfrågan →</button>
+    </div>
+    <p class="tiny" style="margin-top:12px;">Genom att skicka godkänner du vår integritetspolicy. Vi delar aldrig dina uppgifter.</p>
+  </div>
+
+  <!-- Tack-skärm -->
+  <div class="lf-step" id="besf-done">
+    <div class="lead-success">
+      <span class="success-mark">✓</span>
+      <h3 id="besf-done-title">Tack för din förfrågan!</h3>
+      <p id="besf-done-sub">En av våra rådgivare hör av sig till dig inom 24 timmar.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== ' ' && e.key !== 'Enter') return;
+    var opt = e.target.closest('.lf-opt');
+    if (!opt) return;
+    e.preventDefault();
+    var input = opt.querySelector('input');
+    if (!input) return;
+    if (input.type === 'radio') input.checked = true;
+    else if (input.type === 'checkbox') input.checked = !input.checked;
+    input.dispatchEvent(new Event('change'));
+  });
+})();
+
+(function () {
+  var besState = { omrade: 'besiktning-serviceavtal' };
+  var besHistory = ['besf-1'];
+
+  function showStep(id) {
+    document.querySelectorAll('.lf-step').forEach(function (el) { el.classList.remove('lf-step--active'); });
+    var step = document.getElementById(id);
+    if (!step) return;
+    step.classList.add('lf-step--active');
+    var card = document.querySelector('.lead-card');
+    if (card) {
+      card.classList.toggle('is-done', id === 'besf-done');
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    updateProgress();
+  }
+
+  function updateProgress() {
+    var fill  = document.getElementById('besf-progress-fill');
+    var label = document.getElementById('besf-progress-label');
+    if (!fill || !label) return;
+    var step = besHistory.length;
+    var branchLen = 4;
+    var stepNum = Math.min(step, branchLen);
+    fill.style.width = (stepNum / branchLen * 100) + '%';
+    label.textContent = 'Steg ' + stepNum + ' av ' + branchLen;
+  }
+
+  function rad(name, errId) {
+    var el = document.querySelector('input[name="' + name + '"]:checked');
+    var err = errId ? document.getElementById(errId) : null;
+    if (!el) { if (err) err.hidden = false; return false; }
+    if (err) err.hidden = true;
+    return el.value;
+  }
+  function checkboxes(name, errId) {
+    var els = document.querySelectorAll('input[name="' + name + '"]:checked');
+    var err = errId ? document.getElementById(errId) : null;
+    if (!els.length) { if (err) err.hidden = false; return false; }
+    if (err) err.hidden = true;
+    return Array.from(els).map(function (c) { return c.value; }).join(', ');
+  }
+  function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+  function fields(ids, errId) {
+    var ok = true;
+    var err = errId ? document.getElementById(errId) : null;
+    ids.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      if (!el.value.trim()) { el.style.borderColor = '#C5341A'; ok = false; }
+      else el.style.borderColor = '';
+    });
+    if (!ok) { if (err) err.hidden = false; return false; }
+    if (err) err.hidden = true;
+    return true;
+  }
+  function go(id) { besHistory.push(id); showStep(id); }
+
+  function buildSummary(s) {
+    var maps = {
+      tjanst:    { 'besiktning': 'Besiktning', 'serviceavtal': 'Serviceavtal', 'bada': 'Båda' },
+      befintlig: { 'befintlig': 'Befintlig anläggning', 'ny': 'Ny anläggning – slutbesiktning' }
+    };
+    var lines = [];
+    function add(l, v) { if (v) lines.push(l + ': ' + v); }
+    function pretty(f) { return maps[f] && maps[f][s[f]] ? maps[f][s[f]] : s[f]; }
+    add('Område', 'Besiktning & Serviceavtal');
+    add('Tjänst', pretty('tjanst'));
+    if (s.kontrollera) add('Kontrollera', s.kontrollera);
+    if (s.befintlig)   add('Anläggningstyp', pretty('befintlig'));
+    if (s.adress || s.kommun) { lines.push(''); add('Adress', s.adress); add('Kommun', s.kommun); }
+    lines.push('');
+    add('Namn', s.namn); add('Telefon', s.telefon); add('E-post', s.epost); add('Meddelande', s.meddelande);
+    return lines.join('\n');
+  }
+
+  window.besNext = function (cur) {
+    var next;
+    if (cur === 'besf-1') {
+      var t = rad('besf1-tjanst', 'besf1-err');
+      if (!t) return;
+      besState.tjanst = t;
+      next = 'besf-2';
+    } else if (cur === 'besf-2') {
+      var k = checkboxes('besf2-kontroll', 'besf2-err');
+      if (!k) return;
+      besState.kontrollera = k;
+      next = 'besf-3';
+    } else if (cur === 'besf-3') {
+      var b = rad('besf3-befintlig', 'besf3-err');
+      if (!b) return;
+      besState.befintlig = b;
+      next = 'besf-4';
+    }
+    if (next) go(next);
+  };
+
+  window.besBack = function () {
+    if (besHistory.length > 1) { besHistory.pop(); showStep(besHistory[besHistory.length - 1]); }
+  };
+
+  window.besSubmit = function (cur) {
+    if (!fields(['besf4-namn', 'besf4-tel', 'besf4-epost', 'besf4-adress', 'besf4-kommun'], 'besf4-err')) return;
+
+    besState.namn        = val('besf4-namn');
+    besState.telefon     = val('besf4-tel');
+    besState.epost       = val('besf4-epost');
+    besState.adress      = val('besf4-adress');
+    besState.kommun      = val('besf4-kommun');
+    besState.meddelande  = val('besf4-meddelande');
+
+    besState.summary = buildSummary(besState);
+
+    var firstName = (besState.namn || '').split(' ')[0];
+    var titleEl = document.getElementById('besf-done-title');
+    var subEl   = document.getElementById('besf-done-sub');
+    if (titleEl) titleEl.textContent = firstName ? ('Tack ' + firstName + '!') : 'Tack för din förfrågan!';
+    if (subEl && besState.telefon) subEl.textContent = 'Vi har tagit emot din förfrågan. En av våra rådgivare hör av sig till ' + besState.telefon + ' inom 24 timmar.';
+
+    go('besf-done');
+
+    var wfForm = document.querySelector('form[data-gk-bridge="true"]');
+    if (wfForm) {
+      Object.keys(besState).forEach(function (k) {
+        if (besState[k] === undefined) return;
+        var input = wfForm.querySelector('[name="' + k + '"]');
+        if (input) input.value = besState[k];
+      });
+      var btn = wfForm.querySelector('input[type="submit"], button[type="submit"]');
+      if (btn) btn.click();
+    }
+
+    try {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'lead_form_submit',
+        lead_omrade: 'besiktning-serviceavtal',
+        lead_tjanst: besState.tjanst || '',
+        lead_kontrollera: besState.kontrollera || ''
+      });
+    } catch (e) {}
+  };
+
+  updateProgress();
+})();
+</script>
