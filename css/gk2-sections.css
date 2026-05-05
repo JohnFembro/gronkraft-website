@@ -102,8 +102,23 @@
 .hero-startpage-copy .right-box {
   min-width: 0 !important;
   max-width: 100% !important;
-  width: 100%;
+  width: 100% !important;
   box-sizing: border-box;
+  overflow: hidden;
+  padding: 0 !important;
+}
+.hero-startpage-copy .right-box > * {
+  max-width: 100% !important;
+  width: 100% !important;
+  box-sizing: border-box;
+}
+/* Force form embed to fit within viewport on mobile */
+.hero-startpage-copy .lead-card,
+.hero-startpage-copy .lead-card.lf-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+  margin: 0 !important;
 }
 .hero-startpage-copy .heading-lable { display: inline-flex !important; align-items: center; gap: 8px; font-size: 12.5px !important; letter-spacing: .14em !important; text-transform: uppercase; font-weight: 800 !important; color: var(--gk-g300) !important; margin-bottom: 14px; font-family: var(--gk-ff) !important; width: auto !important; }
 .hero-startpage-copy .heading-lable::before { content: ""; display: inline-block; width: 22px; height: 1.5px; background: var(--gk-g300); }
