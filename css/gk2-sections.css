@@ -67,13 +67,13 @@
   background: var(--gk-g900);
   color: #fff !important;
   overflow: hidden;
-  margin-top: -76px;
+  margin-top: 0 !important;
   padding: 76px 0 0 !important;
   background-image: linear-gradient(110deg, rgba(6,32,23,.78) 0%, rgba(6,32,23,.35) 45%, rgba(6,32,23,.15) 100%), url(https://cdn.prod.website-files.com/689459ca72b26f3abc2a641d/69f3711badd5c5d919af623e_Hero%20background%2016_9.jpg) !important;
   background-size: cover !important;
   background-position: center right !important;
 }
-.hero-startpage-copy .main-container { width: 100% !important; max-width: 1200px !important; margin: 0 auto !important; padding: 32px 24px 48px !important; position: relative; box-sizing: border-box; }
+.hero-startpage-copy .main-container { width: 100% !important; max-width: 1200px !important; margin: 0 auto !important; padding: 40px 24px 56px !important; position: relative; box-sizing: border-box; }
 @media (min-width: 1024px) { .hero-startpage-copy .main-container { padding: 64px 40px 96px !important; } }
 .hero-startpage-copy .grid-1---075 { display: grid !important; grid-template-columns: 1fr !important; gap: 32px; align-items: center; width: 100%; }
 @media (min-width: 1024px) { .hero-startpage-copy .grid-1---075 { grid-template-columns: 1.2fr 1fr !important; gap: 56px; } }
