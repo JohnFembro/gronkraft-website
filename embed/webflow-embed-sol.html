@@ -1,0 +1,436 @@
+<!--
+  ╔════════════════════════════════════════════════════════════════════╗
+  ║  GRÖNKRAFT — SOLCELLER & BATTERI lead form (Webflow embed)         ║
+  ║  Pre-segmented Sol flow: kundtyp → intresse → contact              ║
+  ║  Paste this entire snippet into a Webflow Embed element inside     ║
+  ║  the [data-gk-sub-lead-form-slot] container on the Sol subpage.    ║
+  ╚════════════════════════════════════════════════════════════════════╝
+-->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap');
+
+@keyframes lfFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Reset / namespace defenses */
+.lf-card, .lf-card * { box-sizing: border-box; }
+.lf-card label, .lf-card input, .lf-card textarea, .lf-card fieldset,
+.lf-card legend, .lf-card p, .lf-card span, .lf-card h3, .lf-card button {
+  text-transform: none;
+  letter-spacing: normal;
+  margin-bottom: 0;
+  line-height: inherit;
+  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+}
+.lf-card img { max-width: 100%; display: block; }
+
+/* Card */
+.lead-card.lf-card {
+  display: flex; flex-direction: column;
+  background: rgba(255, 255, 255, 0.97);
+  color: #0B1410;
+  border-radius: 22px;
+  padding: 26px;
+  box-shadow: 0 30px 60px -30px rgba(11, 20, 16, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+  width: 100%; max-width: 540px;
+  min-height: 460px;
+  line-height: 1.55;
+}
+@media (min-width: 1024px) {
+  .lead-card.lf-card { padding: 32px; }
+}
+
+/* Progress */
+.lf-progress { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.lf-progress-track { flex: 1; height: 4px; border-radius: 999px; background: rgba(11, 20, 16, 0.08); overflow: hidden; }
+.lf-progress-fill { height: 100%; background: #1F8A4C; transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 999px; width: 33%; }
+.lf-progress-label { font-size: 12px; font-weight: 700; color: #5A655F; letter-spacing: 0.02em; white-space: nowrap; }
+.lead-card.is-done .lf-progress { display: none; }
+
+/* Step */
+.lf-step { display: none; flex: 1; animation: lfFade 0.22s ease both; }
+.lf-step.lf-step--active { display: block; }
+
+.lf-head h3 { margin: 0 0 6px; font-size: 22px; font-weight: 800; letter-spacing: -0.005em; color: #0B1410; }
+.lf-head .lf-sub { margin: 0 0 18px; font-size: 14px; color: #5A655F; line-height: 1.5; }
+.lf-section-label { font-size: 13px; font-weight: 700; color: #2A332E; margin: 4px 0 10px; }
+
+/* Radio group */
+.lf-radios { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+.lf-radios.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.lf-opt {
+  position: relative;
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px;
+  border: 1.5px solid #E4E8E5;
+  border-radius: 12px;
+  background: #fff;
+  font-size: 15px; font-weight: 700;
+  color: #0B1410;
+  cursor: pointer; user-select: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  min-height: 56px;
+}
+.lf-opt:hover { border-color: #4CC07A; }
+.lf-opt input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; margin: 0; }
+.lf-opt-text { flex: 1; line-height: 1.3; }
+
+.lf-opt-dot { width: 20px; height: 20px; border-radius: 999px; border: 2px solid #B7BFB9; background: #fff; flex-shrink: 0; position: relative; transition: border-color 0.15s ease; }
+.lf-opt:has(input[type="radio"]:checked) { border-color: #1F8A4C; background: rgba(31, 138, 76, 0.06); }
+.lf-opt:has(input[type="radio"]:checked) .lf-opt-dot { border-color: #1F8A4C; }
+.lf-opt:has(input[type="radio"]:checked) .lf-opt-dot::after { content: ""; position: absolute; inset: 3px; border-radius: 999px; background: #1F8A4C; }
+
+/* Field */
+.field.lf-field { position: relative; margin-bottom: 12px; }
+.lf-label { display: block; font-size: 13px; font-weight: 700; color: #2A332E; margin: 0 0 6px; }
+.lf-optional { font-weight: 500; color: #5A655F; }
+.lf-card input, .lf-card textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1.5px solid #E4E8E5;
+  background: #fff;
+  font-size: 15px;
+  color: #0B1410;
+  font-family: inherit;
+  transition: border 0.15s ease, box-shadow 0.15s ease;
+  appearance: none; -webkit-appearance: none;
+}
+.lf-card input::placeholder, .lf-card textarea::placeholder { color: #B7BFB9; }
+.lf-card input:focus, .lf-card textarea:focus { outline: none; border-color: #1F8A4C; box-shadow: 0 0 0 4px rgba(31, 138, 76, 0.12); }
+.lf-card textarea { resize: vertical; min-height: 84px; line-height: 1.55; }
+
+.lf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 480px) { .lf-row { grid-template-columns: 1fr; } }
+
+/* Error */
+.lf-err {
+  font-size: 13px; color: #C5341A; font-weight: 700;
+  background: #FFF2EE; border: 1px solid rgba(197, 52, 26, 0.2);
+  border-radius: 8px; padding: 10px 12px;
+  margin: 4px 0 12px;
+  animation: lfFade 0.15s ease;
+}
+
+/* Nav */
+.lf-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-top: 8px; padding-top: 16px;
+  border-top: 1px solid rgba(11, 20, 16, 0.06);
+}
+.lead-card.is-done .lf-nav { display: none; }
+.lf-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none; border: none;
+  font-size: 14px; font-weight: 700;
+  color: #2A332E;
+  padding: 10px 4px; cursor: pointer;
+  font-family: inherit;
+  transition: color 0.15s ease;
+}
+.lf-back:hover { color: #1F8A4C; }
+
+/* Button */
+.lf-card .btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 700; font-size: 15px;
+  border: none; cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.lf-card .btn:active { transform: translateY(1px); }
+.lf-card .btn-primary { background: #1F8A4C; color: #fff; box-shadow: 0 8px 18px -8px rgba(31, 138, 76, 0.55); }
+.lf-card .btn-primary:hover { background: #25A85A; }
+
+/* Success */
+.lead-success { text-align: center; padding: 16px 8px 8px; }
+.success-mark {
+  width: 64px; height: 64px; border-radius: 999px;
+  background: rgba(31, 138, 76, 0.12);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #1F8A4C; margin: 0 auto 12px;
+  font-size: 32px; font-weight: 900;
+}
+.lead-success h3 { margin: 6px 0; font-size: 22px; font-weight: 800; color: #0B1410; }
+.lead-success p { margin: 0 0 18px; color: #5A655F; font-size: 14.5px; line-height: 1.55; }
+.tiny { font-size: 12px; color: #5A655F; margin-top: 8px; }
+
+.lf-card :focus-visible { outline: 2px solid #1F8A4C; outline-offset: 3px; }
+.gk-bridge { display: none !important; }
+</style>
+
+<div class="lead-card lf-card" role="complementary" aria-label="Intresseformulär solceller och batteri">
+
+  <div class="lf-progress">
+    <div class="lf-progress-track"><div class="lf-progress-fill" id="solf-progress-fill"></div></div>
+    <span class="lf-progress-label" id="solf-progress-label">Steg 1 av 3</span>
+  </div>
+
+  <!-- ── Steg 1: Kundtyp ── -->
+  <div class="lf-step lf-step--active" id="solf-1">
+    <div class="lf-head"><h3>Vem är du?</h3></div>
+    <p class="lf-section-label">Kundtyp</p>
+    <div class="lf-radios" role="radiogroup">
+      <label class="lf-opt"><input type="radio" name="solf1-kundtyp" value="privat"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Privat</span></label>
+      <label class="lf-opt"><input type="radio" name="solf1-kundtyp" value="brf"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Bostadsrättsförening</span></label>
+      <label class="lf-opt"><input type="radio" name="solf1-kundtyp" value="foretag"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Företag</span></label>
+    </div>
+    <div class="lf-err" id="solf1-err" hidden>Välj kundtyp.</div>
+    <div class="lf-nav">
+      <span></span>
+      <button type="button" class="btn btn-primary" onclick="solNext('solf-1')">Nästa →</button>
+    </div>
+  </div>
+
+  <!-- ── Steg 2: Intresse ── -->
+  <div class="lf-step" id="solf-2">
+    <div class="lf-head"><h3>Vad är ditt intresse?</h3></div>
+    <div class="lf-radios" role="radiogroup">
+      <label class="lf-opt"><input type="radio" name="solf2-intresse" value="solceller"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Solceller</span></label>
+      <label class="lf-opt"><input type="radio" name="solf2-intresse" value="batteri"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Batteri</span></label>
+      <label class="lf-opt"><input type="radio" name="solf2-intresse" value="solceller-batteri"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Solceller + Batteri</span></label>
+    </div>
+    <div class="lf-err" id="solf2-err" hidden>Välj ditt intresse.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="solBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="solNext('solf-2')">Nästa →</button>
+    </div>
+  </div>
+
+  <!-- ── Steg 3a: Privat – kontaktuppgifter → SUBMIT ── -->
+  <div class="lf-step" id="solf-3a">
+    <div class="lf-head"><h3>Lämna dina kontaktuppgifter</h3></div>
+    <div class="field lf-field"><label class="lf-label">Namn</label><input type="text" id="solf3a-namn" autocomplete="name" placeholder="För- och efternamn"></div>
+    <div class="lf-row">
+      <div class="field lf-field"><label class="lf-label">Telefonnummer</label><input type="tel" id="solf3a-tel" autocomplete="tel" placeholder="+46"></div>
+      <div class="field lf-field"><label class="lf-label">E-post</label><input type="email" id="solf3a-epost" autocomplete="email" placeholder="namn@exempel.se"></div>
+    </div>
+    <div class="field lf-field"><label class="lf-label">Adress</label><input type="text" id="solf3a-adress" autocomplete="street-address" placeholder="Gatuadress för installationen"></div>
+    <div class="field lf-field"><label class="lf-label">Kommun</label><input type="text" id="solf3a-kommun" placeholder="t.ex. Göteborg"></div>
+    <div class="lf-err" id="solf3a-err" hidden>Fyll i alla obligatoriska fält.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="solBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="solSubmit('solf-3a')">Skicka förfrågan →</button>
+    </div>
+    <p class="tiny" style="margin-top:12px;">Genom att skicka godkänner du vår integritetspolicy. Vi delar aldrig dina uppgifter.</p>
+  </div>
+
+  <!-- ── Steg 3b: BRF/Ftg – Organisationsinfo ── -->
+  <div class="lf-step" id="solf-3b">
+    <div class="lf-head"><h3>Information om organisationen</h3></div>
+    <div class="field lf-field"><label class="lf-label">Organisationens namn</label><input type="text" id="solf3b-orgnamn" placeholder="Fyll i organisationens namn"></div>
+    <div class="field lf-field"><label class="lf-label">Org. nummer <span class="lf-optional">(Valfritt)</span></label><input type="text" id="solf3b-orgnr" placeholder="Organisationsnummer"></div>
+    <div class="field lf-field"><label class="lf-label">Adress</label><input type="text" id="solf3b-adress" placeholder="Gatuadress för anläggningen"></div>
+    <div class="lf-row">
+      <div class="field lf-field"><label class="lf-label">Kommun</label><input type="text" id="solf3b-kommun" placeholder="t.ex. Göteborg"></div>
+      <div class="field lf-field"><label class="lf-label">Postort</label><input type="text" id="solf3b-postort" placeholder="Postort"></div>
+    </div>
+    <div class="lf-err" id="solf3b-err" hidden>Fyll i alla obligatoriska fält.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="solBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="solNext('solf-3b')">Nästa →</button>
+    </div>
+  </div>
+
+  <!-- ── Steg 4: BRF/Ftg – Kontaktperson → SUBMIT ── -->
+  <div class="lf-step" id="solf-4">
+    <div class="lf-head"><h3>Kontaktperson</h3></div>
+    <div class="field lf-field"><label class="lf-label">Kontaktperson</label><input type="text" id="solf4-kontakt" autocomplete="name" placeholder="Namn på den som ska bli kontaktad"></div>
+    <div class="lf-row">
+      <div class="field lf-field"><label class="lf-label">Telefonnummer</label><input type="tel" id="solf4-tel" autocomplete="tel" placeholder="+46"></div>
+      <div class="field lf-field"><label class="lf-label">E-post</label><input type="email" id="solf4-epost" autocomplete="email" placeholder="namn@exempel.se"></div>
+    </div>
+    <div class="field lf-field"><label class="lf-label">Meddelande <span class="lf-optional">(Valfritt)</span></label><textarea id="solf4-meddelande" placeholder="Beskriv kort er fastighet, takets riktning eller förbrukningsmönster"></textarea></div>
+    <div class="lf-err" id="solf4-err" hidden>Fyll i alla obligatoriska fält.</div>
+    <div class="lf-nav">
+      <button type="button" class="lf-back" onclick="solBack()">← Tillbaka</button>
+      <button type="button" class="btn btn-primary" onclick="solSubmit('solf-4')">Skicka förfrågan →</button>
+    </div>
+    <p class="tiny" style="margin-top:12px;">Genom att skicka godkänner du vår integritetspolicy. Vi delar aldrig dina uppgifter.</p>
+  </div>
+
+  <!-- ── Tack-skärm ── -->
+  <div class="lf-step" id="solf-done">
+    <div class="lead-success">
+      <span class="success-mark">✓</span>
+      <h3 id="solf-done-title">Tack för din förfrågan!</h3>
+      <p id="solf-done-sub">En av våra rådgivare hör av sig till dig inom 24 timmar.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* Keyboard support for radio/checkbox in .lf-opt labels */
+(function () {
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== ' ' && e.key !== 'Enter') return;
+    var opt = e.target.closest('.lf-opt');
+    if (!opt) return;
+    e.preventDefault();
+    var input = opt.querySelector('input');
+    if (!input) return;
+    if (input.type === 'radio') input.checked = true;
+    else if (input.type === 'checkbox') input.checked = !input.checked;
+    input.dispatchEvent(new Event('change'));
+  });
+})();
+
+/* Sol-only lead form */
+(function () {
+  var solState = { omrade: 'solceller-batteri' };
+  var solHistory = ['solf-1'];
+
+  function showStep(id) {
+    document.querySelectorAll('.lf-step').forEach(function (el) { el.classList.remove('lf-step--active'); });
+    var step = document.getElementById(id);
+    if (!step) return;
+    step.classList.add('lf-step--active');
+    var card = document.querySelector('.lead-card');
+    if (card) {
+      card.classList.toggle('is-done', id === 'solf-done');
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    updateProgress();
+  }
+
+  function updateProgress() {
+    var fill  = document.getElementById('solf-progress-fill');
+    var label = document.getElementById('solf-progress-label');
+    if (!fill || !label) return;
+    var step = solHistory.length;
+    var branchLen = solState.kundtyp === 'privat' ? 3 : (solState.kundtyp ? 4 : 3);
+    var stepNum = Math.min(step, branchLen);
+    fill.style.width = (stepNum / branchLen * 100) + '%';
+    label.textContent = 'Steg ' + stepNum + ' av ' + branchLen;
+  }
+
+  function rad(name, errId) {
+    var el = document.querySelector('input[name="' + name + '"]:checked');
+    var err = errId ? document.getElementById(errId) : null;
+    if (!el) { if (err) err.hidden = false; return false; }
+    if (err) err.hidden = true;
+    return el.value;
+  }
+  function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+  function fields(ids, errId) {
+    var ok = true;
+    var err = errId ? document.getElementById(errId) : null;
+    ids.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      if (!el.value.trim()) { el.style.borderColor = '#C5341A'; ok = false; }
+      else el.style.borderColor = '';
+    });
+    if (!ok) { if (err) err.hidden = false; return false; }
+    if (err) err.hidden = true;
+    return true;
+  }
+  function go(id) { solHistory.push(id); showStep(id); }
+
+  function buildSummary(s) {
+    var maps = {
+      kundtyp:  { 'privat': 'Privat', 'brf': 'BRF', 'foretag': 'Företag' },
+      intresse: { 'solceller': 'Solceller', 'batteri': 'Batteri', 'solceller-batteri': 'Solceller + Batteri' }
+    };
+    var lines = [];
+    function add(l, v) { if (v) lines.push(l + ': ' + v); }
+    function pretty(f) { return maps[f] && maps[f][s[f]] ? maps[f][s[f]] : s[f]; }
+    add('Område', 'Solceller & Batteri');
+    add('Kundtyp', pretty('kundtyp'));
+    if (s.intresse) add('Intresse', pretty('intresse'));
+    if (s.orgNamn || s.orgNr) { lines.push(''); add('Organisation', s.orgNamn); add('Org.nr', s.orgNr); }
+    if (s.adress || s.kommun || s.postort) { lines.push(''); add('Adress', s.adress); add('Kommun', s.kommun); add('Postort', s.postort); }
+    lines.push('');
+    add('Namn', s.namn); add('Kontaktperson', s.kontaktperson); add('Telefon', s.telefon); add('E-post', s.epost); add('Meddelande', s.meddelande);
+    return lines.join('\n');
+  }
+
+  window.solNext = function (cur) {
+    var next;
+    if (cur === 'solf-1') {
+      var kt = rad('solf1-kundtyp', 'solf1-err');
+      if (!kt) return;
+      solState.kundtyp = kt;
+      next = 'solf-2';
+    } else if (cur === 'solf-2') {
+      var intr = rad('solf2-intresse', 'solf2-err');
+      if (!intr) return;
+      solState.intresse = intr;
+      next = solState.kundtyp === 'privat' ? 'solf-3a' : 'solf-3b';
+    } else if (cur === 'solf-3b') {
+      if (!fields(['solf3b-orgnamn','solf3b-adress','solf3b-kommun','solf3b-postort'], 'solf3b-err')) return;
+      solState.orgNamn = val('solf3b-orgnamn'); solState.orgNr = val('solf3b-orgnr');
+      solState.adress  = val('solf3b-adress');  solState.kommun = val('solf3b-kommun'); solState.postort = val('solf3b-postort');
+      next = 'solf-4';
+    }
+    if (next) go(next);
+  };
+
+  window.solBack = function () {
+    if (solHistory.length > 1) { solHistory.pop(); showStep(solHistory[solHistory.length - 1]); }
+  };
+
+  window.solSubmit = function (cur) {
+    var reqMap = {
+      'solf-3a': ['solf3a-namn','solf3a-tel','solf3a-epost','solf3a-adress','solf3a-kommun'],
+      'solf-4':  ['solf4-kontakt','solf4-tel','solf4-epost']
+    };
+    var errMap = { 'solf-3a':'solf3a-err', 'solf-4':'solf4-err' };
+    if (!fields(reqMap[cur] || [], errMap[cur] || null)) return;
+
+    if (cur === 'solf-3a') {
+      solState.namn  = val('solf3a-namn');  solState.telefon = val('solf3a-tel');
+      solState.epost = val('solf3a-epost'); solState.adress  = val('solf3a-adress'); solState.kommun = val('solf3a-kommun');
+    } else if (cur === 'solf-4') {
+      solState.kontaktperson = val('solf4-kontakt'); solState.telefon = val('solf4-tel');
+      solState.epost = val('solf4-epost'); solState.meddelande = val('solf4-meddelande');
+    }
+
+    solState.summary = buildSummary(solState);
+
+    var firstName = (solState.namn || solState.kontaktperson || '').split(' ')[0];
+    var titleEl = document.getElementById('solf-done-title');
+    var subEl   = document.getElementById('solf-done-sub');
+    if (titleEl) titleEl.textContent = firstName ? ('Tack ' + firstName + '!') : 'Tack för din förfrågan!';
+    if (subEl && solState.telefon) subEl.textContent = 'Vi har tagit emot din förfrågan. En av våra rådgivare hör av sig till ' + solState.telefon + ' inom 24 timmar.';
+
+    go('solf-done');
+
+    /* Bridge to hidden Webflow form */
+    var wfForm = document.querySelector('form[data-gk-bridge="true"]');
+    if (wfForm) {
+      Object.keys(solState).forEach(function (k) {
+        if (solState[k] === undefined) return;
+        var input = wfForm.querySelector('[name="' + k + '"]');
+        if (input) input.value = solState[k];
+      });
+      var btn = wfForm.querySelector('input[type="submit"], button[type="submit"]');
+      if (btn) btn.click();
+    }
+
+    /* GTM tracking */
+    try {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'lead_form_submit',
+        lead_omrade: 'solceller-batteri',
+        lead_kundtyp: solState.kundtyp || '',
+        lead_intresse: solState.intresse || ''
+      });
+    } catch (e) {}
+  };
+
+  updateProgress();
+})();
+</script>
