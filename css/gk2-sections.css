@@ -620,6 +620,17 @@ html, body { max-width: 100vw; overflow-x: hidden; }
 [data-gk-sub-lead-bullets] li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; color: rgba(255,255,255,.9); font-weight: 600; }
 [data-gk-b-tick] { width: 24px; height: 24px; flex: 0 0 auto; border-radius: 999px; background: var(--gk-g500); color: #fff; display: inline-flex; align-items: center; justify-content: center; margin-top: 1px; font-size: 14px; font-weight: 900; }
 
+/* Mission statement block — standout centered quote section for Om oss / values pages */
+[data-gk-mission] { padding: 72px 0 56px; background: linear-gradient(180deg, #fff 0%, #fafbfa 100%); font-family: var(--gk-ff); position: relative; }
+[data-gk-mission] [data-gk-wrap] { max-width: 880px; margin: 0 auto; padding: 0 24px; text-align: center; }
+@media (min-width: 900px) { [data-gk-mission] [data-gk-wrap] { padding: 0 40px; } }
+[data-gk-mission] [data-gk-eyebrow] { color: var(--gk-g500) !important; display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 800; }
+[data-gk-mission] [data-gk-eyebrow]::before { content: ""; display: inline-block; width: 22px; height: 1.5px; background: var(--gk-g500); }
+[data-gk-mission] blockquote { font-size: clamp(22px, 2.8vw, 30px); line-height: 1.45; font-weight: 600; color: var(--gk-i900); margin: 22px auto 14px; max-width: 760px; letter-spacing: -.005em; quotes: "\201C" "\201D"; padding: 0; border: none; }
+[data-gk-mission] blockquote::before { content: open-quote; color: var(--gk-g500); font-weight: 800; padding-right: 4px; }
+[data-gk-mission] blockquote::after { content: close-quote; color: var(--gk-g500); font-weight: 800; padding-left: 4px; }
+[data-gk-mission] [data-gk-mission-attr] { font-size: 14px; color: var(--gk-i500); margin: 12px 0 0; font-weight: 600; letter-spacing: .01em; }
+
 /* Lightweight section nav (anchor pills) — placed between SubBanner and first prose chunk for orientation without sticky TOC overhead */
 [data-gk-page-nav] { background: #fafbfa; padding: 18px 0; border-bottom: 1px solid var(--gk-line); font-family: var(--gk-ff); }
 [data-gk-page-nav] [data-gk-wrap] { max-width: 1080px; margin: 0 auto; padding: 0 24px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
