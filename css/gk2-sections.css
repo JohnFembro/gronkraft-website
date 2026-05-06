@@ -835,6 +835,21 @@ html, body { max-width: 100vw; overflow-x: hidden; }
   font-weight: 700; font-size: 15px;
 }
 
+/* Hero with form (Kontakt page) — combined hero + form like homepage */
+[data-gk-hero-form] { position: relative; overflow: hidden; padding: 88px 0 72px; color: #fff; background: var(--gk-g900); font-family: var(--gk-ff); }
+[data-gk-hero-form] [data-gk-hero-image] { position: absolute !important; inset: 0; width: 100% !important; height: 100% !important; object-fit: cover !important; z-index: 0 !important; pointer-events: none; }
+[data-gk-hero-form] [data-gk-hero-overlay] { position: absolute; inset: 0; background: linear-gradient(115deg, rgba(6,32,23,.94) 0%, rgba(6,32,23,.82) 55%, rgba(6,32,23,.55) 100%); z-index: 1; }
+[data-gk-hero-form] [data-gk-wrap] { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+@media (min-width: 900px) { [data-gk-hero-form] [data-gk-wrap] { padding: 0 40px; } }
+[data-gk-hero-form] [data-gk-breadcrumb] { color: rgba(255,255,255,.7); font-size: 13px; margin-bottom: 28px; display: flex; gap: 8px; flex-wrap: wrap; }
+[data-gk-hero-form] [data-gk-breadcrumb] a { color: rgba(255,255,255,.7); text-decoration: none; }
+[data-gk-hero-form] [data-gk-breadcrumb] a:hover { color: #fff; }
+[data-gk-hero-form] [data-gk-breadcrumb] [aria-current="page"] { color: #fff; font-weight: 600; }
+[data-gk-hero-grid] { display: grid; grid-template-columns: 1fr; gap: 36px; align-items: start; }
+@media (min-width: 900px) { [data-gk-hero-grid] { grid-template-columns: 5fr 7fr; gap: 56px; align-items: center; } }
+[data-gk-hero-copy] h1 { font-size: clamp(36px, 5vw, 56px); line-height: 1.05; margin: 0 0 18px; color: #fff !important; font-weight: 800; letter-spacing: -.02em; font-family: var(--gk-ff); }
+[data-gk-hero-copy] p { color: rgba(255,255,255,.85); font-size: 17px; line-height: 1.55; margin: 0; max-width: 56ch; }
+
 /* Custom contact form (Kontakt page) — visual replica of multi-step embed last frame */
 [data-gk-cf="root"] { display: flex; flex-direction: column; gap: 18px; max-width: 720px; margin: 0 auto; padding: 36px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 18px; font-family: var(--gk-ff); box-sizing: border-box; }
 [data-gk-cf="head"] { margin: 0 0 4px; }
