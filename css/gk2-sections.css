@@ -946,7 +946,7 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
 /* Form section (override prior data-gk-cf rules with kc-form scoped versions) */
 [data-gk-kc-form-section] { padding: 96px 0; background: #f6f4ef; font-family: var(--gk-ff); }
 @media (max-width: 880px) { [data-gk-kc-form-section] { padding: 64px 0; } }
-[data-gk-kc-form-section] [data-gk-wrap] { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+[data-gk-kc-form-section] [data-gk-wrap] { max-width: 720px; margin: 0 auto; padding: 0 24px; }
 [data-gk-kc-form-section] [data-gk-kc-head] { text-align: center; margin-bottom: 40px; }
 [data-gk-kc-form-section] [data-gk-kc-head] p { color: var(--gk-i700); font-size: 16px; line-height: 1.55; margin: 0 auto; max-width: 50ch; }
 [data-gk-kc-form-card] { background: #fff; border-radius: 32px 22px 22px 22px; padding: 40px; box-shadow: 0 30px 60px -30px rgba(11,20,16,.18); }
@@ -969,7 +969,7 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
 [data-gk-kc-form-card] [data-gk-cf="submit"]:hover { background: var(--gk-g400); }
 [data-gk-kc-form-card] [data-gk-cf="submit"]:active { transform: translateY(1px); }
 [data-gk-kc-form-card] [data-gk-cf="submit"][disabled] { opacity: .6; cursor: wait; }
-[data-gk-kc-form-card] [data-gk-cf="fine"] { grid-column: 2; align-self: center; display: block; font-size: 13px; color: var(--gk-i700) !important; margin: 0 !important; line-height: 1.5; min-width: 0 !important; flex: none !important; }
+[data-gk-kc-form-card] [data-gk-cf="fine"] { grid-column: 2; align-self: center; display: block; font-size: 13px; color: var(--gk-i700) !important; margin: 0 !important; line-height: 1.5; min-width: 0 !important; flex: none !important; text-align: right; }
 [data-gk-kc-form-card] [data-gk-cf="fine"] a, [data-gk-kc-form-card] [data-gk-cf="fine"] a:link, [data-gk-kc-form-card] [data-gk-cf="fine"] a:visited { display: inline !important; color: var(--gk-g500) !important; text-decoration: underline !important; text-underline-offset: 2px; border-bottom: 0 !important; font-weight: 600; padding: 0 !important; margin: 0 !important; line-height: inherit !important; vertical-align: baseline !important; background: transparent !important; }
 [data-gk-kc-form-card] [data-gk-cf="fine"] a:hover { color: var(--gk-g400) !important; }
 @media (max-width: 600px) { [data-gk-kc-form-card] form { grid-template-columns: 1fr; } [data-gk-kc-form-card] [data-gk-cf="submit"] { grid-column: 1; } [data-gk-kc-form-card] [data-gk-cf="fine"] { grid-column: 1; margin-top: 12px !important; } }
