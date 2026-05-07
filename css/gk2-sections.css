@@ -946,7 +946,7 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
 /* Form section (override prior data-gk-cf rules with kc-form scoped versions) */
 [data-gk-kc-form-section] { padding: 96px 0; background: #f6f4ef; font-family: var(--gk-ff); }
 @media (max-width: 880px) { [data-gk-kc-form-section] { padding: 64px 0; } }
-[data-gk-kc-form-section] [data-gk-wrap] { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+[data-gk-kc-form-section] [data-gk-wrap] { max-width: 880px; margin: 0 auto; padding: 0 24px; }
 [data-gk-kc-form-section] [data-gk-kc-head] { text-align: center; margin-bottom: 40px; }
 [data-gk-kc-form-section] [data-gk-kc-head] p { color: var(--gk-i700); font-size: 16px; line-height: 1.55; margin: 0 auto; max-width: 50ch; }
 [data-gk-kc-form-card] { background: #fff; border-radius: 32px 22px 22px 22px; padding: 40px; box-shadow: 0 30px 60px -30px rgba(11,20,16,.18); }
