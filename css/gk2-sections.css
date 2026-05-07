@@ -93,6 +93,7 @@
   gap: 6px !important;
   grid-row-gap: 6px !important;
 }
+@media (max-width: 767px) { .hero-startpage-copy .div-block-48 { gap: 12px !important; grid-row-gap: 12px !important; } }
 .hero-startpage-copy .left-v-flex > * {
   min-width: 0 !important;
   max-width: 100% !important;
@@ -127,16 +128,16 @@
   box-sizing: border-box;
   margin: 0 !important;
 }
-/* Mobile: let the form grow ~12px wider on each side than the surrounding text container */
+/* Mobile: let the form grow ~12px wider on each side than the surrounding text container.
+   Apply only to the .right-box wrapper; the inner .lf-card naturally fills it via 100% width.
+   Disable overflow:hidden on right-box so the card's border-radius isn't clipped to a rectangle. */
 @media (max-width: 767px) {
-  .hero-startpage-copy .right-box,
-  .hero-startpage-copy .lead-card,
-  .hero-startpage-copy .lead-card.lf-card,
-  .hero-startpage-copy .lf-card {
+  .hero-startpage-copy .right-box {
     margin-left: -12px !important;
     margin-right: -12px !important;
     width: calc(100% + 24px) !important;
     max-width: calc(100% + 24px) !important;
+    overflow: visible !important;
   }
 }
 .hero-startpage-copy .heading-lable { display: inline-flex !important; align-items: center; gap: 8px; font-size: 12.5px !important; letter-spacing: .14em !important; text-transform: uppercase; font-weight: 800 !important; color: var(--gk-g300) !important; margin-bottom: 0 !important; font-family: var(--gk-ff) !important; width: auto !important; }
