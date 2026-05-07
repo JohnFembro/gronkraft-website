@@ -133,7 +133,7 @@
   font-size: clamp(28px, 7vw, 60px) !important;
   line-height: 1.1 !important;
   letter-spacing: -.01em !important;
-  font-weight: 900 !important;
+  font-weight: 700 !important;
   margin: 0 !important;
   color: #fff !important;
   font-family: var(--gk-ff) !important;
@@ -674,8 +674,8 @@ html, body { max-width: 100vw; overflow-x: hidden; }
 [data-gk-icon="mail"] { background-image: url("https://api.iconify.design/material-symbols/mail-rounded.svg?color=%231F8A4C"); }
 
 /* Feature row — 3-column text+icon layout WITHOUT card boxes (used when card-grid would clutter the page) */
-[data-gk-feature-row] { display: grid; grid-template-columns: 1fr; gap: 28px; margin: 32px 0 8px; }
-@media (min-width: 760px) { [data-gk-feature-row] { grid-template-columns: repeat(3, 1fr); gap: 36px; } }
+[data-gk-feature-row] { display: grid; grid-template-columns: 1fr; gap: 28px; margin: 56px 0 48px; }
+@media (min-width: 760px) { [data-gk-feature-row] { grid-template-columns: repeat(3, 1fr); gap: 36px; margin: 72px 0 56px; } }
 [data-gk-feature] { }
 [data-gk-feature] [data-gk-card-icon] { width: 44px; height: 44px; border-radius: 12px; background: rgba(31,138,76,.1); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px; }
 [data-gk-feature] h3 { margin: 0 0 8px !important; font-size: 18px !important; font-weight: 800 !important; color: var(--gk-i900) !important; letter-spacing: -.005em; line-height: 1.3; font-family: var(--gk-ff) !important; }
@@ -740,8 +740,8 @@ html, body { max-width: 100vw; overflow-x: hidden; }
 [data-gk-page-nav] a:hover { background: rgba(31,138,76,.08); border-color: var(--gk-g500); color: var(--gk-g600) !important; }
 
 /* Full-width prose section (replacement for TOC layout — used when prose is split into chunks) */
-[data-gk-prose-section] { padding: 72px 0 80px; font-family: var(--gk-ff); background: #fff; }
-[data-gk-prose-section]:first-of-type { padding-top: 80px; }
+[data-gk-prose-section] { padding: 96px 0 104px; font-family: var(--gk-ff); background: #fff; }
+[data-gk-prose-section]:first-of-type { padding-top: 104px; }
 [data-gk-prose-section] [data-gk-wrap] { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
 @media (min-width: 900px) { [data-gk-prose-section] [data-gk-wrap] { padding: 0 40px; } }
 
@@ -1011,4 +1011,31 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
   #offertform:target form, #offertform.gk-pulse form,
   #offertform:target [class*="lead-form"], #offertform.gk-pulse [class*="lead-form"],
   #offertform:target [class*="multi-form"], #offertform.gk-pulse [class*="multi-form"] { animation: none; }
+}
+
+/* ── Legacy FAQ plus indicator (Home page, .question-2-0 wrappers) ──
+   The original Lottie-based plus icon disappeared. Add CSS-only fallback so users see a click affordance regardless of Lottie state. */
+.q-a-section-gk-2-0 .question-2-0 { position: relative; cursor: pointer; padding-right: 56px; }
+.q-a-section-gk-2-0 .question-2-0 .lottie-animation-3 { display: none !important; }
+.q-a-section-gk-2-0 .question-2-0::after {
+  content: "+";
+  position: absolute;
+  right: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 32px; height: 32px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.12);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 300;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+  transition: transform .25s ease, background .15s;
+  line-height: 1;
+}
+.q-a-section-gk-2-0 .question-wrapper:hover .question-2-0::after { background: rgba(255,255,255,.2); }
+.q-a-section-gk-2-0 .question-wrapper.w--open .question-2-0::after,
+.q-a-section-gk-2-0 .question-wrapper:has(.answer[style*="block"]) .question-2-0::after {
+  transform: translateY(-50%) rotate(45deg);
+  background: var(--gk-g500);
 }
