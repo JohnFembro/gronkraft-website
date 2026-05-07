@@ -949,8 +949,8 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
 [data-gk-kc-form-section] [data-gk-wrap] { max-width: 720px; margin: 0 auto; padding: 0 24px; }
 [data-gk-kc-form-section] [data-gk-kc-head] { text-align: center; margin-bottom: 40px; }
 [data-gk-kc-form-section] [data-gk-kc-head] p { color: var(--gk-i700); font-size: 16px; line-height: 1.55; margin: 0 auto; max-width: 50ch; }
-[data-gk-kc-form-card] { background: #fff; border-radius: 32px 22px 22px 22px; padding: 40px; box-shadow: 0 30px 60px -30px rgba(11,20,16,.18); }
-@media (max-width: 600px) { [data-gk-kc-form-card] { padding: 24px; border-radius: 24px 18px 18px 18px; } }
+[data-gk-kc-form-card] { background: #fff; border-radius: 20px 14px 14px 14px; padding: 40px; box-shadow: 0 30px 60px -30px rgba(11,20,16,.18); }
+@media (max-width: 600px) { [data-gk-kc-form-card] { padding: 24px; border-radius: 16px 12px 12px 12px; } }
 [data-gk-kc-form-card] form { display: grid; grid-template-columns: auto 1fr; column-gap: 28px; row-gap: 18px; align-items: start; max-width: none; margin: 0; padding: 0; background: none; border: none; box-shadow: none; }
 [data-gk-kc-form-card] [data-gk-cf="field"] { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 8px; cursor: text; margin: 0; padding: 0; background: transparent; border: none; box-shadow: none; }
 [data-gk-kc-form-card] [data-gk-cf="field"]:last-of-type { position: relative; padding-bottom: 26px; }
