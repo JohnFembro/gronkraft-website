@@ -969,8 +969,9 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
 [data-gk-kc-form-card] [data-gk-cf="submit"]:hover { background: var(--gk-g400); }
 [data-gk-kc-form-card] [data-gk-cf="submit"]:active { transform: translateY(1px); }
 [data-gk-kc-form-card] [data-gk-cf="submit"][disabled] { opacity: .6; cursor: wait; }
-[data-gk-kc-form-card] [data-gk-cf="fine"] { grid-column: 2; align-self: center; display: block; font-size: 13px; color: var(--gk-i700) !important; margin: 0 !important; line-height: 1.5; }
-[data-gk-kc-form-card] [data-gk-cf="fine"] a { color: var(--gk-g500) !important; text-decoration: underline !important; text-underline-offset: 2px; border-bottom: 0 !important; font-weight: 600; white-space: nowrap; }
+[data-gk-kc-form-card] [data-gk-cf="fine"] { grid-column: 2; align-self: center; display: block; font-size: 13px; color: var(--gk-i700) !important; margin: 0 !important; line-height: 1.5; min-width: 0 !important; flex: none !important; white-space: nowrap; }
+[data-gk-kc-form-card] [data-gk-cf="fine"] a { color: var(--gk-g500) !important; text-decoration: underline !important; text-underline-offset: 2px; border-bottom: 0 !important; font-weight: 600; }
+@media (max-width: 700px) { [data-gk-kc-form-card] [data-gk-cf="fine"] { white-space: normal; } }
 [data-gk-kc-form-card] [data-gk-cf="fine"] a:hover { color: var(--gk-g400) !important; }
 @media (max-width: 600px) { [data-gk-kc-form-card] form { grid-template-columns: 1fr; } [data-gk-kc-form-card] [data-gk-cf="submit"] { grid-column: 1; } [data-gk-kc-form-card] [data-gk-cf="fine"] { grid-column: 1; margin-top: 12px !important; } }
 [data-gk-kc-form-card] [data-gk-cf="success"] { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 32px 0; text-align: center; }
