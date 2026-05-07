@@ -951,8 +951,10 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
 [data-gk-kc-form-section] [data-gk-kc-head] p { color: var(--gk-i700); font-size: 16px; line-height: 1.55; margin: 0 auto; max-width: 50ch; }
 [data-gk-kc-form-card] { background: #fff; border-radius: 32px 22px 22px 22px; padding: 40px; box-shadow: 0 30px 60px -30px rgba(11,20,16,.18); }
 @media (max-width: 600px) { [data-gk-kc-form-card] { padding: 24px; border-radius: 24px 18px 18px 18px; } }
-[data-gk-kc-form-card] form { display: flex; flex-direction: column; gap: 20px; max-width: none; margin: 0; padding: 0; background: none; border: none; box-shadow: none; }
-[data-gk-kc-form-card] [data-gk-cf="field"] { display: flex; flex-direction: column; gap: 8px; cursor: text; margin: 0; padding: 0; background: transparent; border: none; box-shadow: none; }
+[data-gk-kc-form-card] form { display: grid; grid-template-columns: auto 1fr; column-gap: 28px; row-gap: 18px; align-items: start; max-width: none; margin: 0; padding: 0; background: none; border: none; box-shadow: none; }
+[data-gk-kc-form-card] [data-gk-cf="field"] { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 8px; cursor: text; margin: 0; padding: 0; background: transparent; border: none; box-shadow: none; }
+[data-gk-kc-form-card] [data-gk-cf="field"]:last-of-type { position: relative; padding-bottom: 26px; }
+[data-gk-kc-form-card] [data-gk-cf="field"]:last-of-type::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: #E4E8E5; }
 [data-gk-kc-form-card] [data-gk-cf="label-text"] { font-size: 13px !important; font-weight: 600 !important; color: var(--gk-i900) !important; letter-spacing: 0; text-transform: none; }
 [data-gk-kc-form-card] [data-gk-cf="input"] { font-family: var(--gk-ff); font-size: 15px; padding: 16px; border-radius: 12px; border: 1.5px solid #E4E8E5; background: #fff; transition: border-color .15s, box-shadow .15s; min-height: 56px; box-sizing: border-box; width: 100%; color: var(--gk-i900); appearance: none; -webkit-appearance: none; }
 [data-gk-kc-form-card] [data-gk-cf="input"]::placeholder { color: #B7BFB9; }
@@ -961,16 +963,16 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
 [data-gk-kc-form-card] [data-gk-cf="checkbox"] { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; padding: 8px 0; margin: 0; }
 [data-gk-kc-form-card] [data-gk-cf="checkbox"] input { flex-shrink: 0; width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--gk-g500); cursor: pointer; }
 [data-gk-kc-form-card] [data-gk-cf="checkbox"] span { font-size: 14px; color: var(--gk-i700); line-height: 1.5; }
-[data-gk-kc-form-card] [data-gk-cf="err"] { display: none; color: #C5341A !important; background: #FFF2EE; border: 1px solid rgba(197,52,26,.2); border-radius: 8px; padding: 10px 12px; margin: 0 !important; font-size: 13px !important; font-weight: 700; line-height: 1.5; }
+[data-gk-kc-form-card] [data-gk-cf="err"] { display: none; grid-column: 1 / -1; color: #C5341A !important; background: #FFF2EE; border: 1px solid rgba(197,52,26,.2); border-radius: 8px; padding: 10px 12px; margin: 0 !important; font-size: 13px !important; font-weight: 700; line-height: 1.5; }
 [data-gk-kc-form-card] [data-gk-cf="err"][data-show="true"] { display: block; }
-[data-gk-kc-form-card] [data-gk-cf="footer"] { display: flex; align-items: center; justify-content: flex-start; gap: 24px; border-top: 1px solid #E4E8E5; padding-top: 22px; margin-top: 8px; flex-wrap: wrap; }
-[data-gk-kc-form-card] [data-gk-cf="submit"] { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 26px; background: var(--gk-g500); color: #fff; border: none; border-radius: 999px; font-size: 15px; font-weight: 600; letter-spacing: .005em; cursor: pointer; transition: background .15s, transform .15s; font-family: var(--gk-ff); margin: 0; align-self: auto; box-shadow: 0 4px 10px -4px rgba(31,138,76,.4); }
+[data-gk-kc-form-card] [data-gk-cf="submit"] { grid-column: 1; justify-self: start; align-self: center; display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 26px; background: var(--gk-g500); color: #fff; border: none; border-radius: 999px; font-size: 15px; font-weight: 600; letter-spacing: .005em; cursor: pointer; transition: background .15s, transform .15s; font-family: var(--gk-ff); margin: 0; width: auto; max-width: max-content; box-shadow: 0 4px 10px -4px rgba(31,138,76,.4); }
 [data-gk-kc-form-card] [data-gk-cf="submit"]:hover { background: var(--gk-g400); }
 [data-gk-kc-form-card] [data-gk-cf="submit"]:active { transform: translateY(1px); }
 [data-gk-kc-form-card] [data-gk-cf="submit"][disabled] { opacity: .6; cursor: wait; }
-[data-gk-kc-form-card] [data-gk-cf="fine"] { display: block; font-size: 13px; color: var(--gk-i700) !important; margin: 0 !important; line-height: 1.5; flex: 1; min-width: 200px; }
-[data-gk-kc-form-card] [data-gk-cf="fine"] a { color: var(--gk-g500) !important; text-decoration: underline !important; text-underline-offset: 2px; border-bottom: 0 !important; font-weight: 600; }
+[data-gk-kc-form-card] [data-gk-cf="fine"] { grid-column: 2; align-self: center; display: block; font-size: 13px; color: var(--gk-i700) !important; margin: 0 !important; line-height: 1.5; }
+[data-gk-kc-form-card] [data-gk-cf="fine"] a { color: var(--gk-g500) !important; text-decoration: underline !important; text-underline-offset: 2px; border-bottom: 0 !important; font-weight: 600; white-space: nowrap; }
 [data-gk-kc-form-card] [data-gk-cf="fine"] a:hover { color: var(--gk-g400) !important; }
+@media (max-width: 600px) { [data-gk-kc-form-card] form { grid-template-columns: 1fr; } [data-gk-kc-form-card] [data-gk-cf="submit"] { grid-column: 1; } [data-gk-kc-form-card] [data-gk-cf="fine"] { grid-column: 1; margin-top: 12px !important; } }
 [data-gk-kc-form-card] [data-gk-cf="success"] { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 32px 0; text-align: center; }
 [data-gk-kc-form-card] [data-gk-cf="success"] span { font-size: 56px; line-height: 1; color: var(--gk-g500); }
 [data-gk-kc-form-card] [data-gk-cf="success"] strong { font-size: 22px; color: var(--gk-i900); font-weight: 700; }
