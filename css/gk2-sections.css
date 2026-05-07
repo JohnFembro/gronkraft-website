@@ -238,6 +238,7 @@
   flex-direction: column;
   transition: transform .25s, box-shadow .25s;
   list-style: none;
+  cursor: pointer;
 }
 [data-gk-articles-grid] .w-dyn-item:hover {
   transform: translateY(-4px);
