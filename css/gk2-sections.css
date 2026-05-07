@@ -431,11 +431,15 @@ html, body { max-width: 100vw; overflow-x: hidden; }
   background: rgba(255,255,255,.08);
   border: 0 !important;
   color: transparent !important;
-  font-size: 0;
+  font-size: 0 !important;
+  text-indent: -9999px;
+  overflow: hidden;
+  white-space: nowrap;
   cursor: pointer;
   transition: background .15s;
   z-index: 1;
   padding: 0;
+  text-decoration: none !important;
 }
 [data-gk-drawer-close]::before,
 [data-gk-drawer-close]::after {
