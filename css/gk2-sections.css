@@ -928,7 +928,8 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
 [data-gk-kc-methods] [data-gk-wrap] { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
 @media (min-width: 900px) { [data-gk-kc-methods] [data-gk-wrap] { padding: 0 40px; } }
 [data-gk-kc-methods] [data-gk-kc-head] { max-width: 920px; margin-bottom: 56px; text-align: left; }
-[data-gk-kc-methods] [data-gk-eyebrow], [data-gk-kc-form-section] [data-gk-eyebrow], [data-gk-kc-partner] [data-gk-eyebrow] { display: inline-block; color: var(--gk-g500); font-size: 12.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 14px; }
+[data-gk-kc-methods] [data-gk-eyebrow], [data-gk-kc-form-section] [data-gk-eyebrow], [data-gk-kc-partner] [data-gk-eyebrow] { display: inline-block; color: #22C55E; font-size: 12.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 14px; }
+[data-gk-kc-methods] [data-gk-eyebrow]::before, [data-gk-kc-form-section] [data-gk-eyebrow]::before, [data-gk-kc-partner] [data-gk-eyebrow]::before { background: #22C55E !important; }
 [data-gk-kc-methods] h2, [data-gk-kc-form-section] h2 { font-size: clamp(32px, 3.6vw, 44px) !important; font-weight: 700 !important; color: var(--gk-i900) !important; margin: 0 0 16px !important; line-height: 1.1; letter-spacing: -.018em; font-family: var(--gk-ff); }
 [data-gk-kc-methods] [data-gk-kc-head] p { color: var(--gk-i700); font-size: 17px; line-height: 1.55; max-width: 78ch; margin: 0; }
 [data-gk-kc-methods] h2 { font-size: clamp(34px, 4vw, 48px) !important; }
