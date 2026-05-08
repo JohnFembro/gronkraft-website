@@ -820,7 +820,7 @@ html, body { max-width: 100vw; overflow-x: hidden; }
 [data-gk-page-faq] [data-gk-sec-head] [data-gk-sub] { color: var(--gk-i500); margin: 10px 0 0; max-width: 60ch; line-height: 1.55; font-size: 15.5px; }
 [data-gk-faq-grid] { display: flex; flex-direction: column; border-top: 1px solid var(--gk-line); }
 [data-gk-faq-item] { border-bottom: 1px solid var(--gk-line); }
-[data-gk-faq-q] { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; background: none; border: none; cursor: pointer; text-align: left; font-family: var(--gk-ff); font-size: 16.5px; font-weight: 700; color: var(--gk-i900); letter-spacing: -.005em; line-height: 1.4; transition: color .15s; }
+[data-gk-faq-q] { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; background: none; border: none; cursor: pointer; text-align: left; font-family: var(--gk-ff); font-size: 16.5px; font-weight: 700; color: var(--gk-i900); letter-spacing: -.005em; line-height: 1.4; transition: color .15s; text-decoration: none !important; border-bottom: 0 !important; }
 [data-gk-faq-q]:hover { color: var(--gk-g500); }
 [data-gk-faq-plus] { width: 28px; height: 28px; flex: 0 0 auto; border-radius: 999px; background: rgba(31,138,76,.08); color: var(--gk-g500); display: inline-flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 400; transition: transform .25s, background .15s; }
 [data-gk-faq-item].open [data-gk-faq-plus] { transform: rotate(45deg); background: var(--gk-g500); color: #fff; }
