@@ -138,9 +138,9 @@
   margin: 0 !important;
   color: #fff !important;
   font-family: var(--gk-ff) !important;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  hyphens: auto;
+  word-wrap: normal;
+  overflow-wrap: normal;
+  hyphens: manual;
   max-width: 100%;
 }
 .hero-startpage-copy .large-paragraph { font-size: clamp(15px, 1.4vw, 18px) !important; color: rgba(255,255,255,.82) !important; max-width: 52ch; margin: 0 !important; line-height: 1.55; word-wrap: break-word; overflow-wrap: break-word; }
