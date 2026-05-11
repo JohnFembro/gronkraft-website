@@ -1009,6 +1009,16 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
 /* ── Anchor-link pulse for hero offer form (clicked from header CTA) ── */
 #offertform { scroll-margin-top: 96px; }
 [data-gk-sub-lead], [data-gk-kc-form-section] { scroll-margin-top: 96px; }
+/* Ensure the pulse glow can paint outside the card without being clipped by
+   any ancestor that defaults to or sets overflow:hidden (e.g. Webflow's
+   form-block, w-embed grid cells, or hero containers with decorative bg). */
+#offertform, #offertform .main-container, #offertform .grid-1---075,
+#offertform .right-box, #offertform .w-embed,
+[data-gk-sub-lead], [data-gk-sub-lead] [data-gk-wrap],
+[data-gk-sub-lead] [data-gk-sub-lead-grid], [data-gk-sub-lead] [data-gk-sub-lead-form-slot],
+[data-gk-kc-form-section], [data-gk-kc-form-section] [data-gk-wrap] { overflow: visible !important; }
+#offertform .lead-card, [data-gk-sub-lead] .lead-card,
+[data-gk-kc-form-section] [data-gk-kc-form-card] { position: relative; z-index: 2; }
 #offertform:target .lead-card, #offertform.gk-pulse .lead-card,
 #offertform:target .lf-card, #offertform.gk-pulse .lf-card,
 [data-gk-sub-lead].gk-pulse .lead-card,
