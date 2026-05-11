@@ -1009,11 +1009,8 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
 /* ── Anchor-link pulse for hero offer form (clicked from header CTA) ── */
 #offertform { scroll-margin-top: 96px; }
 [data-gk-sub-lead], [data-gk-kc-form-section] { scroll-margin-top: 96px; }
-#offertform:target .lf-form, #offertform.gk-pulse .lf-form,
-#offertform:target .gk-form, #offertform.gk-pulse .gk-form,
-#offertform:target form, #offertform.gk-pulse form,
-#offertform:target [class*="lead-form"], #offertform.gk-pulse [class*="lead-form"],
-#offertform:target [class*="multi-form"], #offertform.gk-pulse [class*="multi-form"],
+#offertform:target .lead-card, #offertform.gk-pulse .lead-card,
+#offertform:target .lf-card, #offertform.gk-pulse .lf-card,
 [data-gk-sub-lead].gk-pulse .lead-card,
 [data-gk-sub-lead].gk-pulse .lf-card,
 [data-gk-sub-lead].gk-pulse .gk-form,
@@ -1030,11 +1027,8 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
   100% { box-shadow: 0 0 0 0 rgba(37,168,90,0); transform: scale(1); }
 }
 @media (prefers-reduced-motion: reduce) {
-  #offertform:target .lf-form, #offertform.gk-pulse .lf-form,
-  #offertform:target .gk-form, #offertform.gk-pulse .gk-form,
-  #offertform:target form, #offertform.gk-pulse form,
-  #offertform:target [class*="lead-form"], #offertform.gk-pulse [class*="lead-form"],
-  #offertform:target [class*="multi-form"], #offertform.gk-pulse [class*="multi-form"],
+  #offertform:target .lead-card, #offertform.gk-pulse .lead-card,
+  #offertform:target .lf-card, #offertform.gk-pulse .lf-card,
   [data-gk-sub-lead].gk-pulse .lead-card,
   [data-gk-sub-lead].gk-pulse .lf-card,
   [data-gk-sub-lead].gk-pulse .gk-form,
