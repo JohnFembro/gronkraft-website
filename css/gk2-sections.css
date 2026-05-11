@@ -1056,3 +1056,25 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
   transform: translateY(-50%) rotate(45deg);
   background: var(--gk-g500);
 }
+
+/* ── Besiktning page: unify .main-section / .vad-som-ing-r width with gk2 1200px wrap ──
+   User added new sections using Webflow's stock .main-section + .main-container (max-width: 1400px).
+   This rule slims them to 1200px and routes horizontal padding through the container so content edges
+   align with the rest of the page's data-gk-wrap sections (24px on mobile, 40px ≥900px). */
+.main-section, .vad-som-ing-r { padding-left: 0 !important; padding-right: 0 !important; }
+.main-section > .main-container,
+.vad-som-ing-r > .main-container {
+  max-width: 1200px !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  box-sizing: border-box;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+@media (min-width: 900px) {
+  .main-section > .main-container,
+  .vad-som-ing-r > .main-container {
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+}
