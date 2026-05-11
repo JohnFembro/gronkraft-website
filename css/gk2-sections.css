@@ -1062,8 +1062,10 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
    This rule slims them to 1200px and routes horizontal padding through the container so content edges
    align with the rest of the page's data-gk-wrap sections (24px on mobile, 40px ≥900px). */
 .main-section, .vad-som-ing-r { padding-left: 0 !important; padding-right: 0 !important; }
+.vanliga-fel-container { padding: 4rem 0 !important; }
 .main-section > .main-container,
-.vad-som-ing-r > .main-container {
+.vad-som-ing-r > .main-container,
+.vanliga-fel-container > .main-container {
   max-width: 1200px !important;
   padding-left: 24px !important;
   padding-right: 24px !important;
@@ -1073,7 +1075,8 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
 }
 @media (min-width: 900px) {
   .main-section > .main-container,
-  .vad-som-ing-r > .main-container {
+  .vad-som-ing-r > .main-container,
+  .vanliga-fel-container > .main-container {
     padding-left: 40px !important;
     padding-right: 40px !important;
   }
