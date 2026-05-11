@@ -1017,14 +1017,14 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
 [data-gk-sub-lead].gk-pulse .lf-form,
 [data-gk-sub-lead].gk-pulse [class*="lead-form"],
 [data-gk-kc-form-section].gk-pulse [data-gk-kc-form-card] {
-  animation: gkOffertPulse 1.8s cubic-bezier(.4,0,.2,1) 1;
-  border-radius: 16px;
+  animation: gkOffertPulse 2.2s cubic-bezier(.4,0,.2,1) 1;
+  border-radius: 22px;
 }
 @keyframes gkOffertPulse {
-  0%   { box-shadow: 0 0 0 0 rgba(37,168,90,0); transform: scale(1); }
-  20%  { box-shadow: 0 0 0 8px rgba(37,168,90,.45), 0 0 32px rgba(37,168,90,.5); transform: scale(1.012); }
-  60%  { box-shadow: 0 0 0 4px rgba(37,168,90,.15), 0 0 18px rgba(37,168,90,.2); transform: scale(1); }
-  100% { box-shadow: 0 0 0 0 rgba(37,168,90,0); transform: scale(1); }
+  0%   { box-shadow: 0 0 0 0 rgba(76,255,140,0), inset 0 0 0 0 rgba(76,255,140,0); transform: scale(1); }
+  18%  { box-shadow: 0 0 0 10px rgba(76,255,140,.55), 0 0 48px rgba(76,255,140,.65), inset 0 0 0 3px rgba(46,200,100,.9); transform: scale(1.015); }
+  55%  { box-shadow: 0 0 0 6px rgba(76,255,140,.2), 0 0 28px rgba(76,255,140,.3), inset 0 0 0 1px rgba(46,200,100,.35); transform: scale(1); }
+  100% { box-shadow: 0 0 0 0 rgba(76,255,140,0), inset 0 0 0 0 rgba(76,255,140,0); transform: scale(1); }
 }
 @media (prefers-reduced-motion: reduce) {
   #offertform:target .lead-card, #offertform.gk-pulse .lead-card,
