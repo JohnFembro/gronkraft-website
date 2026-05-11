@@ -1014,10 +1014,11 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
 #offertform:target form, #offertform.gk-pulse form,
 #offertform:target [class*="lead-form"], #offertform.gk-pulse [class*="lead-form"],
 #offertform:target [class*="multi-form"], #offertform.gk-pulse [class*="multi-form"],
+[data-gk-sub-lead].gk-pulse .lead-card,
+[data-gk-sub-lead].gk-pulse .lf-card,
 [data-gk-sub-lead].gk-pulse .gk-form,
 [data-gk-sub-lead].gk-pulse .lf-form,
 [data-gk-sub-lead].gk-pulse [class*="lead-form"],
-[data-gk-sub-lead].gk-pulse [data-gk-sub-lead-form-slot],
 [data-gk-kc-form-section].gk-pulse [data-gk-kc-form-card] {
   animation: gkOffertPulse 1.8s cubic-bezier(.4,0,.2,1) 1;
   border-radius: 16px;
@@ -1034,10 +1035,11 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
   #offertform:target form, #offertform.gk-pulse form,
   #offertform:target [class*="lead-form"], #offertform.gk-pulse [class*="lead-form"],
   #offertform:target [class*="multi-form"], #offertform.gk-pulse [class*="multi-form"],
+  [data-gk-sub-lead].gk-pulse .lead-card,
+  [data-gk-sub-lead].gk-pulse .lf-card,
   [data-gk-sub-lead].gk-pulse .gk-form,
   [data-gk-sub-lead].gk-pulse .lf-form,
   [data-gk-sub-lead].gk-pulse [class*="lead-form"],
-  [data-gk-sub-lead].gk-pulse [data-gk-sub-lead-form-slot],
   [data-gk-kc-form-section].gk-pulse [data-gk-kc-form-card] { animation: none; }
 }
 
