@@ -293,7 +293,7 @@
               '<div data-gk-city-usp="true"><div data-gk-city-usp-num="true">30+</div><div data-gk-city-usp-lbl="true">Kontrollpunkter</div></div>' +
             '</div>' +
           '</div>' +
-          '<div data-sol-lp="true">' + formHTML() + '</div>' +
+          '<div data-sol-lp="true" style="border-radius:22px;overflow:hidden;width:100%;max-width:540px;">' + formHTML() + '</div>' +
         '</div>' +
       '</section>';
     return html;
