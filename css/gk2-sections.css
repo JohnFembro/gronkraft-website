@@ -760,7 +760,7 @@ html, body { max-width: 100vw; overflow-x: hidden; }
 [data-gk-prose-section] { padding: 96px 0 104px; font-family: var(--gk-ff); background: #fff; }
 [data-gk-prose-section]:first-of-type { padding-top: 104px; }
 /* Soft alternating background — apply data-gk-bg-soft on selected prose-sections to break up white-on-white stacking */
-[data-gk-prose-section][data-gk-bg-soft] { background: #F4F6F4; }
+[data-gk-prose-section][data-gk-bg-soft] { background: #F6F6F6; }
 [data-gk-prose-section] [data-gk-wrap] { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
 @media (min-width: 900px) { [data-gk-prose-section] [data-gk-wrap] { padding: 0 40px; } }
 
@@ -1107,7 +1107,7 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
   --sol-green-secondary: #2E7D32;
   --sol-green-dark: #06150F;
   --sol-green-dark-2: #0B2018;
-  --sol-gray-light: #F4F6F4;
+  --sol-gray-light: #F6F6F6;
   --sol-gray-border: #E5EAE6;
   --sol-gray-divider: #D5E0D9;
   --sol-text-dark: #0E1B14;
