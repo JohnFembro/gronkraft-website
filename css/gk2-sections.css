@@ -1400,21 +1400,8 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
 [data-sol-lp] .faq-item > button:hover { color: var(--sol-green-primary); }
 [data-sol-lp] .faq-item.open .faq-toggle { background: var(--sol-green-primary); color: #fff; transform: rotate(45deg); }
 
-/* Price card buttons — <a> inside .price-card, class stripped */
-[data-sol-lp] .price-card > a {
-  margin-top: auto; justify-content: center; width: 100%;
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 14px 28px; border-radius: var(--sol-radius-pill);
-  font-weight: 700; font-size: 16px;
-  background: transparent; color: var(--sol-text-dark) !important;
-  box-shadow: inset 0 0 0 1.5px var(--sol-text-dark);
-  transition: background 0.15s ease, color 0.15s ease;
-}
-[data-sol-lp] .price-card > a:hover { background: var(--sol-text-dark); color: #fff !important; }
-[data-sol-lp] .price-card.featured > a {
-  background: var(--sol-green-primary); color: #fff !important; box-shadow: none;
-}
-[data-sol-lp] .price-card.featured > a:hover { background: var(--sol-green-secondary); }
+/* Price card buttons — informative section, no CTA needed */
+[data-sol-lp] .price-card > a { display: none !important; }
 
 /* Floating CTA — <a class="floating-cta"> stripped; target by id */
 #floating-cta {
