@@ -216,7 +216,7 @@
     '[data-gk-city-hero] [data-gk-breadcrumb="true"] a { color: rgba(255,255,255,.85); text-decoration: none; }' +
     '[data-gk-city-hero] [data-gk-breadcrumb="true"] a:hover { color: #fff; text-decoration: underline; }' +
     '[data-gk-city-hero] [data-gk-bc-sep="true"] { margin: 0 8px; opacity: .5; }' +
-    '[data-gk-city-hero] [data-gk-sub-h1="true"] { font-size: clamp(36px, 5vw, 56px); font-weight: 900; line-height: 1.05; letter-spacing: -.01em; margin: 0 0 16px; color: #fff; }' +
+    '[data-gk-city-hero] [data-gk-sub-h1="true"] { font-size: clamp(36px, 5vw, 56px); font-weight: 800; line-height: 1.05; letter-spacing: -.01em; margin: 0 0 16px; color: #fff; }' +
     '[data-gk-city-hero] [data-gk-sub-intro="true"] { font-size: clamp(16px, 1.5vw, 18px); line-height: 1.55; color: rgba(255,255,255,.85); max-width: 56ch; margin: 0 0 32px; }' +
     '[data-gk-city-hero] [data-gk-city-usps="true"] { display: flex; flex-wrap: wrap; gap: 32px 48px; margin-top: 8px; }' +
     '[data-gk-city-hero] [data-gk-city-usp="true"] { display: flex; flex-direction: column; }' +
