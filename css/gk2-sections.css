@@ -1129,7 +1129,7 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
 [data-sol-lp] img { max-width: 100%; display: block; }
 [data-sol-lp] a { color: inherit; text-decoration: none; }
 [data-sol-lp] button { font-family: inherit; cursor: pointer; border: none; background: none; }
-[data-sol-lp] .container { max-width: var(--sol-container-max); margin: 0 auto; padding: 0 24px; }
+[data-sol-lp] .container { max-width: var(--sol-container-max); margin: 0 auto; padding: 0 24px; text-align: left; }
 [data-sol-lp] section { padding: var(--sol-section-pad) 0; }
 [data-sol-lp] .bg-white { background: #fff; }
 [data-sol-lp] .bg-gray { background: var(--sol-gray-light); }
