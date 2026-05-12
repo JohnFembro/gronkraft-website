@@ -1496,3 +1496,28 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
   font-size: 14.5px;
   line-height: 1.55;
 }
+
+/* ============================================================
+   Borderless cards inside gray sections
+   Gray border on white card sitting on gray bg adds visual noise
+   without delineating anything — remove it.
+   ============================================================ */
+
+[data-sol-lp] > section[data-sol-bg="gray"] .card,
+[data-sol-lp] > section[data-sol-bg="gray"] .component-card,
+[data-sol-lp] > section[data-sol-bg="gray"] .price-card,
+[data-sol-lp] > section[data-sol-bg="gray"] .price-card.featured,
+[data-sol-lp] > section[data-sol-bg="gray"] .deduction-card,
+[data-sol-lp] > section#losningar .card,
+[data-sol-lp] > section#priser .price-card,
+[data-sol-lp] > section#priser .card {
+  border-color: transparent !important;
+}
+
+/* Hover-state on cards in gray sections — keep subtle elevation, no border */
+[data-sol-lp] > section[data-sol-bg="gray"] .card:hover,
+[data-sol-lp] > section#losningar .card:hover,
+[data-sol-lp] > section#priser .card:hover {
+  border-color: transparent !important;
+}
+
