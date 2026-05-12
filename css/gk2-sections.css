@@ -1521,3 +1521,22 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
   border-color: transparent !important;
 }
 
+
+/* ============================================================
+   Form success-screen centering
+   When the lead-card has .is-done class (success state shown),
+   center the success block both vertically and horizontally
+   inside the card container.
+   ============================================================ */
+
+.lead-card.is-done {
+  justify-content: center !important;
+  align-items: center !important;
+}
+.lead-card.is-done .lf-step.lf-step--active {
+  width: 100% !important;
+  flex: 0 1 auto !important;
+}
+.lead-card.is-done .lead-success {
+  padding: 0 !important;
+}
