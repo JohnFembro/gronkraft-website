@@ -12,7 +12,7 @@
 
   // Version check — newer version always wins, regardless of script execution order.
   // Bump this in lockstep with the loader SHA to make new edits take effect.
-  var THIS_VERSION = 101;
+  var THIS_VERSION = 102;
   var existing = window.__gkCityHeroVersion || 0;
   if (existing >= THIS_VERSION) return;
 
@@ -205,7 +205,7 @@
             '<button type="button" class="lf-back" onclick="bfBack()">← Tillbaka</button>' +
             '<button type="button" class="btn btn-primary" onclick="bfSubmit()">Begär offert →</button>' +
           '</div>' +
-          '<p class="tiny" style="margin-top:12px;">Genom att skicka godkänner du vår <a href="/policyer-villkor/integritetspolicy">integritetspolicy</a> och att vi får hantera dina uppgifter enligt den.</p>' +
+          '<p class="tiny" style="margin-top:12px;">Genom att skicka godkänner du Grönkrafts <a href="/policyer-villkor/integritetspolicy">integritetspolicy</a></p>' +
         '</div>' +
 
         '<div class="lf-step" id="bf-done">' +
