@@ -142,35 +142,61 @@
     ]
   };
 
+  // Body anecdote cards (only for cities where the current site has GENERIC
+  // "Lösa kablar och kontakter / Kablar mot vassa kanter" etc — verified
+  // 2026-05-12 to apply only to goteborg + boras).
+  var CARDS = {
+    goteborg: [
+      { t: 'Saltkorrosion på MC4-kontakter', d: 'Göteborgs kustklimat skickar saltbärande luft från Västerhavet långt in i staden. På Hisingen, Långedrag och Saltholmen ser vi accelererad korrosion på MC4-kontakter och kabelskor — ofta synligt grön patina efter bara 4–5 år.' },
+      { t: 'Vindlast på söderlutade Hisingstak', d: 'Sydväst-vindar mot Hisingen och kustnära Askim ger högre vindlast än fästsystemets standard-dimensionering räknar med. Vi kontrollerar att infästningarna är vridmoment-dragna enligt monteringssystemets specifikation.' },
+      { t: 'Felaktig drönarinspektion vid första installation', d: 'Många BRF-tak i Göteborgs centrum är så svåråtkomliga att installatören aldrig själv inspekterade undersidan av panelerna. Vi gör termografering med drönare som första steg vid våra besiktningar i innerstaden.' },
+      { t: 'Lokala bygglovskrav i kulturskyddade kvarter', d: 'Vasastan, Linnéstaden och delar av Majorna har strikta bygglovskrav för synlig solel. Vi kontrollerar att installationen följer bygglovsbeslutet — annars riskerar du föreläggande från Stadsbyggnadskontoret.' }
+    ],
+    boras: [
+      { t: 'Vatten-genomträngning i papptak', d: 'Borås har Sveriges högsta årsnederbörd (1 000+ mm) vilket testar tätskikt och fästpunkter hårt. Vi hittar regelbundet läckage vid kabelinträngningar och fästbultar där tätningsmassan torkat ut efter 4–6 år.' },
+      { t: 'Algbildning på panelytor', d: 'Den höga luftfuktigheten i Borås ger algbildning på panelernas underkant snabbare än i torrare delar av landet. Resultatet är 3–8 % effektförlust över tid om panelerna inte rengörs regelbundet.' }
+    ]
+  };
+
   function getCitySlug() {
     var m = location.pathname.match(/\/stader\/solcellsbesiktning-([a-z]+)\/?$/);
     return m ? m[1] : null;
   }
 
-  function applyLocalizedFAQ() {
-    var slug = getCitySlug();
-    if (!slug || !FAQ[slug]) return;
+  function applyLocalizedFAQ(slug) {
+    if (!FAQ[slug]) return;
     var items = FAQ[slug];
-
-    // Find question and answer elements in DOM order
     var questions = document.querySelectorAll('p.heading-small.white');
     var answers = document.querySelectorAll('div.answer > p.paragraph-5, .faq-list p.paragraph-5');
-
     if (questions.length < 3 || answers.length < 3) return;
-
-    // Replace the LAST 3 items (positions length-3, length-2, length-1)
     var startIdx = questions.length - 3;
     for (var i = 0; i < 3; i++) {
-      var qEl = questions[startIdx + i];
-      var aEl = answers[startIdx + i];
-      if (qEl && items[i]) qEl.textContent = items[i].q;
-      if (aEl && items[i]) aEl.textContent = items[i].a;
+      if (questions[startIdx + i] && items[i]) questions[startIdx + i].textContent = items[i].q;
+      if (answers[startIdx + i] && items[i]) answers[startIdx + i].textContent = items[i].a;
     }
   }
 
+  function applyLocalizedCards(slug) {
+    if (!CARDS[slug]) return;
+    var items = CARDS[slug];
+    var titles = document.querySelectorAll('h3.heading-24px.bold');
+    var descs = document.querySelectorAll('p.card-description.italic');
+    for (var i = 0; i < items.length; i++) {
+      if (titles[i]) titles[i].textContent = items[i].t;
+      if (descs[i]) descs[i].textContent = items[i].d;
+    }
+  }
+
+  function apply() {
+    var slug = getCitySlug();
+    if (!slug) return;
+    applyLocalizedFAQ(slug);
+    applyLocalizedCards(slug);
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', applyLocalizedFAQ);
+    document.addEventListener('DOMContentLoaded', apply);
   } else {
-    applyLocalizedFAQ();
+    apply();
   }
 })();
