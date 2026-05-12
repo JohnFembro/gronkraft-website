@@ -157,7 +157,7 @@
 
   function formHTML() {
     return (
-      '<div class="lead-card lf-card" role="complementary" aria-label="Boka solcellsbesiktning">' +
+      '<div class="lead-card lf-card" role="complementary" aria-label="Boka solcellsbesiktning" style="border-radius:22px!important;-webkit-border-radius:22px!important;overflow:hidden!important;background:rgba(255,255,255,0.92)!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:26px!important;box-shadow:0 30px 60px -30px rgba(11,20,16,0.35)!important;border:1px solid rgba(255,255,255,0.6)!important;display:flex!important;flex-direction:column!important;color:#0B1410!important;width:100%!important;max-width:540px!important;min-height:460px!important;line-height:1.55!important;">' +
         '<div class="lf-progress">' +
           '<div class="lf-progress-track"><div class="lf-progress-fill" id="bf-progress-fill"></div></div>' +
           '<span class="lf-progress-label" id="bf-progress-label">Steg 1 av 2</span>' +
@@ -220,7 +220,7 @@
     '[data-gk-city-hero] [data-gk-sub-intro="true"] { font-size: clamp(16px, 1.5vw, 18px); line-height: 1.55; color: rgba(255,255,255,.85); max-width: 56ch; margin: 0 0 32px; }' +
     '[data-gk-city-hero] [data-gk-city-usps="true"] { display: flex; flex-wrap: wrap; gap: 32px 48px; margin-top: 8px; }' +
     '[data-gk-city-hero] [data-gk-city-usp="true"] { display: flex; flex-direction: column; }' +
-    '[data-gk-city-hero] [data-gk-city-usp-num="true"] { font-size: clamp(36px, 4vw, 48px); font-weight: 900; line-height: 1; color: #4CC07A; letter-spacing: -.02em; margin-bottom: 6px; }' +
+    '[data-gk-city-hero] [data-gk-city-usp-num="true"] { font-size: clamp(36px, 4vw, 48px); font-weight: 800; line-height: 1; color: #4CC07A; letter-spacing: -.02em; margin-bottom: 6px; }' +
     '[data-gk-city-hero] [data-gk-city-usp-lbl="true"] { font-size: 14px; color: rgba(255,255,255,.85); letter-spacing: 0.02em; }' +
     // ===== lf-card form styles (extracted from Solceller form embed) =====
     '@keyframes lfFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }' +
@@ -515,6 +515,9 @@
     // Append new footer at end of body
     if (!document.querySelector('footer[data-gk-footer]')) {
       document.body.insertAdjacentHTML('beforeend', FOOTER_HTML);
+      console.log('[gk-city-hero] footer injected');
+    } else {
+      console.log('[gk-city-hero] footer already exists, skipping');
     }
 
     bindHeader();
