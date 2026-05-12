@@ -1422,3 +1422,77 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
 @media (max-width: 768px) {
   [data-sol-lp] > header { padding: 80px 0 64px; }
 }
+
+/* ============================================================
+   Process section — dark image-bg variant
+   Matches the home/elbilsladdning "Vi hjälper dig hela vägen" pattern.
+   Triggered on any [data-sol-lp] section with id="process".
+   ============================================================ */
+
+[data-sol-lp] section#process {
+  position: relative;
+  background-image:
+    linear-gradient(180deg, rgba(6,32,23,.85) 0%, rgba(6,32,23,.7) 100%),
+    url(https://cdn.prod.website-files.com/689459ca72b26f3abc2a641d/69f3711bbacb88d875bea362_Car%20port%20bakground.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
+}
+
+[data-sol-lp] section#process .eyebrow {
+  color: #4CC07A !important;
+}
+
+[data-sol-lp] section#process h2 {
+  color: #fff !important;
+}
+
+[data-sol-lp] section#process .section-intro {
+  color: rgba(255,255,255,.72) !important;
+}
+
+/* Remove the horizontal connector line between nodes */
+[data-sol-lp] section#process .process-grid::before {
+  display: none !important;
+}
+
+/* Restyle the numbered "circles" → bar + uppercase number */
+[data-sol-lp] section#process .process-node {
+  width: auto; height: auto; min-height: 0;
+  border-radius: 0;
+  background: transparent;
+  border: none;
+  display: block;
+  place-items: unset;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 14px;
+  font-weight: 800;
+  color: #4CC07A;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+  padding: 0;
+}
+
+[data-sol-lp] section#process .process-node::before {
+  content: "";
+  display: block;
+  height: 2px;
+  background: linear-gradient(90deg, #4CC07A, rgba(76,192,122,.1));
+  max-width: 80px;
+  margin: 0 0 16px;
+}
+
+[data-sol-lp] section#process .process-step h3 {
+  color: #fff !important;
+  font-size: 19px;
+  font-weight: 800;
+  margin: 8px 0;
+}
+
+[data-sol-lp] section#process .process-step p {
+  color: rgba(255,255,255,.74) !important;
+  font-size: 14.5px;
+  line-height: 1.55;
+}
