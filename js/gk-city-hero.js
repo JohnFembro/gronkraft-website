@@ -284,14 +284,19 @@
       });
     }
     var ddTrig = document.querySelector('[data-gk-header-dd-trigger]');
-    var dd = document.querySelector('[data-gk-header-dd]');
-    if (ddTrig && dd) {
+    var ddMenu = document.querySelector('[data-gk-header-dd-menu]');
+    if (ddTrig && ddMenu) {
       ddTrig.addEventListener('click', function (e) {
         e.preventDefault();
-        dd.toggleAttribute('data-open');
+        e.stopPropagation();
+        var isOpen = ddMenu.classList.toggle('open');
+        ddTrig.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       });
       document.addEventListener('click', function (e) {
-        if (!dd.contains(e.target)) dd.removeAttribute('data-open');
+        if (!ddMenu.contains(e.target) && !ddTrig.contains(e.target)) {
+          ddMenu.classList.remove('open');
+          ddTrig.setAttribute('aria-expanded', 'false');
+        }
       });
     }
   }
@@ -435,10 +440,10 @@
     else document.body.insertAdjacentHTML('afterbegin', buildHero());
 
     // Apply critical card styles via setProperty with !important — highest CSS precedence possible
-    // Use rAF to ensure the element is fully committed to layout before styling
-    requestAnimationFrame(function () {
+    // Apply synchronously AND in rAF for double-safety against timing issues
+    var applyCardStyles = function () {
       var card = document.querySelector('[data-gk-city-hero] .lead-card');
-      if (!card) { console.warn('[gk-city-hero] .lead-card not found'); return; }
+      if (!card) return false;
       var apply = function (prop, val) { card.style.setProperty(prop, val, 'important'); };
       apply('display', 'flex');
       apply('flex-direction', 'column');
@@ -455,9 +460,11 @@
       apply('min-height', '460px');
       apply('line-height', '1.55');
       apply('overflow', 'hidden');
-      console.log('[gk-city-hero] applied card styles, computed border-radius:',
-        getComputedStyle(card).borderRadius);
-    });
+      return true;
+    };
+    applyCardStyles();
+    requestAnimationFrame(applyCardStyles);
+    setTimeout(applyCardStyles, 100);
 
     bindHeader();
   }
