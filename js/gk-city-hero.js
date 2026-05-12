@@ -188,7 +188,7 @@
     // ===== lf-card form styles (extracted from Solceller form embed) =====
     '@keyframes lfFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }' +
     '.lf-card, .lf-card * { box-sizing: border-box; }' +
-    ".lf-card label, .lf-card input, .lf-card textarea, .lf-card fieldset, .lf-card legend, .lf-card p, .lf-card span, .lf-card h3, .lf-card button { text-transform: none; letter-spacing: normal; margin-bottom: 0; line-height: inherit; font-family: 'Nunito', system-ui, -apple-system, sans-serif; }" +
+    ".lf-card label, .lf-card input, .lf-card textarea, .lf-card fieldset, .lf-card legend, .lf-card p, .lf-card span, .lf-card h3, .lf-card button { text-transform: none !important; letter-spacing: normal !important; margin-bottom: 0; line-height: inherit; font-family: 'Nunito', system-ui, -apple-system, sans-serif; }" +
     '.lf-card img { max-width: 100%; display: block; }' +
     '.lead-card.lf-card { display: flex; flex-direction: column; background: rgba(255,255,255,0.97); color: #0B1410; border-radius: 22px !important; padding: 26px; box-shadow: 0 30px 60px -30px rgba(11,20,16,0.35); border: 1px solid rgba(255,255,255,0.6); width: 100%; max-width: 540px; min-height: 460px; line-height: 1.55; overflow: hidden; }' +
     '@media (min-width: 1024px) { .lead-card.lf-card { padding: 32px; } }' +
@@ -197,8 +197,8 @@
     '.lf-progress-fill { height: 100%; background: #1F8A4C; transition: width 0.35s cubic-bezier(0.4,0,0.2,1); border-radius: 999px; width: 50%; }' +
     '.lf-progress-label { font-size: 12px; font-weight: 700; color: #5A655F; letter-spacing: 0.02em; white-space: nowrap; }' +
     '.lead-card.is-done .lf-progress { display: none; }' +
-    '.lf-step { display: none; flex: 1; animation: lfFade 0.22s ease both; }' +
-    '.lf-step.lf-step--active { display: block; }' +
+    '.lf-step { display: none !important; flex: 1; animation: lfFade 0.22s ease both; }' +
+    '.lf-step.lf-step--active { display: block !important; }' +
     '.lf-head h3 { margin: 0 0 6px; font-size: 22px; font-weight: 800; letter-spacing: -0.005em; color: #0B1410; }' +
     '.lf-head .lf-sub { margin: 0 0 18px; font-size: 14px; color: #5A655F; line-height: 1.5; }' +
     '.lf-section-label { font-size: 13px; font-weight: 700; color: #2A332E; margin: 4px 0 10px; }' +
