@@ -160,8 +160,8 @@
 [data-gk-omraden] h2 { font-size: clamp(26px, 3.4vw, 38px); font-weight: 900; letter-spacing: -.01em; margin: 8px 0 0; color: var(--gk-i900); }
 [data-gk-sub] { color: var(--gk-i500); margin: 10px 0 0; max-width: 60ch; line-height: 1.55; }
 [data-gk-cards] { display: grid; gap: 18px; grid-template-columns: 1fr; }
-@media (min-width: 720px) { [data-gk-cards] { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1040px) { [data-gk-cards] { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 720px) { [data-gk-cards] { grid-template-columns: repeat(2, 1fr) !important; } }
+@media (min-width: 1040px) { [data-gk-cards] { grid-template-columns: repeat(4, 1fr) !important; } }
 [data-gk-card] { background: var(--gk-surf2); border: 1px solid transparent; border-radius: 22px; padding: 28px 26px 24px; display: flex; flex-direction: column; gap: 14px; align-items: stretch; transition: transform .25s, box-shadow .25s; }
 [data-gk-card]:hover { transform: translateY(-4px); box-shadow: var(--gk-shd); }
 [data-gk-card-icon] { width: 58px; height: 58px; border-radius: 14px; background: #fff; display: inline-flex; align-items: center; justify-content: center; }
