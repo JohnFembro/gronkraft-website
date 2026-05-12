@@ -511,6 +511,26 @@
     applyCardStyles();
     requestAnimationFrame(applyCardStyles);
     setTimeout(applyCardStyles, 100);
+    setTimeout(applyCardStyles, 500);
+    setTimeout(applyCardStyles, 1500);
+
+    // Watch the card's style attribute — if anything clears it, re-apply
+    var cardEl = document.querySelector('[data-gk-city-hero] .lead-card');
+    if (cardEl && window.MutationObserver) {
+      var mo2 = new MutationObserver(function () {
+        if (!cardEl.style.borderRadius || cardEl.style.borderRadius === '0px') {
+          applyCardStyles();
+        }
+      });
+      mo2.observe(cardEl, { attributes: true, attributeFilter: ['style', 'class'] });
+    }
+
+    // Also re-apply on bfcache restore (back-forward navigation)
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) {
+        applyCardStyles();
+      }
+    });
 
     // Append new footer at end of body
     if (!document.querySelector('footer[data-gk-footer]')) {
