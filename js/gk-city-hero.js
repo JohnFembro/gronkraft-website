@@ -85,6 +85,38 @@
 
   // === HTML templates ===
 
+  var FOOTER_HTML =
+    '<footer data-gk-footer="true"><div data-gk-wrap="true"><div data-gk-footer-grid="true">' +
+      '<div data-gk-brand-block="true">' +
+        '<img src="' + BASE + '68ae1b9f1273e4c3fa49a897_Gro%CC%88nkraft%20logo%20vit.png" loading="lazy" alt="Grönkraft Sverige AB"/>' +
+        '<p>Grönkraft Sverige AB är en rådgivare inom elbilsladdning, solceller, batterilager och serviceavtal. Vi kopplar privatpersoner, BRF och företag till rätt certifierad installatör.</p>' +
+      '</div>' +
+      '<div data-gk-footer-col="true"><h3>Tjänster</h3><ul role="list">' +
+        '<li><a href="/elbilsladdning">Elbilsladdning</a></li>' +
+        '<li><a href="/solceller">Solceller</a></li>' +
+        '<li><a href="/solcellsbatteri">Solcellsbatteri</a></li>' +
+        '<li><a href="/besiktning-service" aria-current="page" class="w--current">Besiktning &amp; Serviceavtal</a></li>' +
+      '</ul></div>' +
+      '<div data-gk-footer-col="true"><h3>Företag</h3><ul role="list">' +
+        '<li><a href="/om-oss">Om oss</a></li>' +
+        '<li><a href="/bli-partner">Bli partner</a></li>' +
+        '<li><a href="/kontakta-oss">Kontakt</a></li>' +
+        '<li><a href="/artiklar">Artiklar</a></li>' +
+      '</ul></div>' +
+      '<div data-gk-footer-col="true"><h3>Kontakt</h3><ul role="list">' +
+        '<li><a href="tel:+4631105620">031-10 56 20</a></li>' +
+        '<li><a href="mailto:kontakt@gronkraftab.se">kontakt@gronkraftab.se</a></li>' +
+        '<li>Fläskebovägen 11g<br/>438 91 Landvetter</li>' +
+      '</ul></div>' +
+    '</div><div data-gk-footer-bottom="true">' +
+      '<span>© 2026 Grönkraft Sverige AB · Fläskebovägen 11g, 438 91 Landvetter · 031-10 56 20</span>' +
+      '<span data-gk-footer-legal="true">' +
+        '<a href="/policyer-villkor/integritetspolicy">Integritetspolicy</a>' +
+        '<a href="/policyer-villkor/cookiepolicy">Cookies</a>' +
+        '<a href="/policyer-villkor/allmanna-villkor">Allmänna villkor</a>' +
+      '</span>' +
+    '</div></div></footer>';
+
   var HEADER_HTML =
     '<header data-gk-header="true">' +
       '<div data-gk-header-inner="true">' +
@@ -440,6 +472,11 @@
       oldHero.setAttribute('aria-hidden', 'true');
     }
 
+    // Hide old footer (section.section-5 contains the old footer-column structure)
+    document.querySelectorAll('section.section-5').forEach(function (el) {
+      el.style.display = 'none';
+    });
+
     // Inject new header at top of body
     document.body.insertAdjacentHTML('afterbegin', HEADER_HTML);
 
@@ -474,6 +511,11 @@
     applyCardStyles();
     requestAnimationFrame(applyCardStyles);
     setTimeout(applyCardStyles, 100);
+
+    // Append new footer at end of body
+    if (!document.querySelector('footer[data-gk-footer]')) {
+      document.body.insertAdjacentHTML('beforeend', FOOTER_HTML);
+    }
 
     bindHeader();
   }
