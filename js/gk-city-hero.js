@@ -434,21 +434,25 @@
     if (hdr) hdr.insertAdjacentHTML('afterend', buildHero());
     else document.body.insertAdjacentHTML('afterbegin', buildHero());
 
-    // Apply critical card styles as inline style — beats any external CSS
+    // Apply critical card styles via setProperty with !important — highest CSS precedence possible
     var card = document.querySelector('[data-gk-city-hero] .lead-card');
     if (card) {
-      card.style.cssText =
-        'display:flex;flex-direction:column;' +
-        'background:rgba(255,255,255,0.9);' +
-        'backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);' +
-        'color:#0B1410;' +
-        'border-radius:22px;' +
-        'padding:26px;' +
-        'box-shadow:0 30px 60px -30px rgba(11,20,16,0.35);' +
-        'border:1px solid rgba(255,255,255,0.6);' +
-        'width:100%;max-width:540px;' +
-        'min-height:460px;line-height:1.55;' +
-        'overflow:hidden;';
+      var apply = function (prop, val) { card.style.setProperty(prop, val, 'important'); };
+      apply('display', 'flex');
+      apply('flex-direction', 'column');
+      apply('background', 'rgba(255,255,255,0.9)');
+      apply('backdrop-filter', 'blur(10px)');
+      apply('-webkit-backdrop-filter', 'blur(10px)');
+      apply('color', '#0B1410');
+      apply('border-radius', '22px');
+      apply('padding', '26px');
+      apply('box-shadow', '0 30px 60px -30px rgba(11,20,16,0.35)');
+      apply('border', '1px solid rgba(255,255,255,0.6)');
+      apply('width', '100%');
+      apply('max-width', '540px');
+      apply('min-height', '460px');
+      apply('line-height', '1.55');
+      apply('overflow', 'hidden');
     }
 
     bindHeader();
