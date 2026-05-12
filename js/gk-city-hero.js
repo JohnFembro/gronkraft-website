@@ -190,7 +190,7 @@
     '.lf-card, .lf-card * { box-sizing: border-box; }' +
     ".lf-card label, .lf-card input, .lf-card textarea, .lf-card fieldset, .lf-card legend, .lf-card p, .lf-card span, .lf-card h3, .lf-card button { text-transform: none; letter-spacing: normal; margin-bottom: 0; line-height: inherit; font-family: 'Nunito', system-ui, -apple-system, sans-serif; }" +
     '.lf-card img { max-width: 100%; display: block; }' +
-    '.lead-card.lf-card { display: flex; flex-direction: column; background: rgba(255,255,255,0.97); color: #0B1410; border-radius: 22px; padding: 26px; box-shadow: 0 30px 60px -30px rgba(11,20,16,0.35); border: 1px solid rgba(255,255,255,0.6); width: 100%; max-width: 540px; min-height: 460px; line-height: 1.55; }' +
+    '.lead-card.lf-card { display: flex; flex-direction: column; background: rgba(255,255,255,0.97); color: #0B1410; border-radius: 22px !important; padding: 26px; box-shadow: 0 30px 60px -30px rgba(11,20,16,0.35); border: 1px solid rgba(255,255,255,0.6); width: 100%; max-width: 540px; min-height: 460px; line-height: 1.55; overflow: hidden; }' +
     '@media (min-width: 1024px) { .lead-card.lf-card { padding: 32px; } }' +
     '.lf-progress { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }' +
     '.lf-progress-track { flex: 1; height: 4px; border-radius: 999px; background: rgba(11,20,16,0.08); overflow: hidden; }' +
