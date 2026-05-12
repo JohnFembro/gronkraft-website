@@ -10,6 +10,25 @@
 (function () {
   if (location.pathname.indexOf('/stader/solcellsbesiktning-') === -1) return;
 
+  // Version check — newer version always wins, regardless of script execution order.
+  // Bump this string in lockstep with the loader SHA to make new edits take effect.
+  var THIS_VERSION = 100;
+  var existing = window.__gkCityHeroVersion || 0;
+  if (existing >= THIS_VERSION) return;
+
+  // If an older version already injected, remove its handiwork before re-injecting
+  if (existing > 0) {
+    var oldHero = document.querySelector('[data-gk-city-hero]');
+    if (oldHero) oldHero.remove();
+    var oldHdr = document.querySelector('header[data-gk-header][data-gk-injected="1"]');
+    if (oldHdr) oldHdr.remove();
+    var oldFtr = document.querySelector('footer[data-gk-footer][data-gk-injected="1"]');
+    if (oldFtr) oldFtr.remove();
+    var oldStyle = document.querySelector('style[data-gk-city-hero-css]');
+    if (oldStyle) oldStyle.remove();
+  }
+  window.__gkCityHeroVersion = THIS_VERSION;
+
   var match = location.pathname.match(/\/stader\/solcellsbesiktning-([a-z]+)/);
   if (!match) return;
   var slug = match[1];
@@ -488,13 +507,15 @@
       }
     }
 
-    // Inject new header at top of body
+    // Inject new header at top of body (mark as ours so version-check can remove on update)
     document.body.insertAdjacentHTML('afterbegin', HEADER_HTML);
+    var injectedHdr = document.querySelector('header[data-gk-header]');
+    if (injectedHdr) injectedHdr.setAttribute('data-gk-injected', '1');
 
     // Inject new hero immediately after new header
-    var hdr = document.querySelector('header[data-gk-header]');
-    if (hdr) hdr.insertAdjacentHTML('afterend', buildHero());
+    if (injectedHdr) injectedHdr.insertAdjacentHTML('afterend', buildHero());
     else document.body.insertAdjacentHTML('afterbegin', buildHero());
+    var hdr = injectedHdr;
 
     // Apply critical card styles via setProperty with !important — highest CSS precedence possible
     // Apply synchronously AND in rAF for double-safety against timing issues
@@ -541,12 +562,11 @@
       }
     });
 
-    // Append new footer at end of body
+    // Append new footer at end of body (mark as ours)
     if (!document.querySelector('footer[data-gk-footer]')) {
       document.body.insertAdjacentHTML('beforeend', FOOTER_HTML);
-      console.log('[gk-city-hero] footer injected');
-    } else {
-      console.log('[gk-city-hero] footer already exists, skipping');
+      var ftr = document.querySelector('footer[data-gk-footer]');
+      if (ftr) ftr.setAttribute('data-gk-injected', '1');
     }
 
     bindHeader();
