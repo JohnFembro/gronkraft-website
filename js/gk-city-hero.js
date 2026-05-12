@@ -174,7 +174,8 @@
 
   // Custom CSS for the hero layout (form right, text left on desktop)
   var EXTRA_CSS =
-    '[data-gk-city-hero] { position: relative; min-height: 80vh; padding: 96px 0 64px; color: #fff; overflow: hidden; }' +
+    '[data-gk-city-hero] { position: relative; padding: 96px 0 80px; color: #fff; overflow: hidden; }' +
+    '@media (min-width: 960px) { [data-gk-city-hero] { padding: 120px 0 96px; } }' +
     '[data-gk-city-hero] [data-gk-sub-banner-image="true"] { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }' +
     '[data-gk-city-hero] [data-gk-sub-banner-overlay="true"] { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,32,23,.78) 0%, rgba(6,32,23,.6) 100%); z-index: 1; }' +
     '[data-gk-city-hero] [data-gk-wrap="true"] { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }' +
@@ -190,7 +191,7 @@
     '.lf-card, .lf-card * { box-sizing: border-box; }' +
     ".lf-card label, .lf-card input, .lf-card textarea, .lf-card fieldset, .lf-card legend, .lf-card p, .lf-card span, .lf-card h3, .lf-card button { text-transform: none !important; letter-spacing: normal !important; margin-bottom: 0; line-height: inherit; font-family: 'Nunito', system-ui, -apple-system, sans-serif; }" +
     '.lf-card img { max-width: 100%; display: block; }' +
-    '.lead-card.lf-card { display: flex; flex-direction: column; background: rgba(255,255,255,0.97); color: #0B1410; border-radius: 22px !important; padding: 26px; box-shadow: 0 30px 60px -30px rgba(11,20,16,0.35); border: 1px solid rgba(255,255,255,0.6); width: 100%; max-width: 540px; min-height: 460px; line-height: 1.55; overflow: hidden; }' +
+    '.lead-card.lf-card { display: flex !important; flex-direction: column !important; background: rgba(255,255,255,0.88) !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: #0B1410 !important; border-radius: 22px !important; padding: 26px !important; box-shadow: 0 30px 60px -30px rgba(11,20,16,0.35) !important; border: 1px solid rgba(255,255,255,0.6) !important; width: 100% !important; max-width: 540px !important; min-height: 460px !important; line-height: 1.55 !important; }' +
     '@media (min-width: 1024px) { .lead-card.lf-card { padding: 32px; } }' +
     '.lf-progress { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }' +
     '.lf-progress-track { flex: 1; height: 4px; border-radius: 999px; background: rgba(11,20,16,0.08); overflow: hidden; }' +
