@@ -477,6 +477,17 @@
       el.style.display = 'none';
     });
 
+    // Strip redirect attrs from hero-form EARLY (before Webflow binds its handler)
+    // so submission stays on page instead of navigating to /tack
+    var heroForm = document.getElementById('hero-form');
+    if (heroForm) {
+      heroForm.removeAttribute('redirect');
+      heroForm.removeAttribute('data-redirect');
+      if (window.jQuery) {
+        try { window.jQuery(heroForm).removeData('redirect'); } catch (e) {}
+      }
+    }
+
     // Inject new header at top of body
     document.body.insertAdjacentHTML('afterbegin', HEADER_HTML);
 
