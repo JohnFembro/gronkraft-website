@@ -190,7 +190,7 @@
             '<button type="button" class="lf-back" onclick="bfBack()">← Tillbaka</button>' +
             '<button type="button" class="btn btn-primary" onclick="bfSubmit()">Begär offert →</button>' +
           '</div>' +
-          '<p class="tiny" style="margin-top:12px;">Genom att skicka godkänner du vår <a href="/policyer-villkor/integritetspolicy">integritetspolicy</a>. Vi delar aldrig dina uppgifter.</p>' +
+          '<p class="tiny" style="margin-top:12px;">Genom att skicka godkänner du vår <a href="/policyer-villkor/integritetspolicy">integritetspolicy</a> och att vi får hantera dina uppgifter enligt den.</p>' +
         '</div>' +
 
         '<div class="lf-step" id="bf-done">' +
