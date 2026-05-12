@@ -157,7 +157,7 @@
 
   function formHTML() {
     return (
-      '<div class="lead-card lf-card" role="complementary" aria-label="Boka solcellsbesiktning" style="border-radius:22px!important;-webkit-border-radius:22px!important;overflow:hidden!important;background:rgba(255,255,255,0.92)!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:26px!important;box-shadow:0 30px 60px -30px rgba(11,20,16,0.35)!important;border:1px solid rgba(255,255,255,0.6)!important;display:flex!important;flex-direction:column!important;color:#0B1410!important;width:100%!important;max-width:540px!important;min-height:460px!important;line-height:1.55!important;">' +
+      '<div class="lead-card lf-card" role="complementary" aria-label="Boka solcellsbesiktning" style="border-radius:22px!important;-webkit-border-radius:22px!important;overflow:hidden!important;background:rgba(255,255,255,0.97)!important;padding:26px!important;box-shadow:0 30px 60px -30px rgba(11,20,16,0.35)!important;border:1px solid rgba(255,255,255,0.6)!important;display:flex!important;flex-direction:column!important;color:#0B1410!important;width:100%!important;max-width:540px!important;min-height:460px!important;line-height:1.55!important;">' +
         '<div class="lf-progress">' +
           '<div class="lf-progress-track"><div class="lf-progress-fill" id="bf-progress-fill"></div></div>' +
           '<span class="lf-progress-label" id="bf-progress-label">Steg 1 av 2</span>' +
@@ -493,9 +493,7 @@
       var apply = function (prop, val) { card.style.setProperty(prop, val, 'important'); };
       apply('display', 'flex');
       apply('flex-direction', 'column');
-      apply('background', 'rgba(255,255,255,0.9)');
-      apply('backdrop-filter', 'blur(10px)');
-      apply('-webkit-backdrop-filter', 'blur(10px)');
+      apply('background', 'rgba(255,255,255,0.97)');
       apply('color', '#0B1410');
       apply('border-radius', '22px');
       apply('padding', '26px');
