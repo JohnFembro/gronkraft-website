@@ -1433,7 +1433,7 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
   position: relative;
   background-image:
     linear-gradient(180deg, rgba(6,32,23,.85) 0%, rgba(6,32,23,.7) 100%),
-    url(https://cdn.prod.website-files.com/689459ca72b26f3abc2a641d/69f3711bbacb88d875bea362_Car%20port%20bakground.jpg);
+    var(--sol-process-bg, url(https://cdn.prod.website-files.com/689459ca72b26f3abc2a641d/69f3711bbacb88d875bea362_Car%20port%20bakground.jpg));
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
