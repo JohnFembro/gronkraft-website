@@ -1343,3 +1343,93 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
   [data-sol-lp] .grid-4 { grid-template-columns: 1fr; }
   [data-sol-lp] .floating-cta { right: 16px; bottom: 16px; padding: 12px 18px; font-size: 14px; }
 }
+
+/* ── Class-stripping compatibility overrides for Solceller landningssida ──
+   Webflow's whtml_builder strips class attributes from <header>, <section>
+   and <button>. These rules target by element type, id, or data-attribute
+   so the design still applies without classes on those tags. */
+[data-sol-lp] > header {
+  padding: 140px 0 96px; background: var(--sol-green-dark); color: var(--sol-text-on-dark);
+  position: relative; overflow: hidden;
+}
+[data-sol-lp] > header::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(circle at 80% 10%, rgba(31,138,76,0.18), transparent 50%);
+}
+[data-sol-lp] > header h1 { margin: 0 0 20px; color: var(--sol-text-on-dark); }
+[data-sol-lp] > header .eyebrow { color: #6FCB8F; }
+[data-sol-lp] > header .hero-intro { color: var(--sol-text-on-dark-muted); }
+[data-sol-lp] > header .trust-item { color: var(--sol-text-on-dark-muted); }
+
+/* Hero primary CTA — first <a> in .hero-cta-row */
+[data-sol-lp] > header .hero-cta-row > a:first-child {
+  background: var(--sol-green-primary); color: #fff !important;
+  padding: 14px 28px; border-radius: var(--sol-radius-pill);
+  font-weight: 700; font-size: 16px;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+[data-sol-lp] > header .hero-cta-row > a:first-child:hover {
+  background: var(--sol-green-secondary); transform: translateY(-1px);
+}
+
+/* Section bg defaults (white) + gray override */
+[data-sol-lp] > section { padding: 96px 0; background: #fff; }
+[data-sol-lp] > section[data-sol-bg="gray"],
+[data-sol-lp] > section#losningar,
+[data-sol-lp] > section#priser { background: var(--sol-gray-light); }
+
+/* Card bg flips with section bg */
+[data-sol-lp] > section .card { background: var(--sol-gray-light); border-color: transparent; }
+[data-sol-lp] > section[data-sol-bg="gray"] .card,
+[data-sol-lp] > section#losningar .card,
+[data-sol-lp] > section#priser .card { background: #fff; border-color: var(--sol-gray-border); }
+
+/* Component cards (vad-ingår-grid) — white sections, white cards by default override */
+[data-sol-lp] > section .component-card { background: #fff; border-color: var(--sol-gray-border); }
+
+/* FAQ trigger button (class stripped from <button>) */
+[data-sol-lp] .faq-item > button {
+  width: 100%; padding: 24px 0; display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; text-align: left;
+  font-size: 18px; font-weight: 700; color: var(--sol-text-dark);
+  background: none; border: none; cursor: pointer; font-family: inherit;
+}
+[data-sol-lp] .faq-item > button:hover { color: var(--sol-green-primary); }
+[data-sol-lp] .faq-item.open .faq-toggle { background: var(--sol-green-primary); color: #fff; transform: rotate(45deg); }
+
+/* Price card buttons — <a> inside .price-card, class stripped */
+[data-sol-lp] .price-card > a {
+  margin-top: auto; justify-content: center; width: 100%;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: var(--sol-radius-pill);
+  font-weight: 700; font-size: 16px;
+  background: transparent; color: var(--sol-text-dark) !important;
+  box-shadow: inset 0 0 0 1.5px var(--sol-text-dark);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+[data-sol-lp] .price-card > a:hover { background: var(--sol-text-dark); color: #fff !important; }
+[data-sol-lp] .price-card.featured > a {
+  background: var(--sol-green-primary); color: #fff !important; box-shadow: none;
+}
+[data-sol-lp] .price-card.featured > a:hover { background: var(--sol-green-secondary); }
+
+/* Floating CTA — <a class="floating-cta"> stripped; target by id */
+#floating-cta {
+  position: fixed; right: 24px; bottom: 24px; z-index: 40;
+  padding: 14px 22px; border-radius: 999px;
+  background: #1F8A4C; color: #fff !important;
+  font-weight: 700; font-size: 15px;
+  box-shadow: 0 10px 30px rgba(6,21,15,0.25);
+  display: none; align-items: center; gap: 8px;
+  transition: transform 0.2s ease;
+}
+#floating-cta.visible { display: inline-flex; }
+#floating-cta:hover { transform: translateY(-2px); }
+@media (max-width: 479px) {
+  #floating-cta { right: 16px; bottom: 16px; padding: 12px 18px; font-size: 14px; }
+}
+
+@media (max-width: 768px) {
+  [data-sol-lp] > header { padding: 80px 0 64px; }
+}
