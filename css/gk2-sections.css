@@ -1540,3 +1540,22 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
 .lead-card.is-done .lead-success {
   padding: 0 !important;
 }
+
+/* Force inline anchors inside the .tiny consent line so the integritetspolicy
+   link doesn't wrap onto its own row. Webflow's default <a> styles can add
+   inline-block + padding which forces a line break — neutralize that. */
+.lf-card .tiny,
+.lead-card .tiny {
+  display: block !important;
+}
+.lf-card .tiny a,
+.lf-card .tiny a:visited,
+.lead-card .tiny a,
+.lead-card .tiny a:visited {
+  display: inline !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: inherit !important;
+  text-decoration: underline !important;
+  white-space: normal !important;
+}
