@@ -11,22 +11,18 @@
   if (location.pathname.indexOf('/stader/solcellsbesiktning-') === -1) return;
 
   // Version check — newer version always wins, regardless of script execution order.
-  // Bump this string in lockstep with the loader SHA to make new edits take effect.
-  var THIS_VERSION = 100;
+  // Bump this in lockstep with the loader SHA to make new edits take effect.
+  var THIS_VERSION = 101;
   var existing = window.__gkCityHeroVersion || 0;
   if (existing >= THIS_VERSION) return;
 
-  // If an older version already injected, remove its handiwork before re-injecting
-  if (existing > 0) {
-    var oldHero = document.querySelector('[data-gk-city-hero]');
-    if (oldHero) oldHero.remove();
-    var oldHdr = document.querySelector('header[data-gk-header][data-gk-injected="1"]');
-    if (oldHdr) oldHdr.remove();
-    var oldFtr = document.querySelector('footer[data-gk-footer][data-gk-injected="1"]');
-    if (oldFtr) oldFtr.remove();
-    var oldStyle = document.querySelector('style[data-gk-city-hero-css]');
-    if (oldStyle) oldStyle.remove();
-  }
+  // Always remove prior injection — older un-versioned predecessors don't set the
+  // marker, so we can't rely on `existing > 0` here. Clean up unconditionally.
+  var prior = document.querySelectorAll(
+    '[data-gk-city-hero], header[data-gk-header][data-gk-injected="1"], ' +
+    'footer[data-gk-footer][data-gk-injected="1"], style[data-gk-city-hero-css]'
+  );
+  for (var i = 0; i < prior.length; i++) prior[i].remove();
   window.__gkCityHeroVersion = THIS_VERSION;
 
   var match = location.pathname.match(/\/stader\/solcellsbesiktning-([a-z]+)/);
