@@ -358,21 +358,32 @@
     var msg = (document.getElementById('bf-msg') || {}).value || '';
 
     var summary = [
-      'Kundtyp: ' + bfState.kundtyp,
+      '═══ SOLCELLSBESIKTNING ═══',
+      'Tjänst: Solcellsbesiktning',
       'Stad: ' + cityName,
+      'Kundtyp: ' + (bfState.kundtyp || ''),
+      '',
+      'Namn: ' + namn,
+      'Telefon: ' + tel,
       'E-post: ' + epost,
       'Adress: ' + adress,
       orgnr ? 'Org.nr: ' + orgnr : '',
-      msg ? '— Meddelande: ' + msg : ''
+      msg ? '\nMeddelande:\n' + msg : ''
     ].filter(Boolean).join('\n');
+
+    // Tag namn so John can identify lead source at a glance
+    var namnTagged = '[Besiktning ' + cityName + '] ' + namn;
 
     var f = document.getElementById('hero-form');
     if (f) {
+      // Strip redirect attrs so Webflow doesn't navigate to /tack — user stays on page
+      f.removeAttribute('redirect');
+      f.removeAttribute('data-redirect');
       var setVal = function (name, val) {
         var i = f.querySelector('[name="' + name + '"]');
         if (i) i.value = val;
       };
-      setVal('namn', namn);
+      setVal('namn', namnTagged);
       setVal('Phone', tel);
       setVal('Message', summary);
       // Trigger Webflow's submit handler
@@ -422,6 +433,23 @@
     var hdr = document.querySelector('header[data-gk-header]');
     if (hdr) hdr.insertAdjacentHTML('afterend', buildHero());
     else document.body.insertAdjacentHTML('afterbegin', buildHero());
+
+    // Apply critical card styles as inline style — beats any external CSS
+    var card = document.querySelector('[data-gk-city-hero] .lead-card');
+    if (card) {
+      card.style.cssText =
+        'display:flex;flex-direction:column;' +
+        'background:rgba(255,255,255,0.9);' +
+        'backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);' +
+        'color:#0B1410;' +
+        'border-radius:22px;' +
+        'padding:26px;' +
+        'box-shadow:0 30px 60px -30px rgba(11,20,16,0.35);' +
+        'border:1px solid rgba(255,255,255,0.6);' +
+        'width:100%;max-width:540px;' +
+        'min-height:460px;line-height:1.55;' +
+        'overflow:hidden;';
+    }
 
     bindHeader();
   }
