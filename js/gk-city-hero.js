@@ -185,7 +185,11 @@
     '[data-gk-city-hero] [data-gk-breadcrumb="true"] a:hover { color: #fff; text-decoration: underline; }' +
     '[data-gk-city-hero] [data-gk-bc-sep="true"] { margin: 0 8px; opacity: .5; }' +
     '[data-gk-city-hero] [data-gk-sub-h1="true"] { font-size: clamp(36px, 5vw, 56px); font-weight: 900; line-height: 1.05; letter-spacing: -.01em; margin: 0 0 16px; color: #fff; }' +
-    '[data-gk-city-hero] [data-gk-sub-intro="true"] { font-size: clamp(16px, 1.5vw, 18px); line-height: 1.55; color: rgba(255,255,255,.85); max-width: 56ch; margin: 0; }' +
+    '[data-gk-city-hero] [data-gk-sub-intro="true"] { font-size: clamp(16px, 1.5vw, 18px); line-height: 1.55; color: rgba(255,255,255,.85); max-width: 56ch; margin: 0 0 32px; }' +
+    '[data-gk-city-hero] [data-gk-city-usps="true"] { display: flex; flex-wrap: wrap; gap: 32px 48px; margin-top: 8px; }' +
+    '[data-gk-city-hero] [data-gk-city-usp="true"] { display: flex; flex-direction: column; }' +
+    '[data-gk-city-hero] [data-gk-city-usp-num="true"] { font-size: clamp(36px, 4vw, 48px); font-weight: 900; line-height: 1; color: #4CC07A; letter-spacing: -.02em; margin-bottom: 6px; }' +
+    '[data-gk-city-hero] [data-gk-city-usp-lbl="true"] { font-size: 14px; color: rgba(255,255,255,.85); letter-spacing: 0.02em; }' +
     // ===== lf-card form styles (extracted from Solceller form embed) =====
     '@keyframes lfFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }' +
     '.lf-card, .lf-card * { box-sizing: border-box; }' +
@@ -251,6 +255,11 @@
           '<div data-gk-sub-banner-inner="true">' +
             '<h1 data-gk-sub-h1="true">Solcellsbesiktning i ' + cityName + '</h1>' +
             '<p data-gk-sub-intro="true">' + introText + '</p>' +
+            '<div data-gk-city-usps="true">' +
+              '<div data-gk-city-usp="true"><div data-gk-city-usp-num="true">100%</div><div data-gk-city-usp-lbl="true">Oberoende</div></div>' +
+              '<div data-gk-city-usp="true"><div data-gk-city-usp-num="true">24h</div><div data-gk-city-usp-lbl="true">Till offert</div></div>' +
+              '<div data-gk-city-usp="true"><div data-gk-city-usp-num="true">30+</div><div data-gk-city-usp-lbl="true">Kontrollpunkter</div></div>' +
+            '</div>' +
           '</div>' +
           '<div data-sol-lp="true">' + formHTML() + '</div>' +
         '</div>' +
