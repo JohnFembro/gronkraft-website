@@ -1238,10 +1238,11 @@ textarea[data-gk-cf="input"] { resize: vertical; min-height: 84px; line-height: 
   display: flex; flex-direction: column; position: relative;
 }
 [data-sol-lp] .price-card.featured {
-  border: 2px solid var(--sol-green-primary);
-  transform: translateY(-8px);
-  box-shadow: 0 12px 32px rgba(31,138,76,0.10);
+  border: 1px solid var(--sol-gray-border);
+  transform: none;
+  box-shadow: none;
 }
+[data-sol-lp] .price-badge { display: none; }
 [data-sol-lp] .price-badge {
   position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
   background: var(--sol-green-primary); color: #fff;
