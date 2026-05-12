@@ -435,8 +435,10 @@
     else document.body.insertAdjacentHTML('afterbegin', buildHero());
 
     // Apply critical card styles via setProperty with !important — highest CSS precedence possible
-    var card = document.querySelector('[data-gk-city-hero] .lead-card');
-    if (card) {
+    // Use rAF to ensure the element is fully committed to layout before styling
+    requestAnimationFrame(function () {
+      var card = document.querySelector('[data-gk-city-hero] .lead-card');
+      if (!card) { console.warn('[gk-city-hero] .lead-card not found'); return; }
       var apply = function (prop, val) { card.style.setProperty(prop, val, 'important'); };
       apply('display', 'flex');
       apply('flex-direction', 'column');
@@ -453,7 +455,9 @@
       apply('min-height', '460px');
       apply('line-height', '1.55');
       apply('overflow', 'hidden');
-    }
+      console.log('[gk-city-hero] applied card styles, computed border-radius:',
+        getComputedStyle(card).borderRadius);
+    });
 
     bindHeader();
   }
