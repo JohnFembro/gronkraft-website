@@ -145,14 +145,14 @@
 
         '<div class="lf-step" id="bf-2">' +
           '<div class="lf-head"><h3 id="bf2-title">Dina kontaktuppgifter</h3></div>' +
-          '<div class="field lf-field"><label class="lf-label" id="bf2-namn-label">Namn</label><input type="text" id="bf-namn" autocomplete="name" placeholder="För- och efternamn"></div>' +
-          '<div class="field lf-field" id="bf-orgnr-wrap" style="display:none;"><label class="lf-label">Org.nr <span class="lf-optional">(Valfritt)</span></label><input type="text" id="bf-orgnr" placeholder="Organisationsnummer"></div>' +
+          '<div class="field lf-field"><label class="lf-label" for="bf-namn" id="bf2-namn-label">Namn</label><input type="text" id="bf-namn" name="bf-namn" autocomplete="name" placeholder="För- och efternamn"></div>' +
+          '<div class="field lf-field" id="bf-orgnr-wrap" style="display:none;"><label class="lf-label" for="bf-orgnr">Org.nr <span class="lf-optional">(Valfritt)</span></label><input type="text" id="bf-orgnr" name="bf-orgnr" autocomplete="off" placeholder="Organisationsnummer"></div>' +
           '<div class="lf-row">' +
-            '<div class="field lf-field"><label class="lf-label">Telefon</label><input type="tel" id="bf-tel" autocomplete="tel" placeholder="+46"></div>' +
-            '<div class="field lf-field"><label class="lf-label">E-post</label><input type="email" id="bf-epost" autocomplete="email" placeholder="namn@exempel.se"></div>' +
+            '<div class="field lf-field"><label class="lf-label" for="bf-tel">Telefon</label><input type="tel" id="bf-tel" name="bf-tel" autocomplete="tel" placeholder="+46"></div>' +
+            '<div class="field lf-field"><label class="lf-label" for="bf-epost">E-post</label><input type="email" id="bf-epost" name="bf-epost" autocomplete="email" placeholder="namn@exempel.se"></div>' +
           '</div>' +
-          '<div class="field lf-field"><label class="lf-label">Adress för anläggningen</label><input type="text" id="bf-adress" autocomplete="street-address" placeholder="Gatuadress"></div>' +
-          '<div class="field lf-field"><label class="lf-label">Meddelande <span class="lf-optional">(Valfritt)</span></label><textarea id="bf-msg" placeholder="t.ex. anläggningens storlek, ålder, ev. problem"></textarea></div>' +
+          '<div class="field lf-field"><label class="lf-label" for="bf-adress">Adress för anläggningen</label><input type="text" id="bf-adress" name="bf-adress" autocomplete="street-address" placeholder="Gatuadress"></div>' +
+          '<div class="field lf-field"><label class="lf-label" for="bf-msg">Meddelande <span class="lf-optional">(Valfritt)</span></label><textarea id="bf-msg" name="bf-msg" placeholder="t.ex. anläggningens storlek, ålder, ev. problem"></textarea></div>' +
           '<div class="lf-err" id="bf2-err" hidden role="alert" aria-live="polite">Fyll i alla obligatoriska fält.</div>' +
           '<div class="lf-nav">' +
             '<button type="button" class="lf-back" onclick="bfBack()">← Tillbaka</button>' +
