@@ -67,6 +67,32 @@
     }
   }, true);
 
+  // The lf-card multi-step uses onclick="mfSubmit(...)" etc. — those handlers
+  // populate the bridge form AND transition UI to the success step before any
+  // submit event fires. Blocking only the submit event leaves a fake success.
+  // We intercept the click in capture phase so onclick never runs.
+  function isLeadSubmitClick(btn) {
+    if (!btn) return false;
+    if (btn.matches('[data-gk-cf="submit"]')) return true;
+    if (btn.type === 'submit' && btn.closest('form[data-gk-bridge="true"], #hero-form, form[data-gk-cf="root"]')) return true;
+    if (!btn.closest('.lf-card')) return false;
+    var onclick = btn.getAttribute('onclick') || '';
+    if (/(?:mf|bf|sol|ef|cf)Submit\(/.test(onclick)) return true;
+    var txt = (btn.textContent || btn.value || '').trim().toLowerCase();
+    return /skicka|beg.r offert/.test(txt);
+  }
+
+  document.addEventListener('click', function (e) {
+    if (hasConsent()) return;
+    var btn = e.target.closest('button, input, a');
+    if (!isLeadSubmitClick(btn)) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    e.stopPropagation();
+    showToast();
+    openBanner();
+  }, true);
+
   var origSubmit = HTMLFormElement.prototype.submit;
   HTMLFormElement.prototype.submit = function () {
     if (block(this)) return;
