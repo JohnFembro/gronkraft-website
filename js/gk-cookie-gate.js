@@ -6,13 +6,14 @@
 */
 (function () {
   function hasConsent() {
-    return /(?:^|;\s*)(cookieyes-consent|cky-consent)=/.test(document.cookie);
-  }
-
-  function cookieYesInstalled() {
-    if (window.CookieYes) return true;
-    if (document.querySelector('script[src*="cookieyes"]')) return true;
-    if (document.querySelector('[class*="cky-"]')) return true;
+    // Broad match — CookieYes versions differ on cookie naming
+    if (/(?:^|;\s*)(cookieyes-consent|cky-consent|cookie-yes-consent|CookieConsent)=/i.test(document.cookie)) return true;
+    try {
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (k && /(cookieyes|cky.?consent|cookie.?consent)/i.test(k)) return true;
+      }
+    } catch (e) {}
     return false;
   }
 
@@ -49,16 +50,19 @@
 
   function block(form) {
     if (hasConsent()) return false;
-    if (!cookieYesInstalled()) return false;
     if (!form || !form.matches || !form.matches(GATED)) return false;
     showToast();
     openBanner();
     return true;
   }
 
+  // Capture phase + stopImmediatePropagation — Webflow's submit handler is
+  // bound on the form element itself (target phase). stopPropagation alone
+  // would NOT stop Webflow's AJAX submit; only stopImmediatePropagation will.
   document.addEventListener('submit', function (e) {
     if (block(e.target)) {
       e.preventDefault();
+      e.stopImmediatePropagation();
       e.stopPropagation();
     }
   }, true);
