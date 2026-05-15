@@ -12,7 +12,7 @@
 
   // Version check — newer version always wins, regardless of script execution order.
   // Bump this in lockstep with the loader SHA to make new edits take effect.
-  var THIS_VERSION = 102;
+  var THIS_VERSION = 103;
   var existing = window.__gkCityHeroVersion || 0;
   if (existing >= THIS_VERSION) return;
 
@@ -63,7 +63,16 @@
   }
 
   var cityName = CITY[slug] || (slug.charAt(0).toUpperCase() + slug.slice(1));
-  var imageURL = BASE + IMAGES[hashSlug(slug)];
+
+  // Per-city hero image override — takes precedence over the hash distribution
+  var CITY_IMAGE_OVERRIDE = {
+    malmo: '6a06ca3f545ca92639bd2ab2_karl-hornfeldt-X0wvdQZbZAw-unsplash.avif'
+  };
+  var CITY_IMAGE_ALT = {
+    malmo: 'Öresundsbron som sträcker sig över lugnt vatten under en klar himmel.'
+  };
+  var imageURL = BASE + (CITY_IMAGE_OVERRIDE[slug] || IMAGES[hashSlug(slug)]);
+  var imageAlt = CITY_IMAGE_ALT[slug] || 'Solpaneler';
 
   // City-specific intro paragraphs (the existing copy from the old hero — preserved per user request)
   // Falls back to a generic intro for any city not explicitly mapped.
@@ -291,7 +300,7 @@
   function buildHero() {
     var html =
       '<section data-gk-city-hero="true" id="hero">' +
-        '<img data-gk-sub-banner-image="true" src="' + imageURL + '" alt="Solpaneler"/>' +
+        '<img data-gk-sub-banner-image="true" src="' + imageURL + '" alt="' + imageAlt + '"/>' +
         '<div data-gk-sub-banner-overlay="true" aria-hidden="true"></div>' +
         '<div data-gk-wrap="true">' +
           '<nav data-gk-breadcrumb="true" aria-label="Brödsmulor">' +
