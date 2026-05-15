@@ -12,7 +12,7 @@
 
   // Version check — newer version always wins, regardless of script execution order.
   // Bump this in lockstep with the loader SHA to make new edits take effect.
-  var THIS_VERSION = 103;
+  var THIS_VERSION = 104;
   var existing = window.__gkCityHeroVersion || 0;
   if (existing >= THIS_VERSION) return;
 
@@ -66,10 +66,22 @@
 
   // Per-city hero image override — takes precedence over the hash distribution
   var CITY_IMAGE_OVERRIDE = {
-    malmo: '6a06ca3f545ca92639bd2ab2_karl-hornfeldt-X0wvdQZbZAw-unsplash.avif'
+    malmo: '6a06ca3f545ca92639bd2ab2_karl-hornfeldt-X0wvdQZbZAw-unsplash.avif',
+    stockholm: '6a06cf3c54a8c53e8ef60cce_hero-stockholm.jpg',
+    goteborg: '6a06cf3c472278aecaa908f4_hero-goteborg.jpg',
+    uppsala: '6a06cf3c13f7d2fc9681aff9_hero-uppsala.jpg',
+    halmstad: '6a06cf3cd7a0178fb447350a_hero-halmstad.jpg',
+    helsingborg: '6a06cf3ceb6e61f22e754e91_hero-helsingborg.jpg',
+    varberg: '6a06cf3cabb9f088967dc050_hero-varberg.jpg'
   };
   var CITY_IMAGE_ALT = {
-    malmo: 'Öresundsbron som sträcker sig över lugnt vatten under en klar himmel.'
+    malmo: 'Öresundsbron som sträcker sig över lugnt vatten under en klar himmel.',
+    stockholm: 'Stadsvy över Stockholm med ikoniska byggnader längs vattnet.',
+    goteborg: 'Stadsvy över Göteborg med hamn och kanaler.',
+    uppsala: 'Stadsvy över Uppsala med domkyrkan och äldre bebyggelse.',
+    halmstad: 'Stadsvy över Halmstad vid kusten.',
+    helsingborg: 'Stadsvy över Helsingborg vid Öresund.',
+    varberg: 'Stadsvy över Varberg med fästning och hav.'
   };
   var imageURL = BASE + (CITY_IMAGE_OVERRIDE[slug] || IMAGES[hashSlug(slug)]);
   var imageAlt = CITY_IMAGE_ALT[slug] || 'Solpaneler';
