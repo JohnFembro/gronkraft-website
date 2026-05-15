@@ -12,7 +12,7 @@
 
   // Version check — newer version always wins, regardless of script execution order.
   // Bump this in lockstep with the loader SHA to make new edits take effect.
-  var THIS_VERSION = 105;
+  var THIS_VERSION = 106;
   var existing = window.__gkCityHeroVersion || 0;
   if (existing >= THIS_VERSION) return;
 
@@ -540,10 +540,16 @@
         }
       }
     }
+    var canonical = ORIGIN + location.pathname;
     document.querySelectorAll('script[type="application/ld+json"]').forEach(function (s) {
       if (s.hasAttribute('data-gk-jsonld-fixed')) return;
       var data;
       try { data = JSON.parse(s.textContent); } catch (e) { return; }
+      if (data['@type'] === 'WebPage') {
+        // Override url to actual canonical — source per-page JSON-LD has wrong path
+        data.url = canonical;
+        if (data.mainEntity && data.mainEntity.url) data.mainEntity.url = canonical;
+      }
       if (data['@type'] === 'WebPage' && data.about && data.about['@type'] === 'FAQPage' && data.about.mainEntity) {
         var faq = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: data.about.mainEntity };
         delete data.about;
@@ -558,6 +564,26 @@
       s.textContent = JSON.stringify(data);
       s.setAttribute('data-gk-jsonld-fixed', '1');
     });
+
+    // SEO: emit BreadcrumbList JSON-LD matching the visual breadcrumb
+    if (!document.querySelector('script[data-gk-breadcrumb]')) {
+      var crumb = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Hem', item: ORIGIN + '/' },
+          { '@type': 'ListItem', position: 2, name: 'Besiktning', item: ORIGIN + '/besiktning-service' },
+          { '@type': 'ListItem', position: 3, name: cityName, item: canonical }
+        ]
+      };
+      var cs = document.createElement('script');
+      cs.type = 'application/ld+json';
+      cs.setAttribute('data-gk-breadcrumb', '1');
+      cs.setAttribute('data-gk-jsonld-fixed', '1');
+      cs.setAttribute('data-gk-abs', '1');
+      cs.textContent = JSON.stringify(crumb);
+      document.head.appendChild(cs);
+    }
 
     // Hide old footer (section.section-5 contains the old footer-column structure)
     document.querySelectorAll('section.section-5').forEach(function (el) {
