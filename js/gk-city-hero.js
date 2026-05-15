@@ -12,7 +12,7 @@
 
   // Version check — newer version always wins, regardless of script execution order.
   // Bump this in lockstep with the loader SHA to make new edits take effect.
-  var THIS_VERSION = 104;
+  var THIS_VERSION = 105;
   var existing = window.__gkCityHeroVersion || 0;
   if (existing >= THIS_VERSION) return;
 
@@ -506,7 +506,58 @@
       oldHero.style.height = '1px';
       oldHero.style.overflow = 'hidden';
       oldHero.setAttribute('aria-hidden', 'true');
+
+      // SEO: demote leftover H1 in hidden section so we don't ship 2 H1s
+      oldHero.querySelectorAll('h1').forEach(function (h) {
+        var h2 = document.createElement('h2');
+        for (var i = 0; i < h.attributes.length; i++) {
+          h2.setAttribute(h.attributes[i].name, h.attributes[i].value);
+        }
+        h2.innerHTML = h.innerHTML;
+        h.parentNode.replaceChild(h2, h);
+      });
+      // Strip stray duplicated <strong>privatperson, brf eller företag</strong>
+      oldHero.querySelectorAll('.large-paragraph strong').forEach(function (s) {
+        if (/privatperson.*brf.*f[oö]retag/i.test(s.textContent)) s.remove();
+      });
     }
+
+    // SEO: lift nested FAQPage out of WebPage.about → top-level FAQPage
+    // Also absolutify any relative URLs (url/item/@id) in city-page JSON-LD
+    var ORIGIN = 'https://www.gronkraftab.se';
+    function _abs(u) {
+      if (typeof u !== 'string') return u;
+      if (u.indexOf('http') === 0 || u.indexOf('//') === 0) return u;
+      if (u.charAt(0) === '/') return ORIGIN + u;
+      return u;
+    }
+    function _walk(o) {
+      if (Array.isArray(o)) { for (var i = 0; i < o.length; i++) _walk(o[i]); return; }
+      if (o && typeof o === 'object') {
+        for (var k in o) {
+          if (k === 'url' || k === 'item' || k === '@id') o[k] = _abs(o[k]);
+          else if (typeof o[k] === 'object') _walk(o[k]);
+        }
+      }
+    }
+    document.querySelectorAll('script[type="application/ld+json"]').forEach(function (s) {
+      if (s.hasAttribute('data-gk-jsonld-fixed')) return;
+      var data;
+      try { data = JSON.parse(s.textContent); } catch (e) { return; }
+      if (data['@type'] === 'WebPage' && data.about && data.about['@type'] === 'FAQPage' && data.about.mainEntity) {
+        var faq = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: data.about.mainEntity };
+        delete data.about;
+        var faqEl = document.createElement('script');
+        faqEl.type = 'application/ld+json';
+        faqEl.setAttribute('data-gk-faq-lifted', '1');
+        faqEl.setAttribute('data-gk-jsonld-fixed', '1');
+        faqEl.textContent = JSON.stringify(faq);
+        s.parentNode.insertBefore(faqEl, s.nextSibling);
+      }
+      _walk(data);
+      s.textContent = JSON.stringify(data);
+      s.setAttribute('data-gk-jsonld-fixed', '1');
+    });
 
     // Hide old footer (section.section-5 contains the old footer-column structure)
     document.querySelectorAll('section.section-5').forEach(function (el) {
