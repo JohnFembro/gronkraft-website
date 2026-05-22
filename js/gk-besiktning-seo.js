@@ -121,29 +121,8 @@
     s.textContent = JSON.stringify(ld);
     document.head.appendChild(s);
 
-    var sasection = document.querySelector('[data-gk-seo-section="serviceavtal"] .main-container');
-    if (!sasection) return;
-    var faqWrap = document.createElement('div');
-    faqWrap.style.cssText = 'margin-top:40px;';
-    var heading = document.createElement('h3');
-    heading.className = 'heading-24px bold';
-    heading.style.cssText = 'margin-top:24px;margin-bottom:16px;';
-    heading.textContent = 'Vanliga frågor om underhåll, driftstopp och serviceavtal';
-    faqWrap.appendChild(heading);
-    faqs.forEach(function (f) {
-      var details = document.createElement('details');
-      details.style.cssText = 'margin:12px 0;padding:16px 20px;border:1px solid rgba(11,20,16,0.08);border-radius:12px;background:#fff;';
-      var summary = document.createElement('summary');
-      summary.style.cssText = 'cursor:pointer;font-weight:700;font-size:16px;color:#0B1410;list-style:none;';
-      summary.textContent = f.q;
-      var ans = document.createElement('p');
-      ans.style.cssText = 'margin:12px 0 0;color:#2A332E;line-height:1.55;font-size:15px;';
-      ans.textContent = f.a;
-      details.appendChild(summary);
-      details.appendChild(ans);
-      faqWrap.appendChild(details);
-    });
-    sasection.appendChild(faqWrap);
+    // Visible accordion FAQ removed per user request — JSON-LD schema kept above
+    // for rich-snippet eligibility in SERP.
   }
 
   if (document.readyState === 'loading') {
