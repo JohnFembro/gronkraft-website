@@ -89,7 +89,7 @@
     // Rewrite H1 to lead with "Laddbox"
     var h1 = document.querySelector('h1');
     if (h1 && /elbilsladdning/i.test(h1.textContent)) {
-      h1.textContent = 'Laddbox för hemma, BRF och företag';
+      h1.textContent = 'Laddbox hemma, BRF och företag';
     }
 
     // Find anchor: the FAQ section
