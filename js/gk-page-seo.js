@@ -16,6 +16,7 @@
 
   if (path === '/besiktning-service') ready(initBesiktning);
   else if (path === '/elbilsladdning') ready(initLaddbox);
+  else if (path === '/' || path === '') ready(initHome);
 
   /* ───────────────────────── /besiktning-service ───────────────────────── */
   function initBesiktning() {
@@ -138,6 +139,31 @@
       ['Kan jag installera en laddbox själv?', 'Nej. Installation av laddbox kräver behörig elektriker och anmälan till nätägaren. Försäkring och garanti gäller inte om installationen utförs av icke-behörig person. Det är också en säkerhetsrisk — laddboxar drar höga strömmar och felinstallation kan leda till brand.'],
       ['Kan jag få en laddbox med dubbla uttag?', 'Ja. De flesta laddboxtillverkare (Garo, Zaptec, Charge Amps med flera) erbjuder modeller med dubbla uttag. För tvåbils-hushåll är detta ofta den mest kostnadseffektiva lösningen, men reducerar laddhastigheten när båda bilarna laddar samtidigt.'],
       ['Vad händer om jag flyttar — kan jag ta laddboxen med jag?', 'Tekniskt går det att demontera och flytta laddboxen, men det kräver en behörig elektriker på båda sidor och anmälan till nätägaren igen. I praktiken är det ofta enklare att låta laddboxen vara kvar (kan öka husets försäljningsvärde) och installera en ny i det nya hemmet.']
+    ]);
+  }
+
+  /* ───────────────────────── / (home) ─────────────────────────
+     Design-safe: only edits H1 textContent (keeps all classes/styling)
+     and injects invisible JSON-LD. No new visible sections. */
+  function initHome() {
+    // H1 reorder to lead with strongest commercial keyword
+    var h1 = document.querySelector('h1');
+    if (h1 && /Elbilsladdning.{0,40}Besiktning/i.test(h1.textContent)) {
+      h1.textContent = 'Solceller, batteri, laddbox & besiktning';
+    }
+
+    // FAQPage schema for the 10 visible FAQs
+    injectFaqLd([
+      ['Vad kostar det att installera en elbilsladdare?', 'Kostnaden varierar beroende på installationens kontext, är det en hemmainstallation eller åt en bostadsrättsförening eller företag. För en hemmainstallation ligger priset mellan 5000-7000 kr och i en gemensamhetsanläggning ligger priset mellan 7000-10 000 kr efter bidrag.'],
+      ['Kan jag få ROT-avdrag på elbilsladdare?', 'Nej, för installation av laddpunkt används inte ROT-avdrag. Då gäller i stället skattereduktion för grön teknik. För laddpunkt innebär det att du kan få skattereduktion med 50 procent av kostnaden för både arbete och material. Skillnaden mot ROT är att ROT bara gäller arbetskostnaden, medan grön teknik omfattar både arbete och material.'],
+      ['Hur lång tid tar en laddboxinstallation?', 'En standardinstallation tar vanligtvis 2–4 timmar. Mer komplexa installationer, till exempel i gemensamhetsanläggningar kan det ta längre tid. Vi ger dig alltid en tydlig tidsplan innan arbetet påbörjas.'],
+      ['Vilka laddboxmärken jobbar ni med?', 'Vi har tagit ett aktivt val att hålla oss neutrala och inte samarbeta med några specifika tillverkare av laddboxar. Du kan vara trygg i att vi erbjuder marknadens ledande tillverkare och väljer alltid laddbox utifrån dina specifika behov. Vi rekommenderar aldrig produkter utan att ha granskat kvalitet, garantier och kompatibilitet.'],
+      ['Varför behöver jag besikta min solcellsanläggning?', 'En solcellsanläggning är en investering på hundratusentals kronor. Regelbundna besiktningar säkerställer optimal produktion, att garantier hålls och att potentiella fel upptäcks tidigt — innan de blir dyra skador.'],
+      ['Hur mycket kan jag spara med solceller?', 'Det beror på din förbrukning, takets läge och anläggningens storlek. En genomsnittlig villa med en 10 kWp-anläggning kan spara 15 000–25 000 kr per år i minskade elkostnader och elförsäljning. Betalningstiden är normalt 8–12 år.'],
+      ['Varför har man batteri tillsammans med sin solcellsanläggning?', 'Solceller producerar el från solljus dagtid. Ett batteripaket lagrar överskottsel som du sedan kan använda på kvällen eller när solproduktionen är låg. Kombinationen ger maximal självförsörjning och bäst skydd mot höga elpriser.'],
+      ['Hur länge håller solceller?', 'Kvalitetspaneler håller i 25–30 år och levereras med produktgarantier på 10–15 år samt prestationsgarantier på upp till 25 år. Med rätt underhåll kan anläggningen vara lönsam i 30+ år. För att hålla en solcellsanläggning säker och produktiv krävs löpande underhåll och gärna fortlöpande kontroller.'],
+      ['Vad ingår i ett serviceavtal?', 'Det beror på vilken partner som erbjuder serviceavtalet och dina specifika behov, men generellt brukar serviceavtal inkludera regelbundna produktionskontroller, visuell besiktning av paneler och anslutningar, elskåpsinspektion, rensning av skräp och mossa, samt prioriterad hjälp vid driftstopp. Vi hjälper dig hitta bästa avtalet efter dina behov.'],
+      ['Hur snabbt kan ni komma ut och besikta?', 'Normalt bokar vi in en besiktning inom 1–2 veckor. Vid akuta driftstopp för kunder med serviceavtal prioriteras ni och vi siktar på att ha en tekniker på plats inom 48 timmar.']
     ]);
   }
 
