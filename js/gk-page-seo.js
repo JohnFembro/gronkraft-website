@@ -104,31 +104,30 @@
     var container = document.createElement('div');
     container.setAttribute('data-gk-laddbox-seo', '1');
     container.innerHTML =
-      '<section class="main-section" data-gk-seo-section="laddbox-brands">' +
-        '<div class="main-container">' +
-          '<h2 class="heading-l bold">Garo, Charge Amps, Defa, Zaptec eller Easee — så väljer du rätt laddbox</h2>' +
-          '<p class="large-paragraph italic">Marknaden domineras idag av fem tillverkare: <strong>Garo</strong>, <strong>Charge Amps</strong>, <strong>Defa</strong>, <strong>Zaptec</strong> och <strong>Easee</strong>. Alla levererar laddboxar som klarar svenska bostadsförhållanden — skillnaderna handlar mer om appstöd, lastbalansering, betallösningar för BRF och hur boxen tål väder än om laddhastighet i sig.</p>' +
-          '<p class="large-paragraph"><em>Garo</em> har lång erfarenhet av nordiska klimat och stark närvaro hos elektriker. <em>Charge Amps</em> är ett svenskt premiummärke med fokus på appgränssnitt och inbyggd energimätning — populärt hos villaägare som integrerar laddning med solceller. <em>Defa</em> är ofta förstvalet vid integration mot solceller eftersom de tillåter dynamisk styrning från växelriktare. <em>Zaptec</em> dominerar BRF-marknaden tack vare smidig hantering av många användare på samma huvudsäkring. <em>Easee</em> har det mest moderna app-gränssnittet och tunna boxar som passar i carporten.</p>' +
-          '<p class="large-paragraph">Vi rekommenderar inte ett enskilt fabrikat — valet beror på din anläggning, ditt elabonnemang och hur du tänker använda laddboxen. I förstudien går vi igenom dina förutsättningar och rekommenderar 1–2 alternativ.</p>' +
-          '<a href="/#offertform" class="large-link">Få offert på rätt laddbox för ditt hem</a>' +
-        '</div>' +
+      '<section data-gk-prose-section="true" data-gk-seo-section="laddbox-brands">' +
+        '<div data-gk-wrap="true"><div data-gk-prose="true"><section>' +
+          '<h2>Garo, Charge Amps, Defa, Zaptec eller Easee — så väljer du rätt laddbox</h2>' +
+          '<p>Marknaden domineras idag av fem tillverkare: <strong>Garo</strong>, <strong>Charge Amps</strong>, <strong>Defa</strong>, <strong>Zaptec</strong> och <strong>Easee</strong>. Alla levererar laddboxar som klarar svenska bostadsförhållanden, skillnaderna handlar mer om appstöd, lastbalansering, betallösningar för BRF och hur boxen tål väder än om laddhastighet i sig.</p>' +
+          '<p><em>Garo</em> har lång erfarenhet av nordiska klimat och stark närvaro hos elektriker. <em>Charge Amps</em> är ett svenskt premiummärke med fokus på appgränssnitt och inbyggd energimätning, populärt hos villaägare som integrerar laddning med solceller. <em>Defa</em> är ofta förstvalet vid integration mot solceller eftersom de tillåter dynamisk styrning från växelriktare. <em>Zaptec</em> dominerar BRF-marknaden tack vare smidig hantering av många användare på samma huvudsäkring. <em>Easee</em> har det mest moderna app-gränssnittet och tunna boxar som passar i carporten.</p>' +
+          '<p>Vi rekommenderar inte ett enskilt fabrikat. Valet beror på din anläggning, ditt elabonnemang och hur du tänker använda laddboxen. I förstudien går vi igenom dina förutsättningar och rekommenderar 1–2 alternativ.</p>' +
+        '</section></div></div>' +
       '</section>' +
-      '<section class="main-section" data-gk-seo-section="laddbox-installation">' +
-        '<div class="main-container">' +
-          '<h2 class="heading-l bold">Installera laddbox — steg för steg</h2>' +
-          '<p class="large-paragraph italic">Från beställning till installerat och klart tar det normalt 2 till 4 veckor. Så här ser processen ut när du installerar laddbox via Grönkraft.</p>' +
-          '<p class="large-paragraph"><strong>1. Förstudie (1–3 dagar).</strong> Vi går igenom dina förutsättningar via formulär eller telefon: huvudsäkring, var laddboxen ska sitta, om du har solceller, hur många bilar.</p>' +
-          '<p class="large-paragraph"><strong>2. Offert (inom 24 h på vardagar).</strong> Du får fast pris från en certifierad installatör. Grönt avdrag på 50 % dras direkt på fakturan.</p>' +
-          '<p class="large-paragraph"><strong>3. Installation (oftast 2–4 timmar på plats).</strong> Vår partner-elektriker drar kabel, installerar boxen och konfigurerar appstöd. Vid behov uppgraderas huvudsäkringen.</p>' +
-          '<p class="large-paragraph"><strong>4. Installerat och klart.</strong> Du får dokumentation, garantibevis och en kort genomgång av appen.</p>' +
-        '</div>' +
+      '<section data-gk-prose-section="true" data-gk-seo-section="laddbox-installation">' +
+        '<div data-gk-wrap="true"><div data-gk-prose="true"><section>' +
+          '<h2>Installera laddbox — steg för steg</h2>' +
+          '<p>Från beställning till installerat och klart tar det normalt 2 till 4 veckor. Så här ser processen ut när du installerar laddbox via Grönkraft.</p>' +
+          '<p><strong>1. Förstudie (1–3 dagar).</strong> Vi går igenom dina förutsättningar via formulär eller telefon: huvudsäkring, var laddboxen ska sitta, om du har solceller, hur många bilar.</p>' +
+          '<p><strong>2. Offert (inom 24 h på vardagar).</strong> Du får fast pris från en certifierad installatör. Grönt avdrag på 50 % dras direkt på fakturan.</p>' +
+          '<p><strong>3. Installation (oftast 2–4 timmar på plats).</strong> Vår partner-elektriker drar kabel, installerar boxen och konfigurerar appstöd. Vid behov uppgraderas huvudsäkringen.</p>' +
+          '<p><strong>4. Installerat och klart.</strong> Du får dokumentation, garantibevis och en kort genomgång av appen.</p>' +
+        '</section></div></div>' +
       '</section>' +
-      '<section class="main-section" data-gk-seo-section="laddbox-dubbla-uttag">' +
-        '<div class="main-container">' +
-          '<h2 class="heading-l bold">Laddbox med dubbla uttag — för hushåll med två elbilar</h2>' +
-          '<p class="large-paragraph italic">Hushåll med två elbilar har två alternativ: två separata laddboxar med lastbalansering, eller en laddbox med dubbla uttag som delar effekt mellan bilarna.</p>' +
-          '<p class="large-paragraph">En laddbox med dubbla uttag är ofta billigare och kräver mindre kabel-dragning, men reducerar laddhastigheten när båda bilarna laddar samtidigt. Vi dimensionerar utifrån din huvudsäkring och realistiska laddmönster — för de flesta tvåbils-hushåll räcker en box med dubbla uttag som balanserar mot 11 kW.</p>' +
-        '</div>' +
+      '<section data-gk-prose-section="true" data-gk-seo-section="laddbox-dubbla-uttag">' +
+        '<div data-gk-wrap="true"><div data-gk-prose="true"><section>' +
+          '<h2>Laddbox med dubbla uttag — för hushåll med två elbilar</h2>' +
+          '<p>Hushåll med två elbilar har två alternativ: två separata laddboxar med lastbalansering, eller en laddbox med dubbla uttag som delar effekt mellan bilarna.</p>' +
+          '<p>En laddbox med dubbla uttag är ofta billigare och kräver mindre kabel-dragning, men reducerar laddhastigheten när båda bilarna laddar samtidigt. Vi dimensionerar utifrån din huvudsäkring och realistiska laddmönster, för de flesta tvåbils-hushåll räcker en box med dubbla uttag som balanserar mot 11 kW.</p>' +
+        '</section></div></div>' +
       '</section>';
     anchor.parentNode.insertBefore(container, anchor);
 
