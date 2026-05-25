@@ -112,15 +112,40 @@
           '<p>Vi rekommenderar inte ett enskilt fabrikat. Valet beror på din anläggning, ditt elabonnemang och hur du tänker använda laddboxen. I förstudien går vi igenom dina förutsättningar och rekommenderar 1–2 alternativ.</p>' +
         '</section></div></div>' +
       '</section>' +
-      '<section data-gk-prose-section="true" data-gk-seo-section="laddbox-installation">' +
-        '<div data-gk-wrap="true"><div data-gk-prose="true"><section>' +
-          '<h2>Installera laddbox — steg för steg</h2>' +
-          '<p>Från beställning till installerat och klart tar det normalt 2 till 4 veckor. Så här ser processen ut när du installerar laddbox via Grönkraft.</p>' +
-          '<p><strong>1. Förstudie (1–3 dagar).</strong> Vi går igenom dina förutsättningar via formulär eller telefon: huvudsäkring, var laddboxen ska sitta, om du har solceller, hur många bilar.</p>' +
-          '<p><strong>2. Offert (inom 24 h på vardagar).</strong> Du får fast pris från en certifierad installatör. Grönt avdrag på 50 % dras direkt på fakturan.</p>' +
-          '<p><strong>3. Installation (oftast 2–4 timmar på plats).</strong> Vår partner-elektriker drar kabel, installerar boxen och konfigurerar appstöd. Vid behov uppgraderas huvudsäkringen.</p>' +
-          '<p><strong>4. Installerat och klart.</strong> Du får dokumentation, garantibevis och en kort genomgång av appen.</p>' +
-        '</section></div></div>' +
+      '<section data-gk-process="true" data-gk-seo-section="laddbox-installation">' +
+        '<div data-gk-wrap="true">' +
+          '<div data-gk-sec-head="true">' +
+            '<span data-gk-eyebrow="true">Så här går det till</span>' +
+            '<h2>Installera laddbox — steg för steg</h2>' +
+            '<p data-gk-sub="true">Från beställning till installerat och klart tar det normalt 2 till 4 veckor.</p>' +
+          '</div>' +
+          '<div data-gk-process-grid="true">' +
+            '<div data-gk-step="true">' +
+              '<div data-gk-step-bar="true"></div>' +
+              '<div data-gk-step-num="true">01</div>' +
+              '<h3>Förstudie</h3>' +
+              '<p>Vi går igenom dina förutsättningar via formulär eller telefon: huvudsäkring, var laddboxen ska sitta, om du har solceller, hur många bilar.</p>' +
+            '</div>' +
+            '<div data-gk-step="true">' +
+              '<div data-gk-step-bar="true"></div>' +
+              '<div data-gk-step-num="true">02</div>' +
+              '<h3>Offert</h3>' +
+              '<p>Du får fast pris inom 24 h på vardagar från en certifierad installatör. Grönt avdrag på 50 % dras direkt på fakturan.</p>' +
+            '</div>' +
+            '<div data-gk-step="true">' +
+              '<div data-gk-step-bar="true"></div>' +
+              '<div data-gk-step-num="true">03</div>' +
+              '<h3>Installation</h3>' +
+              '<p>Vår partner-elektriker drar kabel, installerar boxen och konfigurerar appstöd. Normalt 2–4 timmar på plats.</p>' +
+            '</div>' +
+            '<div data-gk-step="true">' +
+              '<div data-gk-step-bar="true"></div>' +
+              '<div data-gk-step-num="true">04</div>' +
+              '<h3>Installerat och klart</h3>' +
+              '<p>Du får dokumentation, garantibevis och en kort genomgång av appen.</p>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
       '</section>' +
       '<section data-gk-prose-section="true" data-gk-seo-section="laddbox-dubbla-uttag">' +
         '<div data-gk-wrap="true"><div data-gk-prose="true"><section>' +
