@@ -1,0 +1,31 @@
+# Grönkraft
+
+> Grönkraft är ett oberoende besiktningsbolag och rådgivare inom grön teknik i Sverige. Vi hjälper privatpersoner, bostadsrättsföreningar och företag att fatta rätt beslut om solceller, batterilagring, laddbox och besiktning av befintliga anläggningar.
+
+Vår roll är att guida kunder rätt. Vi tar fram förstudier, jämför installatörer i vårt partnernätverk och utför oberoende besiktningar enligt standardiserat protokoll.
+
+## Tjänster
+
+- [Solcellsbesiktning](https://www.gronkraftab.se/besiktning-service): Oberoende kontroll av solcellsanläggningens skick, säkerhet och produktion enligt 30+ kontrollpunkter. Drönartermografering ingår.
+- [Laddbox och elbilsladdning](https://www.gronkraftab.se/elbilsladdning): Rådgivning kring laddbox för villa, BRF och företag — dimensionering, lastbalansering och bidragsansökningar.
+- [Solceller](https://www.gronkraftab.se/solceller): Förstudie inför installation av solceller för villa, BRF och företag — partner tar fram offert.
+- [Solcellsbatteri](https://www.gronkraftab.se/solcellsbatteri): Batterilager för ökad egenanvändning och kapning av effekttoppar — partner tar fram offert.
+- [Serviceavtal](https://www.gronkraftab.se/besiktning-service): Återkommande besiktning enligt schema för villa, BRF och fastighetsbestånd.
+
+## Företag
+
+- [Om Grönkraft](https://www.gronkraftab.se/om-oss): Bakgrund, affärsmodell och hur vi arbetar med partnerinstallatörer.
+- [Kontakt](https://www.gronkraftab.se/kontakta-oss): Telefon 031-10 56 20, e-post kontakt@gronkraftab.se, Fläskebovägen 11G Landvetter.
+- [Bli partner](https://www.gronkraftab.se/bli-partner): För installatörer som vill ta del av Grönkrafts leadflöde.
+
+## Artiklar
+
+- [BRF-lagen 29 maj 2026](https://www.gronkraftab.se/post/brf-lagen-29-maj-2026-styrelse-checklista): Checklista över de beslut BRF-styrelser behöver fatta innan lagen om laddmöjlighet träder i kraft.
+- [Slopad 60-öring 2026](https://www.gronkraftab.se/post/60-oringen-slopad-solceller-2026): Hur villaägarens solcellsekonomi förändras när skattereduktionen för mikroproduktion försvinner.
+- [Sesol i konkurs](https://www.gronkraftab.se/post/sesol-i-konkurs---vad-betyder-det-for-din-solcellsanlaggning): Vad du som köpt anläggning genom Sesol bör göra för att skydda garanti och drift.
+- [Vanliga fel vid besiktning](https://www.gronkraftab.se/post/de-vanligaste-felen-vi-hittar-vid-besiktning-och-dess-konsekvenser): De återkommande bristerna vi dokumenterar vid solcellsbesiktning, och vad de leder till.
+- [5 situationer som kräver kontroll](https://www.gronkraftab.se/post/solceller-ar-inte-underhallsfria---5-situationer-som-kraver-kontroll): När en oberoende besiktning är en klok investering utöver driftsättning.
+
+## Optional
+
+- [Städer vi täcker](https://www.gronkraftab.se/stader/solcellsbesiktning-goteborg): Solcellsbesiktning i Göteborg, Malmö, Stockholm, Uppsala, Halmstad, Helsingborg och Varberg samt resten av Götaland och Mälardalen.
