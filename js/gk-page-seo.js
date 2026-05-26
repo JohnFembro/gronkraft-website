@@ -2,10 +2,14 @@
    Per-page runtime SEO content injection. Branches by pathname.
    - /besiktning-service: adds underhåll/driftstopp/serviceavtal sections + FAQ schema
    - /elbilsladdning: rewrites H1, adds brand/installation/dual-outlet sections + FAQ schema
+   - / (home): rewrites H1, injects keyword-rich lead paragraph, extended FAQ schema
+   - BRF callout on /solcellsbatteri, /elbilsladdning, /besiktning-service, /
+   - Related-posts block on /solceller, /solcellsbatteri, /elbilsladdning, /besiktning-service
+   - Exclude current post from "Läs fler artiklar" on /post/*
 */
 (function () {
   if (window.__gkPageSeoVersion) return;
-  window.__gkPageSeoVersion = 1;
+  window.__gkPageSeoVersion = 4;
 
   var path = location.pathname;
 
@@ -17,6 +21,21 @@
   if (path === '/besiktning-service') ready(initBesiktning);
   else if (path === '/elbilsladdning') ready(initLaddbox);
   else if (path === '/' || path === '') ready(initHome);
+
+  // BRF callout injection — runs independently of existing init logic
+  if (['/solcellsbatteri', '/elbilsladdning', '/besiktning-service', '/', ''].indexOf(path) !== -1) {
+    ready(injectBrfCallout);
+  }
+
+  // Related-posts inline link block on product pages
+  if (['/solceller', '/solcellsbatteri', '/elbilsladdning', '/besiktning-service'].indexOf(path) !== -1) {
+    ready(injectRelatedPosts);
+  }
+
+  // On individual /post/* pages, remove the current post from the "Läs fler artiklar" list
+  if (path.indexOf('/post/') === 0) {
+    ready(pruneCurrentFromRelated);
+  }
 
   /* ───────────────────────── /besiktning-service ───────────────────────── */
   function initBesiktning() {
@@ -167,8 +186,8 @@
   }
 
   /* ───────────────────────── / (home) ─────────────────────────
-     Design-safe: only edits H1 textContent (keeps all classes/styling)
-     and injects invisible JSON-LD. No new visible sections. */
+     Edits H1 textContent, injects a keyword-rich lead-paragraph under H1,
+     and injects FAQ JSON-LD. */
   function initHome() {
     // H1 reorder to lead with strongest commercial keyword
     var h1 = document.querySelector('h1');
@@ -176,7 +195,16 @@
       h1.textContent = 'Solceller, batteri, laddbox & besiktning';
     }
 
-    // FAQPage schema for the 10 visible FAQs
+    // Inject keyword-rich lead paragraph immediately after H1 (idempotent)
+    if (h1 && !document.querySelector('[data-gk-home-lead]')) {
+      var lead = document.createElement('p');
+      lead.setAttribute('data-gk-home-lead', '1');
+      lead.style.cssText = 'max-width:760px;margin:12px 0 0;font-size:1.05em;line-height:1.55;';
+      lead.textContent = 'Vi hjälper privatpersoner, bostadsrättsföreningar och företag med solceller, solcellsbatteri, laddbox och solcellsbesiktning – inklusive termografering. Förstudie via vårt partner-nätverk, offert inom 24 timmar.';
+      if (h1.parentNode) h1.parentNode.insertBefore(lead, h1.nextSibling);
+    }
+
+    // FAQPage schema for the visible FAQs + 3 niche-keyword entries
     injectFaqLd([
       ['Vad kostar det att installera en elbilsladdare?', 'Kostnaden varierar beroende på installationens kontext, är det en hemmainstallation eller åt en bostadsrättsförening eller företag. För en hemmainstallation ligger priset mellan 5000-7000 kr och i en gemensamhetsanläggning ligger priset mellan 7000-10 000 kr efter bidrag.'],
       ['Kan jag få ROT-avdrag på elbilsladdare?', 'Nej, för installation av laddpunkt används inte ROT-avdrag. Då gäller i stället skattereduktion för grön teknik. För laddpunkt innebär det att du kan få skattereduktion med 50 procent av kostnaden för både arbete och material. Skillnaden mot ROT är att ROT bara gäller arbetskostnaden, medan grön teknik omfattar både arbete och material.'],
@@ -187,8 +215,136 @@
       ['Varför har man batteri tillsammans med sin solcellsanläggning?', 'Solceller producerar el från solljus dagtid. Ett batteripaket lagrar överskottsel som du sedan kan använda på kvällen eller när solproduktionen är låg. Kombinationen ger maximal självförsörjning och bäst skydd mot höga elpriser.'],
       ['Hur länge håller solceller?', 'Kvalitetspaneler håller i 25–30 år och levereras med produktgarantier på 10–15 år samt prestationsgarantier på upp till 25 år. Med rätt underhåll kan anläggningen vara lönsam i 30+ år. För att hålla en solcellsanläggning säker och produktiv krävs löpande underhåll och gärna fortlöpande kontroller.'],
       ['Vad ingår i ett serviceavtal?', 'Det beror på vilken partner som erbjuder serviceavtalet och dina specifika behov, men generellt brukar serviceavtal inkludera regelbundna produktionskontroller, visuell besiktning av paneler och anslutningar, elskåpsinspektion, rensning av skräp och mossa, samt prioriterad hjälp vid driftstopp. Vi hjälper dig hitta bästa avtalet efter dina behov.'],
-      ['Hur snabbt kan ni komma ut och besikta?', 'Normalt bokar vi in en besiktning inom 1–2 veckor. Vid akuta driftstopp för kunder med serviceavtal prioriteras ni och vi siktar på att ha en tekniker på plats inom 48 timmar.']
+      ['Hur snabbt kan ni komma ut och besikta?', 'Normalt bokar vi in en besiktning inom 1–2 veckor. Vid akuta driftstopp för kunder med serviceavtal prioriteras ni och vi siktar på att ha en tekniker på plats inom 48 timmar.'],
+      ['Vad är termografering av solceller?', 'Termografering är en kontrollmetod där en värmekamera, ofta monterad på drönare, används för att upptäcka temperaturavvikelser på panelnivå. Dessa hot spots kan tyda på mikrosprickor, lös kontakt eller dolda fel som inte syns visuellt eller via växelriktarens app. Termografering ingår i våra solcellsbesiktningar och ger en pålitlig bild av anläggningens skick.'],
+      ['Vad kostar elbilsladdning för BRF?', 'Kostnaden för en BRF-installation beror på antal laddpunkter, fastighetens elkapacitet och behov av lastbalansering. Räkna med 7000–10 000 kr per laddpunkt efter Ladda bilen-bidraget. Naturvårdsverket täcker upp till 50 procent av bidragsberättigade kostnader, max 15 000 kr per laddpunkt.'],
+      ['Vad är skillnaden mellan solcellsbesiktning och en vanlig husbesiktning?', 'En vanlig husbesiktning fokuserar på byggnadens skick. Solcellsbesiktning kräver el-teknisk kompetens och täcker DC-sidan (paneler, kablage, växelriktare), montage, märkning, lönsamhet och säkerhet. Den genomförs som överlåtelsebesiktning vid köp eller som periodisk kontroll under anläggningens livslängd.']
     ]);
+  }
+
+  /* ───────────────────────── BRF callout (shared) ───────────────────────── */
+  function injectBrfCallout() {
+    if (document.querySelector('[data-gk-brf-callout]')) return; // idempotency
+    if (document.querySelector('a[href="/brf-solceller"], a[href*="/brf-solceller"]')) return; // skip if already linked (e.g. /solceller server-rendered)
+
+    var copy = {
+      '/solcellsbatteri': {
+        eyebrow: 'För bostadsrättsföreningar',
+        heading: 'Solcellsbatteri för BRF',
+        body: 'Batterilager för BRF kräver dimensionering mot fastighetens lastprofil och effekttariff. Vårt beslutsstöd ger styrelsen ekonomikalkyl och upphandlingshjälp.'
+      },
+      '/elbilsladdning': {
+        eyebrow: 'För BRF-styrelser',
+        heading: 'BRF-styrelser inför 29 maj 2026',
+        body: 'Ny laddbox-lag ger boende rätt att kräva laddpunkt. Vi guidar styrelsen genom stämmobeslut, dimensionering av infrastruktur och upphandling.'
+      },
+      '/besiktning-service': {
+        eyebrow: 'För bostadsrättsföreningar',
+        heading: 'Besiktning för BRF-bestånd',
+        body: 'Återkommande besiktning enligt schema med protokoll som möter försäkringsbolagens krav. Underlag och stämmounderlag för BRF-styrelser.'
+      },
+      '/': {
+        eyebrow: 'För bostadsrättsföreningar',
+        heading: 'Solceller, batteri och laddbox för BRF',
+        body: 'Dedikerat beslutsstöd för bostadsrättsföreningar — stämmounderlag, investeringskalkyl och upphandlingshjälp. Styrelsen får ett komplett underlag innan stämmobeslutet.'
+      }
+    };
+
+    var key = (path === '' ? '/' : path);
+    var c = copy[key];
+    if (!c) return;
+
+    // Find a good anchor: prefer FAQ section, else footer, else end of main
+    var anchor = null;
+    document.querySelectorAll('h2').forEach(function (h) {
+      if (!anchor && /^Frågor/i.test(h.textContent.trim())) {
+        anchor = h.closest('section') || h.parentElement;
+      }
+    });
+    if (!anchor) anchor = document.querySelector('footer');
+    if (!anchor || !anchor.parentNode) return;
+
+    var section = document.createElement('section');
+    section.setAttribute('data-gk-brf-callout', '1');
+    section.innerHTML =
+      '<div class="container">' +
+        '<div style="text-align:center;max-width:760px;margin:0 auto;padding:60px 24px;">' +
+          '<div class="eyebrow">' + c.eyebrow + '</div>' +
+          '<h2>' + c.heading + '</h2>' +
+          '<p class="section-intro">' + c.body + '</p>' +
+          '<a href="/brf-solceller" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:8px;">' +
+            'Se BRF-beslutsstödet' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' +
+          '</a>' +
+        '</div>' +
+      '</div>';
+    anchor.parentNode.insertBefore(section, anchor);
+  }
+
+  /* ───────────────────────── Related posts on product pages ───────────────────────── */
+  function injectRelatedPosts() {
+    if (document.querySelector('[data-gk-related-posts]')) return;
+
+    var copy = {
+      '/solceller': [
+        { href: '/post/60-oringen-slopad-solceller-2026', title: 'Slopad 60-öring 2026 — så räknar du hem solcellerna nu' },
+        { href: '/post/hur-stor-solcellsanlaggning-far-jag-egentligen-ha', title: 'Hur stor solcellsanläggning får jag egentligen ha?' }
+      ],
+      '/solcellsbatteri': [
+        { href: '/post/batteri-till-solceller---vad-du-bor-veta-innan-och-efter-installation', title: 'Batteri till solceller — vad du bör veta före och efter installation' },
+        { href: '/post/60-oringen-slopad-solceller-2026', title: 'Slopad 60-öring 2026 — så räknar du hem solcellerna nu' }
+      ],
+      '/elbilsladdning': [
+        { href: '/post/brf-lagen-29-maj-2026-styrelse-checklista', title: 'BRF-lagen 29 maj 2026: vad styrelsen behöver besluta' }
+      ],
+      '/besiktning-service': [
+        { href: '/post/termografering-av-solceller---upptack-dolda-fel-med-dronarteknik-och-sakra-maximal-effekt', title: 'Termografering av solceller — upptäck dolda fel med drönarteknik' },
+        { href: '/post/villkorsdjungeln-darfor-ar-garantier-och-forsakringar-for-solceller-svarare-an-de-verkar', title: 'Villkorsdjungeln: garantier och försäkringar för solceller' },
+        { href: '/post/forsakringsarenden-faller-pa-bristande-dokumentation', title: 'Försäkringsärenden faller på bristande dokumentation' }
+      ]
+    };
+
+    var items = copy[path];
+    if (!items || !items.length) return;
+
+    // Insert before the BRF callout if it exists, else before FAQ, else before footer
+    var anchor = document.querySelector('[data-gk-brf-callout]');
+    if (!anchor) {
+      document.querySelectorAll('h2').forEach(function (h) {
+        if (!anchor && /^Frågor/i.test(h.textContent.trim())) {
+          anchor = h.closest('section') || h.parentElement;
+        }
+      });
+    }
+    if (!anchor) anchor = document.querySelector('footer');
+    if (!anchor || !anchor.parentNode) return;
+
+    var section = document.createElement('section');
+    section.setAttribute('data-gk-related-posts', '1');
+    var html = '<div class="container"><div style="max-width:760px;margin:0 auto;padding:40px 24px;">';
+    html += '<h3 style="margin-bottom:12px;">Läs mer i våra artiklar</h3><ul style="padding-left:18px;line-height:1.7;">';
+    items.forEach(function (it) {
+      html += '<li><a href="' + it.href + '">' + it.title + '</a></li>';
+    });
+    html += '</ul></div></div>';
+    section.innerHTML = html;
+    anchor.parentNode.insertBefore(section, anchor);
+  }
+
+  /* ───────────────────────── Remove current post from "Läs fler artiklar" on /post/* ───────────────────────── */
+  function pruneCurrentFromRelated() {
+    var section = document.querySelector('[data-gk-blog-related]');
+    if (!section) return;
+    var currentPath = location.pathname.replace(/\/$/, '');
+    var items = section.querySelectorAll('.w-dyn-item');
+    for (var i = 0; i < items.length; i++) {
+      var a = items[i].querySelector('a[href]');
+      if (!a) continue;
+      var href = a.getAttribute('href').replace(/\/$/, '');
+      if (href === currentPath) {
+        items[i].parentNode.removeChild(items[i]);
+      }
+    }
   }
 
   /* ───────────────────────── shared ───────────────────────── */
