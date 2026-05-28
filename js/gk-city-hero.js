@@ -200,7 +200,7 @@
         '</div>' +
 
         '<div class="lf-step lf-step--active" id="bf-1">' +
-          '<div class="lf-head"><h3>Boka besiktning</h3><p class="lf-sub">Du får offert inom 24h på vardagar.</p></div>' +
+          '<div class="lf-head"><h3>Få offert inom 24h</h3><p class="lf-sub">Du binder inte upp dig på något i detta steget.</p></div>' +
           '<p class="lf-section-label">Vem är du?</p>' +
           '<div class="lf-radios" role="radiogroup">' +
             '<label class="lf-opt"><input type="radio" name="bf-kundtyp" value="privat"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Privat</span></label>' +
