@@ -2,11 +2,46 @@
    Tags every lead-form submission with the source page URL so John can see
    which page generated the lead in the CRM/email.
 
+   v2: Also injects a clearly labelled summary block when the visitor arrives
+   from the besparingskalkylator (CTA carries the settings as URL params,
+   marker param = "besparing"). The block is captured at page load — before
+   the multi-step form rewrites anything — and prepended at submit.
+
    Hooks the submit event in capture phase so values get injected BEFORE
    Webflow's native form handler reads them.
 */
 
 (function () {
+  function kalkylSummary() {
+    try {
+      var sp = new URLSearchParams(window.location.search);
+      if (!sp.has('besparing')) return null;
+      var get = function (k, d) { return sp.has(k) ? sp.get(k) : d; };
+      var fmtN = function (v) {
+        var n = parseFloat(v);
+        return isFinite(n) ? n.toLocaleString('sv-SE') : v;
+      };
+      var avtal = { hourly: 'Timpris', monthly: 'Månadspris', fixed: 'Fastpris' }[get('avtal', 'hourly')] || 'Timpris';
+      var rows = [];
+      rows.push('Solceller: ' + get('pv', '10') + ' kWp · Batteri: ' + get('batt', '10') + ' kWh · Förbrukning: ' + fmtN(get('kwh', '15000')) + ' kWh/år');
+      rows.push('Elområde: ' + get('zon', 'SE3') + ' · Elavtal: ' + avtal + ' · Elbil hemma: ' + (get('elbil', '0') === '1' ? 'Ja' : 'Nej'));
+      if (sp.has('pris')) rows.push('Angivet totalpris: ' + fmtN(sp.get('pris')) + ' kr (efter grönt avdrag)');
+      var b = 'Beräknad besparing: ca ' + fmtN(sp.get('besparing')) + ' SEK/år';
+      if (sp.has('varavbatteri')) b += ' (varav batteri ca ' + fmtN(sp.get('varavbatteri')) + ' SEK)';
+      rows.push(b);
+      var qs = [];
+      ['pv', 'batt', 'kwh', 'zon', 'elbil', 'avtal', 'tariff', 'grid', 'dag', 'natt', 'sommar', 'vinter', 'pris'].forEach(function (k) {
+        if (sp.has(k)) qs.push(k + '=' + encodeURIComponent(sp.get(k)));
+      });
+      var link = 'https://gronkraftab.se/besparingskalkylator' + (qs.length ? '?' + qs.join('&') : '');
+      rows.push('Öppna kalkylen: ' + link);
+      return '🧮 FRÅN BESPARINGSKALKYLATORN\n' + rows.join('\n') + '\n\n';
+    } catch (e) { return null; }
+  }
+
+  // Captured once at load, before the visitor interacts with the form.
+  var KALKYL = kalkylSummary();
+
   function tag(form) {
     if (!form || form.__gkSourceTagged) return;
     form.__gkSourceTagged = true;
@@ -23,8 +58,15 @@
 
     targets.forEach(function (input) {
       var v = input.value || '';
+      var block = '';
+      if (KALKYL && v.indexOf('BESPARINGSKALKYLATORN') === -1) {
+        block = KALKYL;
+      }
       if (v.indexOf('Källa:') === -1) {
-        input.value = prefix + v;
+        block += prefix;
+      }
+      if (block) {
+        input.value = block + v;
       }
     });
   }
