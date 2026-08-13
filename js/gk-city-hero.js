@@ -123,6 +123,55 @@
 
   // === HTML templates ===
 
+  function formHTML() {
+    return (
+      '<div class="lead-card lf-card" role="complementary" aria-label="Boka solcellsbesiktning" style="border-radius:22px!important;-webkit-border-radius:22px!important;overflow:hidden!important;background:rgba(255,255,255,0.97)!important;padding:26px!important;box-shadow:0 30px 60px -30px rgba(11,20,16,0.35)!important;border:1px solid rgba(255,255,255,0.6)!important;display:flex!important;flex-direction:column!important;color:#0B1410!important;width:100%!important;max-width:540px!important;min-height:460px!important;line-height:1.55!important;">' +
+        '<div class="lf-progress">' +
+          '<div class="lf-progress-track"><div class="lf-progress-fill" id="bf-progress-fill"></div></div>' +
+          '<span class="lf-progress-label" id="bf-progress-label">Steg 1 av 2</span>' +
+        '</div>' +
+
+        '<div class="lf-step lf-step--active" id="bf-1">' +
+          '<div class="lf-head"><h3>Få offert inom 24h</h3><p class="lf-sub">Du binder inte upp dig på något i detta steget.</p></div>' +
+          '<p class="lf-section-label">Vem är du?</p>' +
+          '<div class="lf-radios" role="radiogroup">' +
+            '<label class="lf-opt"><input type="radio" name="bf-kundtyp" value="privat"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Privat</span></label>' +
+            '<label class="lf-opt"><input type="radio" name="bf-kundtyp" value="brf"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Bostadsrättsförening</span></label>' +
+            '<label class="lf-opt"><input type="radio" name="bf-kundtyp" value="foretag"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Företag</span></label>' +
+          '</div>' +
+          '<div class="lf-err" id="bf1-err" hidden role="alert" aria-live="polite">Välj kundtyp.</div>' +
+          '<div class="lf-nav"><span></span><button type="button" class="btn btn-primary" onclick="bfNext()">Nästa →</button></div>' +
+        '</div>' +
+
+        '<div class="lf-step" id="bf-2">' +
+          '<div class="lf-head"><h3 id="bf2-title">Dina kontaktuppgifter</h3></div>' +
+          '<div class="field lf-field"><label class="lf-label" for="bf-namn" id="bf2-namn-label">Namn</label><input type="text" id="bf-namn" name="bf-namn" autocomplete="name" placeholder="För- och efternamn"></div>' +
+          '<div class="field lf-field" id="bf-orgnr-wrap" style="display:none;"><label class="lf-label" for="bf-orgnr">Org.nr <span class="lf-optional">(Valfritt)</span></label><input type="text" id="bf-orgnr" name="bf-orgnr" autocomplete="off" placeholder="Organisationsnummer"></div>' +
+          '<div class="lf-row">' +
+            '<div class="field lf-field"><label class="lf-label" for="bf-tel">Telefon</label><input type="tel" id="bf-tel" name="bf-tel" autocomplete="tel" placeholder="+46"></div>' +
+            '<div class="field lf-field"><label class="lf-label" for="bf-epost">E-post</label><input type="email" id="bf-epost" name="bf-epost" autocomplete="email" placeholder="namn@exempel.se"></div>' +
+          '</div>' +
+          '<div class="field lf-field"><label class="lf-label" for="bf-adress">Adress för anläggningen</label><input type="text" id="bf-adress" name="bf-adress" autocomplete="street-address" placeholder="Gatuadress"></div>' +
+          '<div class="field lf-field"><label class="lf-label" for="bf-msg">Meddelande <span class="lf-optional">(Valfritt)</span></label><textarea id="bf-msg" name="bf-msg" placeholder="t.ex. anläggningens storlek, ålder, ev. problem"></textarea></div>' +
+          '<div class="lf-err" id="bf2-err" hidden role="alert" aria-live="polite">Fyll i alla obligatoriska fält.</div>' +
+          '<div class="lf-nav">' +
+            '<button type="button" class="lf-back" onclick="bfBack()">← Tillbaka</button>' +
+            '<button type="button" class="btn btn-primary" onclick="bfSubmit()">Begär offert →</button>' +
+          '</div>' +
+          '<p class="tiny" style="margin-top:12px;">Genom att skicka godkänner du Grönkrafts <a href="/policyer-villkor/integritetspolicy">integritetspolicy</a></p>' +
+        '</div>' +
+
+        '<div class="lf-step" id="bf-done">' +
+          '<div class="lead-success">' +
+            '<span class="success-mark">✓</span>' +
+            '<h3 id="bf-done-title">Tack för din förfrågan!</h3>' +
+            '<p id="bf-done-sub">En av våra rådgivare hör av sig inom 24 timmar.</p>' +
+          '</div>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
   // Custom CSS for the hero layout (form right, text left on desktop)
   var EXTRA_CSS =
     '[data-gk-city-hero] { position: relative; padding: 96px 0 80px; color: #fff; overflow: hidden; }' +
