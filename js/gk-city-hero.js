@@ -1,6 +1,8 @@
 /* gk-city-hero.js
-   Runtime replacement of old header + hero on /stader/solcellsbesiktning-<city>
-   - New header (matches new design across solceller/solcellsbatteri/brf)
+   Runtime replacement of old hero on /stader/solcellsbesiktning-<city>.
+   Header + footer are NATIVE Webflow components since v108 ("Header (GK 2.0)" /
+   "Footer (GK 2.0)" instances on every city page) — this script no longer
+   injects or styles them.
    - New sub-banner hero with breadcrumb, h1, intro
    - 2-step besiktning form in hero (lf-card pattern, bridged to existing
      hero-form on the page so Webflow's submit + /tack redirect works)
@@ -12,7 +14,7 @@
 
   // Version check — newer version always wins, regardless of script execution order.
   // Bump this in lockstep with the loader SHA to make new edits take effect.
-  var THIS_VERSION = 107;
+  var THIS_VERSION = 108;
   var existing = window.__gkCityHeroVersion || 0;
   if (existing >= THIS_VERSION) return;
 
@@ -121,125 +123,6 @@
 
   // === HTML templates ===
 
-  var FOOTER_HTML =
-    '<footer data-gk-footer="true"><div data-gk-wrap="true"><div data-gk-footer-grid="true">' +
-      '<div data-gk-brand-block="true">' +
-        '<img src="' + BASE + '68ae1b9f1273e4c3fa49a897_Gro%CC%88nkraft%20logo%20vit.png" loading="lazy" alt="Grönkraft Sverige AB"/>' +
-        '<p>Grönkraft Sverige AB är en rådgivare inom elbilsladdning, solceller, batterilager och serviceavtal. Vi kopplar privatpersoner, BRF och företag till rätt certifierad installatör.</p>' +
-      '</div>' +
-      '<div data-gk-footer-col="true"><h3>Tjänster</h3><ul role="list">' +
-        '<li><a href="/elbilsladdning">Elbilsladdning</a></li>' +
-        '<li><a href="/solceller">Solceller</a></li>' +
-        '<li><a href="/solcellsbatteri">Solcellsbatteri</a></li>' +
-        '<li><a href="/besiktning-service" aria-current="page" class="w--current">Besiktning &amp; Serviceavtal</a></li>' +
-      '</ul></div>' +
-      '<div data-gk-footer-col="true"><h3>Företag</h3><ul role="list">' +
-        '<li><a href="/om-oss">Om oss</a></li>' +
-        '<li><a href="/bli-partner">Bli partner</a></li>' +
-        '<li><a href="/kontakta-oss">Kontakt</a></li>' +
-        '<li><a href="/artiklar">Artiklar</a></li>' +
-      '</ul></div>' +
-      '<div data-gk-footer-col="true"><h3>Kontakt</h3><ul role="list">' +
-        '<li><a href="tel:+4631105620">031-10 56 20</a></li>' +
-        '<li><a href="mailto:kontakt@gronkraftab.se">kontakt@gronkraftab.se</a></li>' +
-        '<li>Fläskebovägen 11g<br/>438 91 Landvetter</li>' +
-      '</ul></div>' +
-    '</div><div data-gk-footer-bottom="true">' +
-      '<span>© 2026 Grönkraft Sverige AB · Fläskebovägen 11g, 438 91 Landvetter · 031-10 56 20</span>' +
-      '<span data-gk-footer-legal="true">' +
-        '<a href="/policyer-villkor/integritetspolicy">Integritetspolicy</a>' +
-        '<a href="/policyer-villkor/cookiepolicy">Cookies</a>' +
-        '<a href="/policyer-villkor/allmanna-villkor">Allmänna villkor</a>' +
-      '</span>' +
-    '</div></div></footer>';
-
-  var HEADER_HTML =
-    '<header data-gk-header="true">' +
-      '<div data-gk-header-inner="true">' +
-        '<a aria-label="Grönkraft startsida" data-gk-header-logo="true" href="/" class="w-inline-block">' +
-          '<img src="' + BASE + '68ae1b9f1273e4c3fa49a897_Gro%CC%88nkraft%20logo%20vit.png" loading="eager" alt="Grönkraft Sverige AB"/>' +
-        '</a>' +
-        '<nav data-gk-header-nav="true">' +
-          '<a href="/">Hem</a>' +
-          '<div data-gk-header-dd="true">' +
-            '<a href="#" data-gk-header-dd-trigger="true"><span>Tjänster</span> <span data-gk-chevron="true">▾</span></a>' +
-            '<div data-gk-header-dd-menu="true">' +
-              '<a href="/elbilsladdning">Elbilsladdning</a>' +
-              '<a href="/solceller">Solceller</a>' +
-              '<a href="/solcellsbatteri">Solcellsbatteri</a>' +
-              '<a href="/besiktning-service" aria-current="page" class="w--current">Besiktning &amp; Serviceavtal</a>' +
-            '</div>' +
-          '</div>' +
-          '<a href="/bli-partner">Bli partner</a>' +
-          '<a href="/om-oss">Om oss</a>' +
-          '<a href="/kontakta-oss">Kontakt</a>' +
-        '</nav>' +
-        '<a data-gk-header-cta="true" href="/#offertform">Få offert</a>' +
-        '<a href="#" data-gk-header-burger="true" aria-label="Öppna meny">☰</a>' +
-      '</div>' +
-      '<div data-gk-header-drawer="true">' +
-        '<a href="#" data-gk-drawer-close="true" aria-label="Stäng meny">×</a>' +
-        '<a href="/">Hem</a>' +
-        '<a href="/elbilsladdning">Elbilsladdning</a>' +
-        '<a href="/solceller">Solceller</a>' +
-        '<a href="/solcellsbatteri">Solcellsbatteri</a>' +
-        '<a href="/besiktning-service" aria-current="page" class="w--current">Besiktning &amp; Serviceavtal</a>' +
-        '<a href="/bli-partner">Bli partner</a>' +
-        '<a href="/om-oss">Om oss</a>' +
-        '<a href="/kontakta-oss">Kontakt</a>' +
-        '<a data-gk-drawer-cta="true" href="/#offertform">Få offert</a>' +
-      '</div>' +
-    '</header>';
-
-  function formHTML() {
-    return (
-      '<div class="lead-card lf-card" role="complementary" aria-label="Boka solcellsbesiktning" style="border-radius:22px!important;-webkit-border-radius:22px!important;overflow:hidden!important;background:rgba(255,255,255,0.97)!important;padding:26px!important;box-shadow:0 30px 60px -30px rgba(11,20,16,0.35)!important;border:1px solid rgba(255,255,255,0.6)!important;display:flex!important;flex-direction:column!important;color:#0B1410!important;width:100%!important;max-width:540px!important;min-height:460px!important;line-height:1.55!important;">' +
-        '<div class="lf-progress">' +
-          '<div class="lf-progress-track"><div class="lf-progress-fill" id="bf-progress-fill"></div></div>' +
-          '<span class="lf-progress-label" id="bf-progress-label">Steg 1 av 2</span>' +
-        '</div>' +
-
-        '<div class="lf-step lf-step--active" id="bf-1">' +
-          '<div class="lf-head"><h3>Få offert inom 24h</h3><p class="lf-sub">Du binder inte upp dig på något i detta steget.</p></div>' +
-          '<p class="lf-section-label">Vem är du?</p>' +
-          '<div class="lf-radios" role="radiogroup">' +
-            '<label class="lf-opt"><input type="radio" name="bf-kundtyp" value="privat"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Privat</span></label>' +
-            '<label class="lf-opt"><input type="radio" name="bf-kundtyp" value="brf"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Bostadsrättsförening</span></label>' +
-            '<label class="lf-opt"><input type="radio" name="bf-kundtyp" value="foretag"><span class="lf-opt-dot" aria-hidden="true"></span><span class="lf-opt-text">Företag</span></label>' +
-          '</div>' +
-          '<div class="lf-err" id="bf1-err" hidden role="alert" aria-live="polite">Välj kundtyp.</div>' +
-          '<div class="lf-nav"><span></span><button type="button" class="btn btn-primary" onclick="bfNext()">Nästa →</button></div>' +
-        '</div>' +
-
-        '<div class="lf-step" id="bf-2">' +
-          '<div class="lf-head"><h3 id="bf2-title">Dina kontaktuppgifter</h3></div>' +
-          '<div class="field lf-field"><label class="lf-label" for="bf-namn" id="bf2-namn-label">Namn</label><input type="text" id="bf-namn" name="bf-namn" autocomplete="name" placeholder="För- och efternamn"></div>' +
-          '<div class="field lf-field" id="bf-orgnr-wrap" style="display:none;"><label class="lf-label" for="bf-orgnr">Org.nr <span class="lf-optional">(Valfritt)</span></label><input type="text" id="bf-orgnr" name="bf-orgnr" autocomplete="off" placeholder="Organisationsnummer"></div>' +
-          '<div class="lf-row">' +
-            '<div class="field lf-field"><label class="lf-label" for="bf-tel">Telefon</label><input type="tel" id="bf-tel" name="bf-tel" autocomplete="tel" placeholder="+46"></div>' +
-            '<div class="field lf-field"><label class="lf-label" for="bf-epost">E-post</label><input type="email" id="bf-epost" name="bf-epost" autocomplete="email" placeholder="namn@exempel.se"></div>' +
-          '</div>' +
-          '<div class="field lf-field"><label class="lf-label" for="bf-adress">Adress för anläggningen</label><input type="text" id="bf-adress" name="bf-adress" autocomplete="street-address" placeholder="Gatuadress"></div>' +
-          '<div class="field lf-field"><label class="lf-label" for="bf-msg">Meddelande <span class="lf-optional">(Valfritt)</span></label><textarea id="bf-msg" name="bf-msg" placeholder="t.ex. anläggningens storlek, ålder, ev. problem"></textarea></div>' +
-          '<div class="lf-err" id="bf2-err" hidden role="alert" aria-live="polite">Fyll i alla obligatoriska fält.</div>' +
-          '<div class="lf-nav">' +
-            '<button type="button" class="lf-back" onclick="bfBack()">← Tillbaka</button>' +
-            '<button type="button" class="btn btn-primary" onclick="bfSubmit()">Begär offert →</button>' +
-          '</div>' +
-          '<p class="tiny" style="margin-top:12px;">Genom att skicka godkänner du Grönkrafts <a href="/policyer-villkor/integritetspolicy">integritetspolicy</a></p>' +
-        '</div>' +
-
-        '<div class="lf-step" id="bf-done">' +
-          '<div class="lead-success">' +
-            '<span class="success-mark">✓</span>' +
-            '<h3 id="bf-done-title">Tack för din förfrågan!</h3>' +
-            '<p id="bf-done-sub">En av våra rådgivare hör av sig inom 24 timmar.</p>' +
-          '</div>' +
-        '</div>' +
-      '</div>'
-    );
-  }
-
   // Custom CSS for the hero layout (form right, text left on desktop)
   var EXTRA_CSS =
     '[data-gk-city-hero] { position: relative; padding: 96px 0 80px; color: #fff; overflow: hidden; }' +
@@ -335,28 +218,9 @@
     return html;
   }
 
-  // Header + footer CSS (from gk2-sections.css) — self-contained since the
-  // sitewide jsDelivr stylesheet was retired in the native migration (2026-08)
+  // Generic breadcrumb layout (was in gk2-sections.css); header/footer CSS
+  // removed in v108 — native Webflow classes style them now.
   var HF_CSS =
-    ':root { --gk-g900: #062017; --gk-g800: #0B3326; --gk-g700: #11402F; --gk-g600: #18553D; --gk-g500: #1F8A4C; --gk-g400: #25A85A; --gk-g300: #4CC07A; --gk-i900: #0B1410; --gk-i700: #2A332E; --gk-i500: #5A655F; --gk-i400: #7C8780; --gk-i300: #B7BFB9; --gk-line: #E4E8E5; --gk-surf: #FFF; --gk-surf2: #F5F6F4; --gk-surf3: #ECEFEC; --gk-r-sm: 8px; --gk-r: 14px; --gk-r-lg: 22px; --gk-r-pill: 999px; --gk-shd: 0 8px 24px -12px rgba(11,20,16,.18), 0 2px 4px rgba(11,20,16,.04); --gk-shd-lg: 0 30px 60px -30px rgba(11,20,16,.35); --gk-max: 1200px; --gk-ff: "Nunito", system-ui, -apple-system, sans-serif; }' +
-    '[data-gk-footer] { background: var(--gk-g900); color: rgba(255,255,255,.7); padding: 64px 0 24px; font-family: var(--gk-ff); } [data-gk-footer] [data-gk-wrap] { max-width: 1200px; margin: 0 auto; padding: 0 24px; } @media (min-width: 900px) { [data-gk-footer] [data-gk-wrap] { padding: 0 40px; } } [data-gk-footer-grid] { display: grid; gap: 32px; grid-template-columns: 1fr; } @media (min-width: 800px) { [data-gk-footer-grid] { grid-template-columns: 1.4fr 1fr 1fr 1fr; } }' +
-    '[data-gk-brand-block] { max-width: 36ch; } [data-gk-brand-block] img { height: 36px !important; width: auto !important; display: block; margin-bottom: 12px; } [data-gk-brand-block] p { font-size: 14px; line-height: 1.55; margin: 12px 0 0; color: rgba(255,255,255,.7); } [data-gk-footer] :where(h3, h4, h5) { color: #fff !important; font-size: 14px !important; font-weight: 800; margin: 0 0 14px; letter-spacing: .04em; text-transform: uppercase; font-family: var(--gk-ff); }' +
-    '[data-gk-footer] ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; } [data-gk-footer] ul li { font-size: 14.5px; color: rgba(255,255,255,.7); } [data-gk-footer] ul a { font-size: 14.5px; color: rgba(255,255,255,.7) !important; text-decoration: none; transition: color .15s; } [data-gk-footer] ul a:hover { color: #fff !important; }' +
-    '[data-gk-footer-bottom] { margin-top: 40px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.08); display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; font-size: 13px; } [data-gk-footer-legal] { display: flex; gap: 18px; } [data-gk-footer-legal] a { color: rgba(255,255,255,.7) !important; text-decoration: none; transition: color .15s; } [data-gk-footer-legal] a:hover { color: #fff !important; }' +
-    '[data-gk-header] { position: absolute; top: 0; left: 0; right: 0; z-index: 60; background: transparent; color: #fff; font-family: var(--gk-ff); transition: background .25s ease; } [data-gk-header].scrolled { position: fixed; background: rgba(6,32,23,.92); border-bottom: 1px solid rgba(255,255,255,.08); animation: gkHeaderSlide .25s ease; }' +
-    '@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { [data-gk-header].scrolled { background: rgba(6,32,23,.55); backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%); } } @keyframes gkHeaderSlide { from { opacity: 0; } to { opacity: 1; } } [data-gk-header-inner] { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 76px; display: flex; align-items: center; gap: 20px; }' +
-    '@media (min-width: 900px) { [data-gk-header-inner] { padding: 0 40px; } } [data-gk-header-logo] { display: inline-flex !important; align-items: center; text-decoration: none; flex: 0 0 auto; height: 36px; max-width: 200px; overflow: hidden; } [data-gk-header-logo] img { height: 36px !important; max-height: 36px !important; width: auto !important; max-width: 200px !important; display: block !important; object-fit: contain; } html, body { max-width: 100vw; overflow-x: hidden; }' +
-    '[data-gk-header-nav] { display: none; gap: 6px; flex: 1; justify-content: center; align-items: center; } @media (min-width: 1024px) { [data-gk-header-nav] { display: flex; } }' +
-    '[data-gk-header-nav] > a, [data-gk-header-dd-trigger] { padding: 10px 14px; border-radius: 8px; font-weight: 600; font-size: 14.5px; color: rgba(255,255,255,.85) !important; text-decoration: none; transition: color .15s, background .15s; background: transparent; border: 0; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 4px; } [data-gk-header-nav] > a:hover, [data-gk-header-dd-trigger]:hover { color: #fff !important; background: rgba(255,255,255,.06); }' +
-    '[data-gk-header-dd] { position: relative; } [data-gk-chevron] { font-size: 12px; transition: transform .2s; } [data-gk-header-dd-trigger][aria-expanded="true"] [data-gk-chevron] { transform: rotate(180deg); }' +
-    '[data-gk-header-dd-menu] { position: absolute; top: calc(100% + 6px); left: 0; min-width: 240px; background: #fff; color: var(--gk-i900); border-radius: 12px; box-shadow: var(--gk-shd-lg); border: 1px solid var(--gk-line); padding: 8px; opacity: 0; pointer-events: none; transform: translateY(-6px); transition: opacity .18s, transform .18s; z-index: 80; } [data-gk-header-dd-menu].open { opacity: 1; pointer-events: auto; transform: translateY(0); }' +
-    '[data-gk-header-dd-menu] a { display: block; padding: 10px 12px; border-radius: 8px; font-weight: 600; font-size: 14.5px; color: var(--gk-i900) !important; background: transparent; text-decoration: none; } [data-gk-header-dd-menu] a:hover { background: var(--gk-surf2); color: var(--gk-g500) !important; }' +
-    '[data-gk-header-cta] { display: none; background: var(--gk-g500); color: #fff !important; padding: 11px 20px; border-radius: 999px; font-weight: 700; font-size: 14.5px; text-decoration: none; transition: background .15s; } @media (min-width: 1024px) { [data-gk-header-cta] { display: inline-flex; align-items: center; } } [data-gk-header-cta]:hover { background: var(--gk-g400); }' +
-    '[data-gk-header-burger] { margin-left: auto; width: 44px; height: 44px; border-radius: 10px; background: transparent; border: 0; color: #fff; font-size: 20px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; } @media (min-width: 1024px) { [data-gk-header-burger] { display: none; } }' +
-    '[data-gk-header-drawer] { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; z-index: 9999 !important; background: rgba(6,32,23,.97) !important; display: flex !important; flex-direction: column; gap: 4px; padding: 88px 24px 24px; opacity: 0; pointer-events: none; transition: opacity .25s ease; overflow-y: auto; }' +
-    '[data-gk-drawer-close] { position: absolute; top: 18px; right: 18px; width: 44px; height: 44px; border-radius: 999px; background: rgba(255,255,255,.08); border: 0 !important; color: transparent !important; font-size: 0 !important; text-indent: -9999px; overflow: hidden; white-space: nowrap; cursor: pointer; transition: background .15s; z-index: 1; padding: 0; text-decoration: none !important; }' +
-    '[data-gk-drawer-close]::before, [data-gk-drawer-close]::after { content: ""; position: absolute; top: 50%; left: 50%; width: 16px; height: 1.75px; background: #fff; border-radius: 1px; transform-origin: center; } [data-gk-drawer-close]::before { transform: translate(-50%, -50%) rotate(45deg); } [data-gk-drawer-close]::after { transform: translate(-50%, -50%) rotate(-45deg); } [data-gk-drawer-close]:hover { background: rgba(255,255,255,.16); }' +
-    '[data-gk-header-drawer].open, [data-gk-header-drawer][data-open] { opacity: 1 !important; pointer-events: auto !important; } [data-gk-header-drawer] a { padding: 14px 6px; border-bottom: 1px solid rgba(255,255,255,.08); font-weight: 600; font-size: 18px; color: #fff !important; text-decoration: none; display: block; } [data-gk-header-drawer] [data-gk-drawer-cta] { margin-top: 24px; border-bottom: 0 !important; display: inline-flex !important; align-items: center; justify-content: center; align-self: flex-start; background: var(--gk-g500) !important; padding: 14px 22px; border-radius: 999px; font-weight: 700; font-size: 15px; }' +
     '[data-gk-breadcrumb] { font-size: 13px; color: rgba(255,255,255,.65); margin-bottom: 20px; font-weight: 600; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; } [data-gk-breadcrumb] a { color: rgba(255,255,255,.65) !important; transition: color .15s; text-decoration: none; } [data-gk-breadcrumb] a:hover { color: #fff !important; } [data-gk-breadcrumb] [aria-current="page"] { color: #fff; }';
 
   // Inject styles
@@ -365,41 +229,6 @@
     s.setAttribute('data-gk-city-hero-css', '1');
     s.textContent = EXTRA_CSS + HF_CSS;
     document.head.appendChild(s);
-  }
-
-  // Header interactions
-  function bindHeader() {
-    var burger = document.querySelector('[data-gk-header-burger]');
-    var close = document.querySelector('[data-gk-drawer-close]');
-    var drawer = document.querySelector('[data-gk-header-drawer]');
-    if (burger && drawer) {
-      burger.addEventListener('click', function (e) {
-        e.preventDefault();
-        drawer.setAttribute('data-open', '1');
-      });
-    }
-    if (close && drawer) {
-      close.addEventListener('click', function (e) {
-        e.preventDefault();
-        drawer.removeAttribute('data-open');
-      });
-    }
-    var ddTrig = document.querySelector('[data-gk-header-dd-trigger]');
-    var ddMenu = document.querySelector('[data-gk-header-dd-menu]');
-    if (ddTrig && ddMenu) {
-      ddTrig.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var isOpen = ddMenu.classList.toggle('open');
-        ddTrig.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      });
-      document.addEventListener('click', function (e) {
-        if (!ddMenu.contains(e.target) && !ddTrig.contains(e.target)) {
-          ddMenu.classList.remove('open');
-          ddTrig.setAttribute('aria-expanded', 'false');
-        }
-      });
-    }
   }
 
   // Form state + interactions
@@ -625,15 +454,10 @@
       }
     }
 
-    // Inject new header at top of body (mark as ours so version-check can remove on update)
-    document.body.insertAdjacentHTML('afterbegin', HEADER_HTML);
-    var injectedHdr = document.querySelector('header[data-gk-header]');
-    if (injectedHdr) injectedHdr.setAttribute('data-gk-injected', '1');
-
-    // Inject new hero immediately after new header
-    if (injectedHdr) injectedHdr.insertAdjacentHTML('afterend', buildHero());
+    // Header is a native Webflow component since v108 — inject hero right after it
+    var nativeHdr = document.querySelector('header[data-gk-header]:not([data-gk-injected])');
+    if (nativeHdr) nativeHdr.insertAdjacentHTML('afterend', buildHero());
     else document.body.insertAdjacentHTML('afterbegin', buildHero());
-    var hdr = injectedHdr;
 
     // Apply critical card styles via setProperty with !important — highest CSS precedence possible
     // Apply synchronously AND in rAF for double-safety against timing issues
@@ -680,14 +504,6 @@
       }
     });
 
-    // Append new footer at end of body (mark as ours)
-    if (!document.querySelector('footer[data-gk-footer]')) {
-      document.body.insertAdjacentHTML('beforeend', FOOTER_HTML);
-      var ftr = document.querySelector('footer[data-gk-footer]');
-      if (ftr) ftr.setAttribute('data-gk-injected', '1');
-    }
-
-    bindHeader();
   }
 
   if (document.readyState === 'loading') {
