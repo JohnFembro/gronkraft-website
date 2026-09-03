@@ -5,6 +5,8 @@
    - 4.0.1's corrected cookie-state parser (distinguishes consent:yes vs consent:no)
    - 4.0.2's patches: rate-limit revisit-button clicks + dedupe gtag events
    - Inline yellow banner that appears in any form on focusin when consent is missing
+   2026-09-03: event param renamed source -> prompt_trigger (GA4 read `source` as the
+   session's traffic source, creating a bogus "form_focus / (not set)" channel).
 */
 (function () {
   var REVISIT_SEL = '[class*="cky-revisit-"], .cky-btn-revisit-wrapper';
@@ -94,7 +96,7 @@
         var s = state();
         if (s === 'u') openRevisit();
         if (s !== 'a') showInlineBanner(form);
-        if (window.gtag) gtag('event', 'consent_prompt_shown', { source: 'form_focus' });
+        if (window.gtag) gtag('event', 'consent_prompt_shown', { prompt_trigger: 'form_focus' });
       });
     });
     document.addEventListener('cookieyes_consent_update', function () {
